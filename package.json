@@ -1,0 +1,19 @@
+{
+  "name": "fl6-cataloguer",
+  "version": "1.0.0",
+  "description": "Application used to organise your staff",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nazichok/FL6_cataloguer.git"
+  },
+  "author": "Nazar Dizhak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nazichok/FL6_cataloguer/issues"
+  },
+  "homepage": "https://github.com/Nazichok/FL6_cataloguer#readme"
+}
