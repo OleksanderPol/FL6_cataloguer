@@ -2,7 +2,8 @@ const express = require('express'),
       path = require('path'),
       http = require('http'),
       bodyParser = require('body-parser'),
-      morgan = require('morgan');
+      morgan = require('morgan'),
+      HttpError = require('error').HttpError;
 
 // our routers will be in whis file -----its just api
 const api = require('./routes/api');
@@ -23,10 +24,24 @@ app.use(morgan('tiny'));
 */
 app.use('/api', api);
 
-app.get('*', (req, res) => {
-  res.send("to work with angular routes start application via 'ng serve'," +
-  	" 'node server.js' is just for testing) " +
-  	"You can use localhost:3000/api and localhost:3000/api/users now to see routing from server.js");
+// app.get('*', (req, res) => {
+//   res.send("to work with angular routes start application via 'ng serve'," +
+//   	" 'node server.js' is just for testing) " +
+//   	"You can use localhost:3000/api and localhost:3000/api/users now to see routing from server.js");
+// });
+
+//error handler
+app.use(function(err, req, res, next) {
+  if (typeof err === 'number') {  // next(404);
+    err = new HttpError(err);
+  }
+
+  if (err instanceof HttpError) {
+    res.status(err.status).send(err); //send the json format of error, parse on cliend and display it correctly
+  } else {
+    err = new HttpError(500);
+    res.status(500).send(err);
+  }
 });
 
 // Get port from environment and store in Express.

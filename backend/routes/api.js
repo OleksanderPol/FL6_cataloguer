@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 /*
-	Here will be added methods for updating, deleting, getting users or 
+	Here will be added methods for updating, deleting, getting users or
 	items, refering to requests from frontend
 */
 
