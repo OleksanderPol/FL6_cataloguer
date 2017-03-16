@@ -1,7 +1,8 @@
-const express = require('express');
-const path = require('path');
-const http = require('http');
-const bodyParser = require('body-parser');
+const express = require('express'),
+      path = require('path'),
+      http = require('http'),
+      bodyParser = require('body-parser'),
+      morgan = require('morgan');
 
 // our routers will be in whis file -----its just api
 const api = require('./routes/api');
@@ -12,6 +13,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//use a logger to check the requests
+app.use(morgan('tiny'));
 // Set our api routes
 /*
 	in ./routes/api are methods to manipulate with info in mongoDB
@@ -22,7 +25,7 @@ app.use('/api', api);
 
 app.get('*', (req, res) => {
   res.send("to work with angular routes start application via 'ng serve'," +
-  	" 'node server.js' is just for testing) " + 
+  	" 'node server.js' is just for testing) " +
   	"You can use localhost:3000/api and localhost:3000/api/users now to see routing from server.js");
 });
 
