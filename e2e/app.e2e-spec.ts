@@ -1,10 +1,10 @@
-import { Fl6AppPage } from './app.po';
+import { ProjectPage } from './app.po';
 
-describe('fl6-app App', () => {
-  let page: Fl6AppPage;
+describe('project App', () => {
+  let page: ProjectPage;
 
   beforeEach(() => {
-    page = new Fl6AppPage();
+    page = new ProjectPage();
   });
 
   it('should display message saying app works', () => {

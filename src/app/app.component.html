@@ -1,3 +1,70 @@
-<h1>
-  {{title}}
-</h1>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Logo</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a class="waves-effect waves-light btn" (click)="openModalLogin()">Sign in</a></li>
+      <li><a class="waves-effect waves-light btn" (click)="openModalRegister()">Register</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="login" class="modal" materialize="modal" [materializeActions]="modalActionsLogin">
+  <div class="modal-content">
+    <h4 class="modal-heading">Sign in</h4>
+    <div class="row">
+      <form class="col s12" [formGroup]="userForm"> 
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="userName" type="text" formControlName="name">
+            <label for="userName">User name</label>
+             <control-messages [control]="userForm.controls.name"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" formControlName="password">
+            <label for="password">Password</label>
+            <control-messages [control]="userForm.controls.password"></control-messages>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer center-align">
+    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat" [disabled]="!userForm.valid" (click)="loginUser()">Sign in</button>
+  </div>
+</div>
+
+<div id="register" class="modal" materialize="modal" [materializeActions]="modalActionsRegister">
+  <div class="modal-content">
+    <h4 class="modal-heading">Register</h4>
+    <div class="row">
+      <form class="col s12" [formGroup]="registerForm">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="emailReg" type="email" formControlName="email">
+            <label for="emailReg">Email</label>
+            <control-messages [control]="registerForm.controls.email"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="userNameReg" type="text" formControlName="name">
+            <label for="userNameReg">User name</label>
+            <control-messages [control]="registerForm.controls.name"></control-messages>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="passwordReg" type="password" formControlName="password">
+            <label for="passwordReg">Password</label>
+            <control-messages [control]="registerForm.controls.password"></control-messages>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer center-align">
+    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat" [disabled]="!registerForm.valid" (click)="registerUser()">Register</button>
+  </div>
+</div>

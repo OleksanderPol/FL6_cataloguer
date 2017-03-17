@@ -1,30 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpModule, JsonpModule } from '@angular/http';
+import { MaterializeModule } from 'angular2-materialize';
+
+import { ControlMessagesComponent } from './control-messages.component';
+import { ValidationService } from './validation.service';
 import { AppComponent } from './app.component';
 
-const ROUTES = [
-  {
-    path: '',
-    component: AppComponent
-  }
-];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ControlMessagesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES) // Add routes to the app
+    MaterializeModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [ValidationService],
   bootstrap: [AppComponent]
 })
-
 export class AppModule { }
