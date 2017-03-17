@@ -4,13 +4,14 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       morgan = require('morgan'),
       session = require('express-session'),
+      errorHandler = require('errorhandler');
       HttpError = require('./error/index').HttpError;
 
 const app = express();
 
 // Parsers for POST data------Have no idea how it works)
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); //does not parse multipart form data. ask lead
 
 //use a logger to check the requests
 app.use(morgan('tiny'));
@@ -50,8 +51,12 @@ app.use(function(err, req, res, next) {
   if (err instanceof HttpError) {
     res.status(err.status).send(err); //send the json format of error, parse on cliend and display it correctly
   } else {
-    err = new HttpError(500);
-    res.status(500).send(err);
+    if (app.get('env') === 'development') {
+      app.use(errorHandler());
+    } else {
+      err = new HttpError(500);
+      res.status(500).send(err);
+    }
   }
 });
 
