@@ -1,5 +1,5 @@
 const crypto = require('crypto'),
-      mongoose = require('libs/mongoose'),
+      mongoose = require('../libs/mongoose'),
       Schema = mongoose.Schema;
 
 let schema = new Schema({

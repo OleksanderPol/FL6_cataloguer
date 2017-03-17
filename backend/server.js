@@ -3,7 +3,7 @@ const express = require('express'),
       http = require('http'),
       bodyParser = require('body-parser'),
       morgan = require('morgan'),
-      HttpError = require('error').HttpError;
+      HttpError = require('./error/index').HttpError;
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
 //require routes
-const routes = require('routes');
+const routes = require('./routes/index');
 app.use('/', routes);
 
 //error handler

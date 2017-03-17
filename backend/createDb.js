@@ -1,5 +1,6 @@
-let User = require('models/user').User;
+let User = require('./models/user').User;
 
-User.findOne({username: 'Alex'}, function(err, user) {
-  console.log(user);
+User.find(function(err, users) {
+  console.log(users);
 });
+
