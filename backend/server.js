@@ -3,6 +3,7 @@ const express = require('express'),
       http = require('http'),
       bodyParser = require('body-parser'),
       morgan = require('morgan'),
+      session = require('express-session'),
       HttpError = require('./error/index').HttpError;
 
 const app = express();
@@ -13,6 +14,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //use a logger to check the requests
 app.use(morgan('tiny'));
+
+//added user sessions
+let MongoStore = require('connect-mongo')(session);
+
+app.use(session({
+  secret: 'FL6epam',  //cookie value will be random created string
+  key: 'sid', //when the user visits our website first time, spesial cookie is created (sid)
+  cookie: {
+    path: '/',
+    httpOnly: true, //could not be accessed from js
+    maxAge: null //cookie will be deleted when user close the browser
+  },
+  store: new MongoStore({ //adding a session to data base
+    url: 'mongodb://qwerty:qwerty@tastbaar.mongo.xervo.io:27017/inidA8mi'
+  })
+}));
+
+//below I have checked if sessions are working(session stores the amount of visits)
+// app.use(function(req, res, next) {
+//   req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+//   res.send('Visits: ' + req.session.numberOfVisits);
+// });
 
 //require routes
 const routes = require('./routes/index');
