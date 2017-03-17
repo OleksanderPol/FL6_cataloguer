@@ -23,7 +23,14 @@ let schema = new Schema({
   created: {
     type: Date,
     default: Date.now
-  }
+  },
+  items: [{
+    type: Schema.Types.ObjectId,
+    ref: 'TestItems'
+  }],
+  categories: [{
+    type: String
+  }]
 });
 
 schema.methods.encryptPassword = function(password) {
