@@ -2,6 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from './validation.service';
 import { MaterializeAction } from 'angular2-materialize';
+import { RequestService } from './request.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class AppComponent {
   public registerForm: FormGroup;
   public userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private signInService: RequestService) {
 
     this.userForm = this.formBuilder.group({
       'name': ['', [Validators.required]],
@@ -40,6 +41,7 @@ export class AppComponent {
   loginUser() {
     if (this.userForm.dirty && this.userForm.valid) {
       console.log(`Name: ${this.userForm.value.name} Password: ${this.userForm.value.password}`);
+      this.signInService.signIn(this.userForm.value.name, this.userForm.value.password);
       this.closeModalLogin();
     }
   }

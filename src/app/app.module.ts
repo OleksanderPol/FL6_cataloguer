@@ -7,6 +7,7 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { ControlMessagesComponent } from './control-messages.component';
 import { ValidationService } from './validation.service';
+import { RequestService } from './request.service';
 import { AppComponent } from './app.component';
 
 
@@ -22,7 +23,7 @@ import { AppComponent } from './app.component';
     MaterializeModule,
     ReactiveFormsModule,
   ],
-  providers: [ValidationService],
+  providers: [ValidationService, RequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
