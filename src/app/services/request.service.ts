@@ -17,7 +17,7 @@ export class RequestService {
             .post('http://requestb.in/1impvyj1', body, { headers: headers })
             .subscribe(response => {
                 if (response.status === 200){
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/home', username]);
                 }
             })
     }
