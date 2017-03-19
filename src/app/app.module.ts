@@ -6,15 +6,20 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { MaterializeModule } from 'angular2-materialize';
 
 import { ControlMessagesComponent } from './control-messages.component';
-import { ValidationService } from './validation.service';
-import { RequestService } from './request.service';
+import { ValidationService } from './services/validation.service';
+import { RequestService } from './services/request.service';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { routing } from './app.routing';
+import { StartingPageComponent } from './starting-page/starting-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ControlMessagesComponent
+    ControlMessagesComponent,
+    HomeComponent,
+    StartingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +27,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     MaterializeModule,
     ReactiveFormsModule,
+    routing
   ],
   providers: [ValidationService, RequestService],
   bootstrap: [AppComponent]
