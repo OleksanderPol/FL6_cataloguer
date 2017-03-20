@@ -14,11 +14,26 @@ export class RequestService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         this.http
-            .post('http://requestb.in/1impvyj1', body, { headers: headers })
+            .post('http://requestb.in/rj9te2rj', body, { headers: headers })
             .subscribe(response => {
                 if (response.status === 200){
                     this.router.navigate(['/home', username]);
                 }
             })
     }
+
+    registerRequest(email, username, password) {
+        var body = `email=${email}&username=${username}&password=${password}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        this.http
+            .post('http://requestb.in/rj9te2rj', body, { headers: headers })
+            .subscribe(response => {
+                if (response.status === 200){
+                    this.router.navigate(['/home', username]);
+                }
+            })
+    }
+
 }

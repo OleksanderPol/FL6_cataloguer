@@ -15,7 +15,7 @@ export class StartingPageComponent {
   public registerForm: FormGroup;
   public userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private signInService: RequestService) {
+  constructor(private formBuilder: FormBuilder, private signInService: RequestService, private registerService: RequestService) {
 
     this.userForm = this.formBuilder.group({
       'name': ['', [Validators.required]],
@@ -54,6 +54,7 @@ export class StartingPageComponent {
 
   registerUser() {
     if (this.registerForm.dirty && this.registerForm.valid) {
+      this.registerService.registerRequest(this.registerForm.value.email, this.registerForm.value.name, this.registerForm.value.password);
       console.log(`Name: ${this.registerForm.value.name} Password: ${this.registerForm.value.password} Email: ${this.registerForm.value.email}`);
       this.closeModalRegister();
     }
