@@ -14,7 +14,7 @@ export class RequestService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         this.http
-            .post('http://requestb.in/rj9te2rj', body, { headers: headers })
+            .post('/signin', body, { headers: headers })
             .subscribe(response => {
                 if (response.status === 200){
                     this.router.navigate(['/home', username]);
@@ -28,7 +28,7 @@ export class RequestService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
         this.http
-            .post('http://requestb.in/rj9te2rj', body, { headers: headers })
+            .post('register', body, { headers: headers })
             .subscribe(response => {
                 if (response.status === 200){
                     this.router.navigate(['/home', username]);

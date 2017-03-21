@@ -41,7 +41,7 @@ app.use(session({
 //require routes
 const routes = require('./routes/index');
 app.use('/', routes);
-
+app.use(express.static(__dirname + '/dist'));
 //error handler
 app.use(function(err, req, res, next) {
   if (typeof err === 'number') {  // next(404);
