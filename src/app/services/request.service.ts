@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class RequestService {
+    public user: any;
 
     constructor(private http: Http, private router: Router) { }
 
@@ -18,6 +19,7 @@ export class RequestService {
             .subscribe(response => {
                 if (response.status === 200){
                     this.router.navigate(['/home', username]);
+                    this.user = response.text();
                 }
             })
     }
