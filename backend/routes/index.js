@@ -4,7 +4,7 @@ const express = require('express'),
       path = require('path');
 
 router.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 router.get('/users', function(req, res) {

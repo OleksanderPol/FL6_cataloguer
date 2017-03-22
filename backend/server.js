@@ -12,7 +12,7 @@ const app = express();
 // Parsers for POST data------Have no idea how it works)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); //does not parse multipart form data. ask lead
-
+app.use(express.static(__dirname + '/dist'));
 //use a logger to check the requests
 app.use(morgan('tiny'));
 
@@ -41,7 +41,7 @@ app.use(session({
 //require routes
 const routes = require('./routes/index');
 app.use('/', routes);
-app.use(express.static(__dirname + '/dist'));
+
 //error handler
 app.use(function(err, req, res, next) {
   if (typeof err === 'number') {  // next(404);
