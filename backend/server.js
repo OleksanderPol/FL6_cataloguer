@@ -1,10 +1,9 @@
 const express = require('express'),
-      path = require('path'),
       http = require('http'),
       bodyParser = require('body-parser'),
       morgan = require('morgan'),
       session = require('express-session'),
-      errorHandler = require('errorhandler');
+      errorHandler = require('errorhandler'),
       HttpError = require('./error/index').HttpError;
 
 const app = express();
@@ -12,7 +11,7 @@ const app = express();
 // Parsers for POST data------Have no idea how it works)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); //does not parse multipart form data. ask lead
-
+app.use(express.static(__dirname + '/dist'));
 //use a logger to check the requests
 app.use(morgan('tiny'));
 

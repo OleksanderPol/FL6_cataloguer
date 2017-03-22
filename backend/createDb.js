@@ -1,5 +1,6 @@
 let User = require('./models/user').User;
 let Item = require('./models/item').Item;
+let Category = require('./models/category').Category;
 
 User.findOne({username:"Max"}, (err, user)=>{
 	user.items = [];
