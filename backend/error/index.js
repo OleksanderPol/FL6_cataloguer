@@ -1,5 +1,4 @@
-const path = require('path'),
-      util = require('util'),
+const util = require('util'),
       http = require('http');
 
 function HttpError(status, message) {

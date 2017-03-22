@@ -1,10 +1,9 @@
 const express = require('express'),
-      path = require('path'),
       http = require('http'),
       bodyParser = require('body-parser'),
       morgan = require('morgan'),
       session = require('express-session'),
-      errorHandler = require('errorhandler');
+      errorHandler = require('errorhandler'),
       HttpError = require('./error/index').HttpError;
 
 const app = express();

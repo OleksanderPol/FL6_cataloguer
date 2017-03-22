@@ -14,11 +14,6 @@ router.get('/users', function(req, res) {
   });
 });
 
-//this file is created just to test the post requests
-// router.get('/signin', function(req, res, next) {
-//   res.sendFile(path.join(__dirname, 'signin.html'));
-// });
-
 //now we need to link the prond end request here and test
 router.post('/register', function(req, res, next) {
   let username = req.body.username,
@@ -65,7 +60,7 @@ router.post('/signin', function(req, res, next) {
         next(new HttpError(401, 'Password is not correct'));
       }
     } else {
-      res.next(new HttpError(404, 'User not found'));
+      next(new HttpError(404, 'User not found'));
     }
   });
 });
