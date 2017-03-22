@@ -1,7 +1,8 @@
 const express = require('express'),
       router = express.Router(),
       User = require('../models/user').User,
-      path = require('path');
+      path = require('path'),
+      HttpError = require('../error/index').HttpError;
 
 router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
