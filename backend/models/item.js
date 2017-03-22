@@ -7,8 +7,8 @@ let schema = new Schema({
     required: true
   },
   category: {
-    type: String,
-    default: "Any"
+    type: Schema.Types.ObjectId,
+    ref: 'TestCategory'
   },
   photoUrl: {
     type: String,

@@ -29,7 +29,8 @@ let schema = new Schema({
     ref: 'TestItems'
   }],
   categories: [{
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'TestCategory'
   }]
 });
 
