@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Routes } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Routes, ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +8,13 @@ import { Routes } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  public user: Object;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private dataService: DataService) {
   }
 
+  ngOnInit() {
+    this.user = this.dataService.getUser();
+    console.log(this.user);
+  }
 }
