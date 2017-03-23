@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Routes } from '@angular/router';
-import { RequestService } from '../services/request.service'
+import { Component, OnInit, Input } from '@angular/core';
+import { Routes, ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +8,13 @@ import { RequestService } from '../services/request.service'
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  public user: Object;
 
-  constructor(private RequestService: RequestService) { }
-
-  ngOnInit() {
-    console.log(this.RequestService.user)
+  constructor(private dataService: DataService) {
   }
 
+  ngOnInit() {
+    this.user = this.dataService.getUser();
+    console.log(this.user);
+  }
 }
