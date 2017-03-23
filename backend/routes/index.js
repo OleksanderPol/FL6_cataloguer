@@ -4,10 +4,6 @@ const express = require('express'),
       path = require('path'),
       HttpError = require('../error/index').HttpError;
 
-router.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
 router.get('/users', function(req, res) {
   User.find(function(err, users) {
     if (err) next(err);
@@ -64,6 +60,23 @@ router.post('/signin', function(req, res, next) {
       next(new HttpError(404, 'User not found'));
     }
   });
+});
+
+router.post('signout', function(req, res) {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+router.get('/home/:user', function(req, res) {
+  if (req.user.username === req.params.user) {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 module.exports = router;
