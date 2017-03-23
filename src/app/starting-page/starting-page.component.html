@@ -11,6 +11,7 @@
 <div id="login" class="modal" materialize="modal" [materializeActions]="modalActionsLogin">
   <div class="modal-content">
     <h4 class="modal-heading">Sign in</h4>
+    <div class="error">{{loginError}}</div>
     <div class="row">
       <form class="col s12" [formGroup]="userForm"> 
         <div class="row">
@@ -31,13 +32,14 @@
     </div>
   </div>
   <div class="modal-footer center-align">
-    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat" [disabled]="!userForm.valid" (click)="loginUser()">Sign in</button>
+    <button type="submit" class="modal-action waves-effect waves-green btn-flat" [disabled]="!userForm.valid" (click)="loginUser()">Sign in</button>
   </div>
 </div>
 
 <div id="register" class="modal" materialize="modal" [materializeActions]="modalActionsRegister">
   <div class="modal-content">
     <h4 class="modal-heading">Register</h4>
+    <div class="error">{{registerError}}</div>
     <div class="row">
       <form class="col s12" [formGroup]="registerForm">
         <div class="row">
@@ -65,6 +67,6 @@
     </div>
   </div>
   <div class="modal-footer center-align">
-    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat" [disabled]="!registerForm.valid" (click)="registerUser()">Register</button>
+    <button type="submit" class="modal-action waves-effect waves-green btn-flat" [disabled]="!registerForm.valid" (click)="registerUser()">Register</button>
   </div>
 </div>

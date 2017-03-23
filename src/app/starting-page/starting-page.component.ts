@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ValidationService } from '../services/validation.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
-
+import { DataService } from '../services/data.service';
+import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import 'rxjs/add/operator/map';
 
 @Component({
   templateUrl: './starting-page.component.html',
@@ -14,8 +16,11 @@ export class StartingPageComponent {
   public modalActionsRegister = new EventEmitter<string | MaterializeAction>();
   public registerForm: FormGroup;
   public userForm: FormGroup;
+  public loginError: string;
+  public registerError: string;
+  public user: Object;
 
-  constructor(private formBuilder: FormBuilder, private signInService: RequestService, private registerService: RequestService) {
+  constructor(private formBuilder: FormBuilder, private signInService: RequestService, private registerService: RequestService, private router: Router, private RequestService: RequestService, private dataService: DataService) {
 
     this.userForm = this.formBuilder.group({
       'name': ['', [Validators.required]],
@@ -39,9 +44,17 @@ export class StartingPageComponent {
 
   loginUser() {
     if (this.userForm.dirty && this.userForm.valid) {
-      console.log(`Name: ${this.userForm.value.name} Password: ${this.userForm.value.password}`);
-      this.signInService.signIn(this.userForm.value.name, this.userForm.value.password);
+      this.signInService.signIn(this.userForm.value.name, this.userForm.value.password, this.receiveResponseLogin.bind(this));
+    }
+  }
+
+  receiveResponseLogin(status, response, username) {
+    if (status === 200) {
+      this.dataService.storeUser(response);
+      this.router.navigate(['/home', username]);
       this.closeModalLogin();
+    } else {
+      this.loginError = response;
     }
   }
 
@@ -54,9 +67,18 @@ export class StartingPageComponent {
 
   registerUser() {
     if (this.registerForm.dirty && this.registerForm.valid) {
-      this.registerService.registerRequest(this.registerForm.value.email, this.registerForm.value.name, this.registerForm.value.password);
-      console.log(`Name: ${this.registerForm.value.name} Password: ${this.registerForm.value.password} Email: ${this.registerForm.value.email}`);
-      this.closeModalRegister();
+      this.registerService.registerRequest(this.registerForm.value.email, this.registerForm.value.name, this.registerForm.value.password, this.receiveResponseRegister.bind(this));
     }
   }
+
+  receiveResponseRegister(status, response, username) {
+    if (status === 200) {
+      this.router.navigate(['/home', username]);
+      this.closeModalRegister();
+      this.user = response;
+    } else {
+      this.registerError = response;
+    }
+  }
+
 }

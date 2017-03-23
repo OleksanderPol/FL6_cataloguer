@@ -21,3 +21,10 @@
 control-messages {
     color: red;
 }
+
+.error {
+    margin: 10px;
+    text-align: center;
+    color: red;
+    padding: 10px;
+}
