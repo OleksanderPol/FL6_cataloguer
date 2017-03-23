@@ -7,6 +7,7 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { ControlMessagesComponent } from './control-messages.component';
 import { ValidationService } from './services/validation.service';
+import { DataService } from './services/data.service';
 import { RequestService } from './services/request.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -29,7 +30,7 @@ import { StartingPageComponent } from './starting-page/starting-page.component';
     ReactiveFormsModule,
     routing
   ],
-  providers: [ValidationService, RequestService],
+  providers: [ValidationService, RequestService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
