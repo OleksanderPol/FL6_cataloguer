@@ -62,6 +62,19 @@ router.post('/signin', function(req, res, next) {
   });
 });
 
+router.post('signout', function(req, res) {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+router.get('/home/:user', function(req, res) {
+  if (req.user.username === req.params.user) {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  } else {
+    res.redirect('/');
+  }
+});
+
 router.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });

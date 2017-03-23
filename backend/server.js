@@ -31,17 +31,11 @@ app.use(session({
   })
 }));
 
-//below I have checked if sessions are working(session stores the amount of visits)
-// app.use(function(req, res, next) {
-//   req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
-//   res.send('Visits: ' + req.session.numberOfVisits);
-// });
+app.use(require('./middleware/loadUser'));
 
-//require routes
 const routes = require('./routes/index');
 app.use('/', routes);
 
-//error handler
 app.use(function(err, req, res, next) {
   if (typeof err === 'number') {  // next(404);
     err = new HttpError(err);
