@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { MaterializeModule } from 'angular2-materialize';
+import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { ControlMessagesComponent } from './control-messages.component';
 import { ValidationService } from './services/validation.service';
@@ -28,7 +29,11 @@ import { StartingPageComponent } from './starting-page/starting-page.component';
     HttpModule,
     MaterializeModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    LocalStorageModule.withConfig({
+            prefix: 'my-app',
+        //  storageType: 'localStorage'
+            storageType: 'sessionStorage'})
   ],
   providers: [ValidationService, RequestService, DataService],
   bootstrap: [AppComponent]

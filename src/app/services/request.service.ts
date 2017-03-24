@@ -20,7 +20,7 @@ export class RequestService {
             .post('/signin', body, { headers: headers })
             .subscribe(response => {
                 this.responseStatus = response.status;
-                this.responseText = JSON.parse(response.text());
+                this.responseText = response.text();
                 responseFunc(this.responseStatus, this.responseText, username);
             }, error => {
                 this.responseStatus = error.status;
@@ -38,7 +38,7 @@ export class RequestService {
             .post('register', body, { headers: headers })
             .subscribe(response => {
                 this.responseStatus = response.status;
-                this.responseText = JSON.parse(response.text());
+                this.responseText = response.text();
                 responseFunc(this.responseStatus, this.responseText, username);
             }, error => {
                 this.responseStatus = error.status;
