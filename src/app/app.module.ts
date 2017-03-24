@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { StartingPageComponent } from './starting-page/starting-page.component';
     AppComponent,
     ControlMessagesComponent,
     HomeComponent,
-    StartingPageComponent
+    StartingPageComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
