@@ -14,14 +14,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
-
+import { GoogleSigninComponent } from './google-signin/google-signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
     HomeComponent,
-    StartingPageComponent
+    StartingPageComponent,
+    GoogleSigninComponent
   ],
   imports: [
     BrowserModule,
