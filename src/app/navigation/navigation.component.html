@@ -1,3 +1,24 @@
-<p>
-  navigation works!
-</p>
+<nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Logo</a>
+    <ul class="right hide-on-med-and-down">
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Sort<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+        </div>
+      <li><a class="waves-effect waves-light btn">Add category</a></li>
+      <li><a class="waves-effect waves-light btn" (click)="signOutUser()">Sign out</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">Date</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Amount of items</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Alphabet</a></li>
+</ul>

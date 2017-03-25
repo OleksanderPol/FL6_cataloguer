@@ -62,7 +62,7 @@ router.post('/signin', function(req, res, next) {
   });
 });
 
-router.post('signout', function(req, res) {
+router.get('/signout', function(req, res) {
   req.session.destroy();
   res.redirect('/');
 });

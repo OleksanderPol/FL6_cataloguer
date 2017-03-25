@@ -47,4 +47,16 @@ export class RequestService {
             })
     }
 
+    signOut() {
+        this.http
+            .get('/signout')
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                console.log(this.responseStatus);
+            }, error => {
+                this.responseStatus = error.status;
+                console.log(this.responseStatus);
+            })
+    }
+
 }
