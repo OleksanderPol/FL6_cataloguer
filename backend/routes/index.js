@@ -75,6 +75,22 @@ router.get('/home/:user', function(req, res) {
   }
 });
 
+router.put('/home/:user', function(req, res, next) {
+  User.findOne({ username: req.body.username }, (err, user)=>{
+    user.email = req.body.email;
+    user.info = req.body.info;
+    user.save((err)=>{
+      if (err) {
+      console.log(err);
+        next(new HttpError(500));
+      } else {
+        console.log(user);
+        res.send(user);
+      }
+    })
+  })
+});
+
 router.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });

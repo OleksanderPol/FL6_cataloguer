@@ -8,6 +8,10 @@ let schema = new Schema({
     unique: true,
     required: true
   },
+  photoUrl: {
+    type: String,
+    default: "../../src/favicon.ico"
+  },
   hashedPassword: {
     type: String,
     required: true
@@ -24,14 +28,18 @@ let schema = new Schema({
     type: Date,
     default: Date.now
   },
-  items: [{
+  items: {
     type: Schema.Types.ObjectId,
     ref: 'TestItems'
-  }],
+  },
   categories: [{
     type: Schema.Types.ObjectId,
     ref: 'TestCategory'
-  }]
+  }],
+  info: {
+    type: String,
+    default: ""
+  }
 });
 
 schema.methods.encryptPassword = function(password) {
@@ -52,4 +60,3 @@ schema.virtual('password')
   }
 
 exports.User = mongoose.model('TestUsers', schema);
-

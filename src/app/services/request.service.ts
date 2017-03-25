@@ -47,4 +47,22 @@ export class RequestService {
             })
     }
 
+    changeUserRequest(username, email, info, responseFunc) {
+        var body = `email=${email}&info=${info}&username=${username}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        this.http
+            .put(`home/${username}`, body, { headers: headers })
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                this.responseText = response.text();
+                responseFunc(this.responseStatus, this.responseText, username);
+            }, error => {
+                this.responseStatus = error.status;
+                this.responseText = JSON.parse(error.text()).message;
+                responseFunc(this.responseStatus, this.responseText, username);
+            })
+    }
+
 }
