@@ -28,14 +28,14 @@ let schema = new Schema({
     type: Date,
     default: Date.now
   },
-  items: {
-    type: Schema.Types.ObjectId,
-    ref: 'TestItems'
-  },
-  categories: [{
+  // items: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'TestItems'
+  // },
+  categories: {
     type: Schema.Types.ObjectId,
     ref: 'TestCategory'
-  }],
+  },
   info: {
     type: String,
     default: ""

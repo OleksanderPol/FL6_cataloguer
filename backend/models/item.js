@@ -2,7 +2,7 @@ const mongoose = require('../libs/mongoose'),
       Schema = mongoose.Schema;
 
 let schema = new Schema({
-  items: [{
+  item: {
     name: {
       type: String,
       required: true
@@ -23,7 +23,7 @@ let schema = new Schema({
       type: Date,
       default: Date.now
     }
-  }]
+  }
 });
 
 exports.Item = mongoose.model('TestItems', schema);

@@ -28,13 +28,13 @@
 	  <form class="col s12" [formGroup]="infoForm">
 	    <div class="row">
 	      <div class="input-field col s12">
-	        <input id="email" type="email" formControlName="email" value={{user.email}}>
+	        <input id="email" type="email" formControlName="email" value={{user.email}} class="active">
 	        <label for="email">Email</label>
 	      </div>
 	    </div>
 	    <div class="row">
 	      <div class="input-field col s12">
-	        <textarea id="message" class="materialize-textarea" length="150" formControlName="info" value={{user.info}}></textarea>
+	        <textarea id="message" class="materialize-textarea active" length="150" formControlName="info" value={{user.info}}></textarea>
 	        <label for="message">Info</label>
 	      	<div class="row">
 	        	<div class="col s12">
