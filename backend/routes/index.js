@@ -1,8 +1,10 @@
-const express = require('express'),
-      router = express.Router(),
-      User = require('../models/user').User,
-      path = require('path'),
-      HttpError = require('../error/index').HttpError;
+var express = require('express'),
+    router = express.Router(),
+    User = require('../models/user').User,
+    Category = require('../models/category').Category,
+    Item = require('../models/item').Item,
+    path = require('path'),
+    HttpError = require('../error/index').HttpError;
 
 router.get('/users', function(req, res) {
   User.find(function(err, users) {
@@ -11,9 +13,8 @@ router.get('/users', function(req, res) {
   });
 });
 
-//now we need to link the prond end request here and test
 router.post('/register', function(req, res, next) {
-  let username = req.body.username,
+  var username = req.body.username,
       password = req.body.password,
       email = req.body.email;
 
@@ -23,7 +24,7 @@ router.post('/register', function(req, res, next) {
     if (user) {
       next(new HttpError(403, 'Such user exist'));
     } else {
-      let user = new User ({
+      var user = new User ({
         username: username,
         password: password,
         email: email
@@ -31,7 +32,6 @@ router.post('/register', function(req, res, next) {
 
       user.save(function(err) {
         if (err) return next(err);
-        console.log(username, password);
         req.session.user = user._id;
         console.log('new user creater: ' + username);
         res.send(user);
@@ -41,7 +41,7 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/signin', function(req, res, next) {
-  let username = req.body.username,
+  var username = req.body.username,
       password = req.body.password;
 
 
@@ -73,6 +73,21 @@ router.get('/home/:user', function(req, res) {
   } else {
     res.redirect('/');
   }
+});
+
+router.get('/categories', function(req, res, next) {
+  if (!req.user._id) {
+    next(new HttpError(401));
+  }
+
+  Category.find({users: req.user._id}, {name: 1, _id: 0}, function(err, categories) {
+    if (err) {
+      return next(err);
+    }
+
+    res.send(categories);
+  });
+
 });
 
 router.get('*', function(req, res) {
