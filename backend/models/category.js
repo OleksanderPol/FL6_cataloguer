@@ -1,18 +1,13 @@
-const mongoose = require('../libs/mongoose'),
-      Schema = mongoose.Schema;
+var mongoose = require('../libs/mongoose'),
+    Schema = mongoose.Schema;
 
-let schema = new Schema({
-	categories: [{
-  	name: {
-  	  type: String,
-  	  required: true,
-  	  default: "Misc"
-  	},
-  	items: [{
-    	type: Schema.Types.ObjectId,
-    	ref: 'TestItems'
-  	}]
-  }]
+var schema = new Schema({
+  users: [String],
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  }
 });
 
-exports.Category = mongoose.model('TestCategory', schema);
+exports.Category = mongoose.model('Category', schema);
