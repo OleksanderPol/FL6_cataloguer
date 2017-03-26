@@ -1,27 +1,32 @@
-const mongoose = require('../libs/mongoose'),
-      Schema = mongoose.Schema;
+var mongoose = require('../libs/mongoose'),
+    Schema = mongoose.Schema;
 
-let schema = new Schema({
-  name: {
+var schema = new Schema({
+  owner: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  category: {
     type: String,
     required: true
   },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'TestCategory'
-  },
-  photoUrl: {
-    type: String,
-    default: "../../src/favicon.ico"
-  },
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'TestUsers'
-  },
-  created: {
-    type: Date,
-    default: Date.now
-  }
+  items: [{
+    name: {
+      type: String,
+      required: true
+    },
+    fotoUrl: {
+      type: String
+    },
+    info: {
+      type: String
+    },
+    created: {
+      type: Date,
+      default: Date.now
+    }
+  }]
 });
 
 exports.Item = mongoose.model('TestItems', schema);
