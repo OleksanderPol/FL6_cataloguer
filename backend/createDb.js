@@ -1,89 +1,91 @@
-let User = require('./models/user').User;
-let Item = require('./models/item').Item;
-let Category = require('./models/category').Category;
+var User = require('./models/user').User,
+    Item = require('./models/item').Item,
+    Category = require('./models/category').Category;
 
-// User.findOne({username:"Max"}, (err, user)=>{
-// 	user.items = [];
-// 	Item.findOne({name:"Lord Of the Rings"}, (err, item)=>{
-// 		user.items.push(item._id);
-// 		item.author = user._id;
-// 		console.log("==================\n" + user.items + "\n===================");
-// 	});
-// })
-
-// setTimeout(()=>{
-// 	User.find(function(err, users) {
-// 	 	console.log(users);
-// 	});
-
-// 	console.log("=================================")
-
-// 	Item.find(function(err, items) {
-// 		console.log(items);
-// 	});
-// }, 2000);
-
-// const DEFAULT_CATEG = ['Music', 'Books', 'Games', 'Bikes', 'Coins', 'Marks', 'Films', 'Plants'];
-
-
-// User.findOne({username: 'Frodo'}, function(err, user) {
-//   if (err) {
-//     console.log(err);
-//   }
-
-//   DEFAULT_CATEG.forEach(function(categName) {
-//     let category = new Category({
-//       users: [user._id],
-//       name: categName
-//     });
-
-//     category.save(function(err) {
-//       if (err) console.log(err);
-//     });
-//   });
-// });
-
-
-// Category.find({'users': '58d78b09091b8605906eb327'}, function(err, category) {
-//   if (err) {
-//     console.log(err);
-//   }
-//   console.log(category);
-// });
-
-// // ***How to remove a collection
-// Category.remove({}, function(err) {
-//   if (err) {
-//     console.log(err)
-//   } else {
-//     console.log('deleted');
-//   }
-// });
+var DEFAULT_CATEG = ['Music', 'Books', 'Games', 'Bikes', 'Coins', 'Marks', 'Films', 'Plants'],
+    testUser = {
+      username: 'Frodo',
+      email: 'frodo@gmail.com',
+      password: '12345678',
+      photoUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4e/Elijah_Wood_as_Frodo_Baggins.png',
+      info: 'Very good hobbit'
+    };
 
 //we need every time when we add new item for user/
-let itemObj = {
-  name: 'AC/DC - Rock or Bust',
+var itemObj = {
+  name: 'AC/DC - Chervona Ruta',
   fotoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Acdc_logo_band.svg/220px-Acdc_logo_band.svg.png',
   info: 'Very nice music'
+};
+
+function createUser(userObj) {
+  var user = new User(userObj);
+
+  user.save(function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('user created: ' + userObj.username);
+    }
+  })
 }
 
-//we need when we firstly create item in some catalog
-let itemCell = {
-  owner: '58d78b09091b8605906eb327',
-  category: 'Music',
-  items: []
+function createCategories(query) {
+  User.findOne(query, function(err, user) {
+    if (err) {
+      console.log(err);
+    }
+
+    DEFAULT_CATEG.forEach(function(categName) {
+      var category = new Category({
+        users: [user._id],
+        name: categName
+      });
+
+      category.save(function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('New categories created')
+        }
+      });
+    });
+  });
 }
 
-function createTestItem(itemObj, userItemSell) {
-  let userItems = [];
+function showDocument(model, query) {
+  model.find(query, function(err, category) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(category);
+  });
+}
 
+// ***How to remove a collection
+function removeDocument(model) {
+  model.remove({}, function(err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('deleted');
+    }
+  });
+}
+
+function createTestItem(itemObj) {
+  var userItems = [];
   userItems.push(itemObj);
 
-  let item = new Item(userItemSell);
+  var item = new Item({
+    owner: '58d81859a0b90913b059d75c', //our users id
+    category: 'Music', //related ctegory name
+    items: userItems //our first item in category
+  });
 
   item.save(function(err) {
     if (err) console.log(err);
-    console.log('New item added');
+    console.log('Items cell crearted');
   });
 }
 
@@ -97,9 +99,15 @@ function addItem(itemObj, query ) {
     });
 }
 
-addItem(itemObj, {owner: '58d78b09091b8605906eb327'});
+function demo() {
+  createUser(testUser);
+  createCategories({username: 'Frodo'});
+  showDocument(category, {users: '58d81859a0b90913b059d75c'});
+  createTestItem(itemObj);
+  addItem(itemObj);
+  addItem(itemObj);
+  showDocument(Item, {owner: '58d81859a0b90913b059d75c'});
+}
 
+showDocument(Item, {owner: '58d81859a0b90913b059d75c'});
 
-Item.find({}, function(err, item) {
-  console.log(item[0].items);
-});
