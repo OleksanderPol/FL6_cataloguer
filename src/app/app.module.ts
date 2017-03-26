@@ -16,6 +16,8 @@ import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
 import { GoogleSigninComponent } from './google-signin/google-signin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { TableNavigationService } from './services/table-navigation.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     StartingPageComponent,
     GoogleSigninComponent,
-    ProfileComponent
+    ProfileComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ import { ProfileComponent } from './profile/profile.component';
         //  storageType: 'localStorage'
             storageType: 'sessionStorage'})
   ],
-  providers: [ValidationService, RequestService, DataService],
+  providers: [ValidationService, RequestService, DataService, TableNavigationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

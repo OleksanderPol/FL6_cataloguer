@@ -1,49 +1,53 @@
-<div class="row">
-	<div class="card-panel col s12 m4 l3" *ngIf="!changeTrigger">
-		<div id="profile-card" class="card">
-			<div class="card-image waves-effect waves-block waves-light">
-				<img class="activator" src="http://media.istockphoto.com/photos/night-scene-milky-way-background-picture-id521011652?k=6&m=521011652&s=170667a&w=0&h=ub3diRak2cAz6sYcnynNCMZmJJXtkYnBR4qNBr7jj4M=" alt="user photo">
-			</div>
-			<div class="card-content">
-				<img src={{user.photoUrl}} alt="" class="circle responsive-img activator card-profile-image">
-				<a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right">
-				<i class="mdi-action-account-circle"></i>
-				</a>
-	
-				<span class="card-title activator grey-text text-darken-4">{{user.username}}</span>
-				<p><i class="mdi-action-perm-phone-msg cyan-text text-darken-2"></i>{{user.info}}</p>
-				<p><i class="mdi-communication-email cyan-text text-darken-2"></i>{{user.email}}</p>
-	
-			</div>
-			<div class="card-reveal">
-				<span class="card-title grey-text text-darken-4">{{user.username}} <i class="mdi-navigation-close right"></i></span>
-				<p>Here is some more information about user.</p>
-				<p><i class="mdi-communication-email cyan-text text-darken-2"></i>{{user.email}}</p>
-				<p><a class="waves-effect waves-light btn" (click)="showChange()">Change Data</a></p>
-			</div>
-		</div>
-	</div>
-	
-	<div class="col s12 m4 l3" *ngIf="changeTrigger">
-	  <form class="col s12" [formGroup]="infoForm">
-	    <div class="row">
-	      <div class="input-field col s12">
-	        <input id="email" type="email" formControlName="email" value={{user.email}} class="active">
-	        <label for="email">Email</label>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="input-field col s12">
-	        <textarea id="message" class="materialize-textarea active" length="150" formControlName="info" value={{user.info}}></textarea>
-	        <label for="message">Info</label>
-	      	<div class="row">
-	        	<div class="col s12">
-	        	  <button class="btn cyan waves-effect waves-light right" type="submit" [disabled]="!infoForm.valid" (click)="changeInfo()">Change Data
-	          	</button>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </form>
-	</div>
+<div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger">
+
+    <div class="profile-edit-btn hidden" *ngIf="editButton">
+        <a class="btn-floating btn-large yellow accent-3" (click)="showChange()">
+            <i class="large material-icons grey-text text-darken-3">mode_edit</i>
+        </a>
+    </div>
+
+
+    <div class="prof-img grey darken-3">
+        <img class="responsive-img" [src]="user.photoUrl" onError="this.src='/assets/img/mock.jpg'">
+    </div>
+
+    <div class="profile-details grey darken-3">
+        <div class="profile-wrapper">
+            <div class="profile-icon">
+                <img src="/assets/icons/user-icon.svg">
+            </div>
+            <div class="profile-name">
+                <span class="user-name">{{user.username | uppercase}}</span>
+                <br>
+            </div>
+            <div class="user-stats">
+                <span>Collections:</span><span class="yellow-text text-accent-3"><b> 25</b></span>
+                <br>
+                <span>Items:</span><span class="yellow-text text-accent-3"><b> 123</b></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="changeTrigger" class="change-user-data">
+    <form [formGroup]="infoForm" class="profile-form grey darken-3">
+        <div class="input-field">
+            <input id="email" type="email" formControlName="email" value={{user.email}}>
+            <label for="email" class="active">Email</label>
+        </div>
+
+
+        <div class="input-field">
+            <textarea id="message" class="materialize-textarea" length="150" formControlName="info" value={{user.info}}></textarea>
+            <label for="message" class="active">Info</label>
+            <div class="center-align">
+                <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid" (click)="changeInfo()">Change Data
+                </button>
+                <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showChange()">Close
+                </button>
+            </div>
+        </div>
+
+    </form>
 </div>

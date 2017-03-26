@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { MaterializeDirective } from "angular2-materialize";
 
 @Component({
   selector: 'app-home',
