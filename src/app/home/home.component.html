@@ -1,10 +1,12 @@
 <div class="row">
-	<div class="col">
-		<app-profile [(user)]="user"></app-profile>
-	</div>
-	<div class="col">
-		<p>
-		  home works!
-		</p>
-	</div>
+  <div class="col">
+    <app-profile [(user)]="user"></app-profile>
+  </div>
+  <div class="col">
+   <ul>
+      <li *ngFor="let category of categories">
+        {{category.name}} - {{category.amountOfItems}}
+      </li>
+    </ul>
+  </div>
 </div>
