@@ -1,7 +1,21 @@
-#search {
-  height: 64px;
+nav {
+  padding: 14px 0px 0px 0px;
+  height: 78px;
 }
 
-label.label-icon {
-  position: absolute;
+.nav-icons ul {
+  display: flex;
+  justify-content: center;
 }
+
+.nav-icons ul li {
+  cursor: pointer;
+  width: 64px;
+  text-align: center;
+}
+
+.nav-icons ul li:hover {
+  background: #424242;
+}
+
+
