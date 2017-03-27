@@ -4,7 +4,7 @@
   </div>
   <div class="col" *ngIf="isCategoryAvaileble">
     <app-search (update)="searchFilter = $event"></app-search>
-   <ul *ngFor="let category of categories | searchPipe:''" >
+   <ul *ngFor="let category of categories | searchPipe: searchFilter" >
       <li (click)="showItems(category.name)">
         {{category.name}} - {{category.amountOfItems}}
       </li>
