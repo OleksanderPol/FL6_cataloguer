@@ -68,7 +68,7 @@ export class RequestService {
     getCategories(responseFunc){
         return this.http.get('categories')
         .subscribe(response => {
-            this.dataService.storeCategories(response.text()); 
+            this.dataService.storeCategories(response.text());
             responseFunc();
         },
         error => {
@@ -85,6 +85,18 @@ export class RequestService {
             console.log("Error")
         }
         )
+    }
+
+    signOut() {
+        this.http
+            .get('/signout')
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                console.log(this.responseStatus);
+            }, error => {
+                this.responseStatus = error.status;
+                console.log(this.responseStatus);
+            })
     }
 
 }

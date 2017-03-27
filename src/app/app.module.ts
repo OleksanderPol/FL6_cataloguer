@@ -16,15 +16,20 @@ import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
 import { GoogleSigninComponent } from './google-signin/google-signin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NavigationComponent } from './navigation/navigation.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
     HomeComponent,
+
     StartingPageComponent,
     GoogleSigninComponent,
-    ProfileComponent
+    ProfileComponent,
+    StartingPageComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
