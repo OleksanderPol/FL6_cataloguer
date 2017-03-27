@@ -1,7 +1,9 @@
-const User = require('../models/user').User;
+var User = require('../models/user').User;
 
-module.exports = function(req, res , next) {
-  if (!req.session.user) return next();
+module.exports = function(req, res, next) {
+  if (!req.session.user) {
+    req.user = {};
+  }
 
   User.findById(req.session.user, function(err, user) {
     if (err) return next(err);

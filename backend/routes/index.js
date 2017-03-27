@@ -1,8 +1,10 @@
-const express = require('express'),
-      router = express.Router(),
-      User = require('../models/user').User,
-      path = require('path'),
-      HttpError = require('../error/index').HttpError;
+var express = require('express'),
+    router = express.Router(),
+    User = require('../models/user').User,
+    Category = require('../models/category').Category,
+    Item = require('../models/item').Item,
+    path = require('path'),
+    HttpError = require('../error/index').HttpError;
 
 router.get('/users', function(req, res) {
   User.find(function(err, users) {
@@ -11,9 +13,8 @@ router.get('/users', function(req, res) {
   });
 });
 
-//now we need to link the prond end request here and test
 router.post('/register', function(req, res, next) {
-  let username = req.body.username,
+  var username = req.body.username,
       password = req.body.password,
       email = req.body.email;
 
@@ -23,7 +24,7 @@ router.post('/register', function(req, res, next) {
     if (user) {
       next(new HttpError(403, 'Such user exist'));
     } else {
-      let user = new User ({
+      var user = new User ({
         username: username,
         password: password,
         email: email
@@ -31,7 +32,6 @@ router.post('/register', function(req, res, next) {
 
       user.save(function(err) {
         if (err) return next(err);
-        console.log(username, password);
         req.session.user = user._id;
         console.log('new user creater: ' + username);
         res.send(user);
@@ -41,7 +41,7 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/signin', function(req, res, next) {
-  let username = req.body.username,
+  var username = req.body.username,
       password = req.body.password;
 
 
@@ -75,20 +75,62 @@ router.get('/home/:user', function(req, res) {
   }
 });
 
-router.put('/home/:user', function(req, res, next) {
-  User.findOne({ username: req.body.username }, (err, user)=>{
-    user.email = req.body.email;
-    user.info = req.body.info;
-    user.save((err)=>{
+
+// router.put('/home/:user', function(req, res, next) {
+//   User.findOne({ username: req.body.username }, (err, user)=>{
+//     user.email = req.body.email;
+//     user.info = req.body.info;
+//     user.save((err)=>{
+//       if (err) {
+//       console.log(err);
+//         next(new HttpError(500));
+//       } else {
+//         console.log(user);
+//         res.send(user);
+//       }
+//     })
+//   })
+
+router.get('/categories', function(req, res, next) {
+  if (!req.user) {
+    return next(401);
+  }
+
+  Category.find({users: req.user._id}, {name: 1, _id: 0}, function(err, categories) {
+    if (err) {
+      return next(err);
+    }
+    Item.find({owner: req.user._id}, function(err, itemCell) {
       if (err) {
-      console.log(err);
-        next(new HttpError(500));
-      } else {
-        console.log(user);
-        res.send(user);
+        return next(err);
       }
-    })
-  })
+      //mongoose document does not allow adding props, we need to convert it to plain obj firstly.
+      var result = categories.map(function(category, index) {
+        category = category.toJSON();
+        category.amountOfItems = itemCell[index] ? itemCell[index].items.length : 0;
+        return category;
+      });
+
+      res.json(result);
+    });
+  });
+});
+
+router.get('/:category/items', function(req, res, next) {
+  var categoryName = req.params.category;
+
+  if (!req.user) {
+    return next(401);
+  }
+
+  Item.findOne({category: categoryName}, function(err, itemCell) {
+    if (err) {
+      return next(err);
+    }
+
+    res.json(itemCell.items);
+  });
+
 });
 
 router.get('*', function(req, res) {
