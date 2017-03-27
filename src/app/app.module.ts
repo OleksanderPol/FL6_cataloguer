@@ -7,9 +7,12 @@ import { MaterializeModule } from 'angular2-materialize';
 import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { ControlMessagesComponent } from './control-messages.component';
+
 import { ValidationService } from './services/validation.service';
 import { DataService } from './services/data.service';
 import { RequestService } from './services/request.service';
+import { ItemsService } from './services/items.service';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { routing } from './app.routing';
@@ -43,7 +46,7 @@ import { NavigationComponent } from './navigation/navigation.component';
         //  storageType: 'localStorage'
             storageType: 'sessionStorage'})
   ],
-  providers: [ValidationService, RequestService, DataService],
+  providers: [ValidationService, RequestService, DataService, ItemsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
