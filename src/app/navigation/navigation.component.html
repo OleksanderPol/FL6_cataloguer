@@ -9,20 +9,31 @@
                 <!-- Navigation tag -->
                 <div class="col s8">
 
-                    <div *ngIf="shown === 'search'">
-                        Search
+                    <div *ngIf="shown === 'search'" class="input-field">
+                      <input id="search" type="search" required placeholder="Type here to search">
+
                     </div>
                     <div *ngIf="shown === 'filter'">
-                        Filter
+                      <select class="nav-select">
+                        <option value="" disabled selected>Select a sorting method</option>
+                        <option value="1">Date</option>
+                        <option value="2">Rate</option>
+                        <option value="3">Alphabet</option>
+                      </select>
                     </div>
                     <div *ngIf="shown === 'adds'">
-                        Add categories/items
+                      <button class="btn waves-effect waves-light">Add category
+                      </button>
                     </div>
 
                 </div>
                 <div class="col s4 nav-icons">
                     <ul class="">
-                        <li (click)="shown = 'search'"><i class="material-icons grey-text lighten-2">search</i></li>
+                        <li (click)="shown = 'search'">
+                          <label class="label-icon" for="search">
+                            <i class="material-icons grey-text lighten-2">search</i>
+                          </label>
+                        </li>
                         <li (click)="shown = 'filter'"><i class="material-icons grey-text lighten-2">swap_vert</i></li>
                         <li (click)="shown = 'adds'"><i class="material-icons grey-text lighten-2">playlist_add</i></li>
                     </ul>
@@ -31,7 +42,6 @@
 
             </div>
         </div>
-
         <!-- Collapsed Menu -->
         <ul class="side-nav" id="nav-mobile">
             <li><a  href="#"><i class="material-icons">search</i></a></li>
@@ -45,3 +55,4 @@
         </a>
     </div>
 </nav>
+

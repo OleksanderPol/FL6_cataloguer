@@ -3,6 +3,10 @@ nav {
   height: 78px;
 }
 
+#search {
+  height: 55px;
+}
+
 .nav-icons ul {
   display: flex;
   justify-content: center;
@@ -17,5 +21,13 @@ nav {
 .nav-icons ul li:hover {
   background: #424242;
 }
+
+.nav-select {
+  background-color: #ffea00;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.870588);
+  margin-bottom: 6px;
+}
+
 
 
