@@ -76,4 +76,15 @@ export class RequestService {
         })
     }
 
+    getItems(category: string, responseFunc){
+        this.http.get(`${category}/items`)
+        .subscribe(response => {
+            responseFunc(response.text());
+        },
+        error => {
+            console.log("Error")
+        }
+        )
+    }
+
 }

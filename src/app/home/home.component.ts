@@ -14,19 +14,30 @@ export class HomeComponent implements OnInit {
 
   public user: Object;
   public categories: Object[];
+  public items: Object[];
 
   constructor(private dataService: DataService, private requestService: RequestService) {
   }
 
   ngOnInit() {
+    this.requestService.getCategories(this.getCategoriesData.bind(this));
     this.user = this.dataService.getUser();
     console.log(this.user);
-    this.requestService.getCategories(this.getCategoriesData.bind(this));
   }
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
     console.log(this.categories);
   }
+
+  showItems(target){
+    this.requestService.getItems(target, this.getItemsData.bind(this));
+  }
+
+  getItemsData(items: string){
+    this.items = JSON.parse(items);
+    console.log(this.items);
+  }
+
 }
 

@@ -3,8 +3,8 @@
     <app-profile [(user)]="user"></app-profile>
   </div>
   <div class="col">
-   <ul>
-      <li *ngFor="let category of categories">
+   <ul *ngFor="let category of categories" >
+      <li (click)="showItems(category.name)">
         {{category.name}} - {{category.amountOfItems}}
       </li>
     </ul>
