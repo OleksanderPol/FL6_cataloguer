@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { MaterializeDirective } from "angular2-materialize";
 import { RequestService } from '../services/request.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -23,11 +24,12 @@ export class HomeComponent implements OnInit {
     this.requestService.getCategories(this.getCategoriesData.bind(this));
     this.user = this.dataService.getUser();
     console.log(this.user);
+    this.requestService.getCategories(this.getCategoriesData.bind(this));
+    this.categories = this.dataService.getCategories();
   }
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
-    console.log(this.categories);
   }
 
   showItems(target){

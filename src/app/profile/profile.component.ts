@@ -14,28 +14,44 @@ import 'rxjs/add/operator/map';
 })
 export class ProfileComponent implements OnInit {
 	@Input() user: Object;
+  @Input() categories: any;
 	public changeTrigger: boolean = false;
+  public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
+  public itemsAmount: Object;
 
   constructor(private formBuilder: FormBuilder, private changeInfoService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': ['']
-    });
+    });     
   }
 
   ngOnInit() {
-    
+    this.itemsAmount = this.categories.reduce(function (sum, curr) {
+      return {amountOfItems: sum.amountOfItems + curr.amountOfItems};
+    })       
   }
 
-  showChange() {
-  	this.changeTrigger = !this.changeTrigger;
+showChange() {
+    this.infoTrigger = false;
+    this.changeTrigger = true;
+  }
+
+  showInfo() {
+    this.infoTrigger = true;
+    this.changeTrigger = false;
+  }
+
+  showUser() {
+    this.infoTrigger = false;
+    this.changeTrigger = false;
   }
 
   changeInfo() {
-  	this.showChange();
-  	if (this.infoForm.dirty && this.infoForm.valid) {
+    this.showUser();
+    if (this.infoForm.dirty && this.infoForm.valid) {
       this.changeInfoService.changeUserRequest(this.dataService.getUser().username, this.infoForm.value.email, this.infoForm.value.info, this.receiveResponseChange.bind(this));
     }
   }

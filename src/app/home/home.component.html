@@ -1,18 +1,81 @@
+<!-- <nav class="z-depth-0 grey darken-4" role="navigation">
+    <div class="row container">
+        <div class="col s4 logo">
+            <a id="logo-container" href="#" class="brand-logo"><img src="/assets/img/logo.svg"></a>
+        </div>
+        <div class="col s8">
+            <div class="row hide-on-med-and-down">
+ -->
+                <!-- Navigation tag -->
+<!--                 <div class="col s8">
 
-<div class="row">
-  <div class="col">
-    <app-navigation></app-navigation>
-    <app-profile [(user)]="user"></app-profile>
-  </div>
-  <div class="col">
-   <ul *ngFor="let category of categories" >
-      <li (click)="showItems(category.name)">
-        {{category.name}} - {{category.amountOfItems}}
-      </li>
-    </ul>
-  </div>
+                    <div *ngIf="shown === 'search'">
+                        Search
+                    </div>
+                    <div *ngIf="shown === 'filter'">
+                        Filter
+                    </div>
+                    <div *ngIf="shown === 'adds'">
+                        Add categories/items
+                    </div>
+
+                </div>
+                <div class="col s4 nav-icons">
+                    <ul class="">
+                        <li (click)="shown = 'search'"><i class="material-icons grey-text lighten-2">search</i></li>
+                        <li (click)="shown = 'filter'"><i class="material-icons grey-text lighten-2">swap_vert</i></li>
+                        <li (click)="shown = 'adds'"><i class="material-icons grey-text lighten-2">playlist_add</i></li>
+                    </ul>
+                </div> -->
+                <!-- //Navigation tag -->
+
+<!--             </div>
+        </div> -->
+
+        <!-- Collapsed Menu -->
+<!--         <ul class="side-nav" id="nav-mobile">
+            <li><a  href="#"><i class="material-icons">search</i></a></li>
+            <li><a href="#"><i class="material-icons">swap_vert</i></a></li>
+            <li><a href="#"><i class="material-icons">playlist_add</i></a></li>
+        </ul> -->
+        <!-- //Collapsed Menu -->
+
+<!--         <a href="#" materialize="sideNav" [materializeParams]="[{edge:'left'}]" data-activates="nav-mobile" class="button-collapse grey-text lighten-2">
+            <i class="material-icons">menu</i>
+        </a>
+    </div>
+</nav> -->
+<app-navigation></app-navigation>
+
+<div class="row container content">
+
+
+    <div class="col s12 l4 hide-on-med-and-down profile white-text">
+
+        <!--   Profile   --><app-profile [(user)]="user" [(categories)]="categories"></app-profile>
+
+        <!--  Profile Navigation -->
+        <div class="profile-nav">
+            <div class="profile-nav-item">
+                <div class="yellow accent-3 active">
+                    <img src="/assets/icons/category-icon-active.svg">
+                    <span class="grey-text text-darken-3">CATEGORIES</span>
+                </div>
+            </div>
+            <div class="profile-nav-item">
+                <div class="grey darken-3">
+                    <img src="/assets/icons/item-icon.svg">
+                    <span class="">ITEMS</span>
+                </div>
+            </div>
+        </div>
+        <!--  //Profile Navigation -->
+    </div>
+
+
+    <!-- Table section -->
+    <div class="col s12 l8">
+        <app-categories [(categories)]="categories"></app-categories>
+    </div>
+
 </div>
-<p>
-  home works!
-</p>
-
