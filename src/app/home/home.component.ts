@@ -26,13 +26,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.requestService.getCategories(this.getCategoriesData.bind(this));
     this.user = this.dataService.getUser();
-    console.log(this.user);
   }
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
     this.isCategoryAvaileble = true;
-    console.log(this.categories);
   }
 
   showItems(target){
@@ -41,12 +39,5 @@ export class HomeComponent implements OnInit {
 
   getItemsData(items: string){
     this.items = JSON.parse(items);
-    console.log(this.items);
   }
-
-  testFunc(test: string){
-    console.log(test);
-  }
-
 }
-
