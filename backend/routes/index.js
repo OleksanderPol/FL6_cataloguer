@@ -76,18 +76,44 @@ router.get('/home/:user', function(req, res) {
 });
 
 router.get('/categories', function(req, res, next) {
-  if (!req.user._id) {
-    next(new HttpError(401));
+  if (!req.user) {
+    return next(401);
   }
 
   Category.find({users: req.user._id}, {name: 1, _id: 0}, function(err, categories) {
     if (err) {
       return next(err);
     }
+    Item.find({owner: req.user._id}, function(err, itemCell) {
+      if (err) {
+        return next(err);
+      }
+      //mongoose document does not allow adding props, we need to convert it to plain obj firstly.
+      var result = categories.map(function(category, index) {
+        category = category.toJSON();
+        category.amountOfItems = itemCell[index] ? itemCell[index].items.length : 0;
+        return category;
+      });
 
-    res.send(categories);
+      res.json(result);
+    });
   });
+});
 
+router.get('/:category/items', function(req, res, next) {
+  var categoryName = req.params.category;
+
+  if (!req.user) {
+    return next(401);
+  }
+
+  Item.findOne({category: categoryName}, function(err, itemCell) {
+    if (err) {
+      return next(err);
+    }
+
+    res.json(itemCell.items);
+  });
 });
 
 router.get('*', function(req, res) {
