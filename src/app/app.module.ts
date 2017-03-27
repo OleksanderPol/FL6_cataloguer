@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { MaterializeModule } from 'angular2-materialize';
+import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { ControlMessagesComponent } from './control-messages.component';
 import { ValidationService } from './services/validation.service';
@@ -13,14 +14,17 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
-
+import { GoogleSigninComponent } from './google-signin/google-signin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlMessagesComponent,
     HomeComponent,
-    StartingPageComponent
+    StartingPageComponent,
+    GoogleSigninComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,11 @@ import { StartingPageComponent } from './starting-page/starting-page.component';
     HttpModule,
     MaterializeModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    LocalStorageModule.withConfig({
+            prefix: 'my-app',
+        //  storageType: 'localStorage'
+            storageType: 'sessionStorage'})
   ],
   providers: [ValidationService, RequestService, DataService],
   bootstrap: [AppComponent]

@@ -50,4 +50,3 @@ schema.virtual('password')
   }
 
 exports.User = mongoose.model('TestUsers', schema);
-
