@@ -4,6 +4,7 @@ import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   public user: Object;
   public categories: Object[];
   public items: Object[];
+  public searchFilter: string;
 
   constructor(private dataService: DataService, private requestService: RequestService) {
   }
@@ -37,6 +39,10 @@ export class HomeComponent implements OnInit {
   getItemsData(items: string){
     this.items = JSON.parse(items);
     console.log(this.items);
+  }
+
+  testFunc(test: string){
+    console.log(test);
   }
 
 }

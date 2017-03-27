@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
 import { GoogleSigninComponent } from './google-signin/google-signin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     StartingPageComponent,
     GoogleSigninComponent,
-    ProfileComponent
+    ProfileComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

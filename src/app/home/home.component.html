@@ -3,6 +3,7 @@
     <app-profile [(user)]="user"></app-profile>
   </div>
   <div class="col">
+    <app-search (update)="searchFilter = $event)"></app-search>
    <ul *ngFor="let category of categories" >
       <li (click)="showItems(category.name)">
         {{category.name}} - {{category.amountOfItems}}
@@ -10,3 +11,5 @@
     </ul>
   </div>
 </div>
+
+<!--<app-search (update)="testFunc($event)"></app-search>-->
