@@ -5,6 +5,7 @@ import { RequestService } from '../services/request.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { SearchComponent } from '../search/search.component';
+import { SearchPipe } from '../search/search.pipe';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
   public categories: Object[];
   public items: Object[];
   public searchFilter: string;
+  public isCategoryAvaileble: boolean = false;
 
   constructor(private dataService: DataService, private requestService: RequestService) {
   }
@@ -29,6 +31,7 @@ export class HomeComponent implements OnInit {
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
+    this.isCategoryAvaileble = true;
     console.log(this.categories);
   }
 

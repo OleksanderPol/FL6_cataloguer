@@ -2,9 +2,9 @@
   <div class="col">
     <app-profile [(user)]="user"></app-profile>
   </div>
-  <div class="col">
-    <app-search (update)="searchFilter = $event)"></app-search>
-   <ul *ngFor="let category of categories" >
+  <div class="col" *ngIf="isCategoryAvaileble">
+    <app-search (update)="searchFilter = $event"></app-search>
+   <ul *ngFor="let category of categories | searchPipe:''" >
       <li (click)="showItems(category.name)">
         {{category.name}} - {{category.amountOfItems}}
       </li>
