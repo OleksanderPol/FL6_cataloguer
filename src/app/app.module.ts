@@ -34,7 +34,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     GoogleSigninComponent,
     ProfileComponent,
     SearchComponent,
-    SearchPipe
+    SearchPipe,
     NavigationComponent
   ],
   imports: [
