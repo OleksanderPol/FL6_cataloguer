@@ -52,7 +52,7 @@
 
     <div class="col s12 l4 hide-on-med-and-down profile white-text">
 
-        <!--   Profile   --><app-profile [(user)]="user"></app-profile>
+        <!--   Profile   --><app-profile [(user)]="user" [(categories)]="categories"></app-profile>
 
         <!--  Profile Navigation -->
         <div class="profile-nav">
@@ -75,7 +75,23 @@
 
     <!-- Table section -->
     <div class="col s12 l8">
-        <app-categories></app-categories>
+        <app-categories [(categories)]="categories"></app-categories>
     </div>
 
 </div>
+
+<!--
+<div class="row">
+  <div class="col">
+    <app-profile [(user)]="user"></app-profile>
+  </div>
+  <div class="col">
+   <ul>
+      <li *ngFor="let category of categories">
+        {{category.name}} - {{category.amountOfItems}}
+      </li>
+    </ul>
+  </div>
+</div>
+>>>>>>> starting-page
+-->

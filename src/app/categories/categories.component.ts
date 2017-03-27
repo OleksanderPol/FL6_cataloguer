@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import {Subscription} from 'rxjs/Subscription';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-categories',
@@ -10,14 +11,16 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  private pageTable: string[] = [];
+  @Input() categories: Object[];
+  private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext = true;
   private showPrev = false;
     
 
   constructor(private router: Router, 
-              private tableNavigationService: TableNavigationService) {
+              private tableNavigationService: TableNavigationService,
+              private dataService: DataService) {
               
               this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
                 this.showNext = value; 
@@ -29,16 +32,16 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.pageTable = this.tableNavigationService.getFirstPage('categories');
+      this.pageTable = this.tableNavigationService.getFirstPage(this.categories);
   }
   
-  getPrev(): string[] {
-      this.pageTable = this.tableNavigationService.getPrev('categories');
+  getPrev(): Object[] {
+      this.pageTable = this.tableNavigationService.getPrev(this.categories);
       return this.pageTable;
   }
     
-  getNext(): string[] {
-      this.pageTable = this.tableNavigationService.getNext('categories');
+  getNext(): Object[] {
+      this.pageTable = this.tableNavigationService.getNext(this.categories);
       return this.pageTable;
   }
     

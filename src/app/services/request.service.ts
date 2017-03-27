@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { User } from '../app.model';
+import { DataService } from './data.service';
 
 @Injectable()
 export class RequestService {
@@ -9,7 +9,7 @@ export class RequestService {
     private responseText: string;
     private requestResponse: Object;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private dataService: DataService) { }
 
     signIn(username, password, responseFunc) {
         var body = `username=${username}&password=${password}`;
@@ -63,6 +63,17 @@ export class RequestService {
                 this.responseText = JSON.parse(error.text()).message;
                 responseFunc(this.responseStatus, this.responseText, username);
             })
+    }
+
+    getCategories(responseFunc){
+        return this.http.get('categories')
+        .subscribe(response => {
+            this.dataService.storeCategories(response.text()); 
+            responseFunc();
+        },
+        error => {
+            console.log("Error");
+        })
     }
 
 }

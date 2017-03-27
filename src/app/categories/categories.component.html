@@ -8,11 +8,11 @@
         </div>
     </div>
 
-    <div class="col s12 m4" *ngFor="let item of pageTable">
+    <div class="col s12 m4" *ngFor="let category of pageTable">
         <div class="card z-depth-0 yellow accent-3" (click)="onClick(item)">
             <div>
-                <span class="card-title">{{item | uppercase}}</span>
-                <span class="item-ammount">234</span>
+                <span class="card-title">{{category.name | uppercase}}</span>
+                <span class="item-ammount">{{category.amountOfItems}}</span>
             </div>
         </div>
     </div>

@@ -14,19 +14,23 @@ import 'rxjs/add/operator/map';
 })
 export class ProfileComponent implements OnInit {
 	@Input() user: Object;
+    @Input() categories: any;
 	public changeTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
+    public itemsAmount: Object;
 
   constructor(private formBuilder: FormBuilder, private changeInfoService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': ['']
-    });
+    });     
   }
 
   ngOnInit() {
-    
+    this.itemsAmount = this.categories.reduce(function (sum, curr) {
+      return {amountOfItems: sum.amountOfItems + curr.amountOfItems};
+    })       
   }
 
   showChange() {

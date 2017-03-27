@@ -14,4 +14,12 @@ export class DataService {
     getUser() {
         return JSON.parse(sessionStorage.getItem("user"));
     }
+
+    storeCategories(categories: string) {
+        sessionStorage.setItem("categories", categories)
+    }
+
+    getCategories() {
+        return JSON.parse(sessionStorage.getItem("categories"));
+    }
 }
