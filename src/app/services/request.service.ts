@@ -98,5 +98,4 @@ export class RequestService {
                 console.log(this.responseStatus);
             })
     }
-
 }
