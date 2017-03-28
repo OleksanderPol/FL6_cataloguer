@@ -24,6 +24,7 @@ export class CategoriesComponent implements OnInit {
 
   private search: string = '';
   private ifCategories: boolean = false;
+  private searchPipe = new SearchPipe();
 
   constructor(private router: Router, 
               private tableNavigationService: TableNavigationService,
@@ -39,7 +40,10 @@ export class CategoriesComponent implements OnInit {
                 this.showPrev = value; 
               });     
 
-              filterService.searchFilter$.subscribe(n => this.search = n)         
+              filterService.searchFilter$.subscribe(searchInput => {
+                let filteredCategories = this.searchPipe.transform(this.categories, searchInput);
+                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+              })         
   }
 
   ngOnInit() {
