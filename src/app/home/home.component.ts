@@ -27,11 +27,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.requestService.getCategories(this.getCategoriesData.bind(this));
     this.user = this.dataService.getUser();
-
-    console.log(this.user);
-
-    this.requestService.getCategories(this.getCategoriesData.bind(this));
-    this.categories = this.dataService.getCategories();
   }
 
   getCategoriesData(){
