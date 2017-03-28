@@ -52,7 +52,7 @@
 
     <div class="col s12 l4 hide-on-med-and-down profile white-text">
 
-        <!--   Profile   --><app-profile [(user)]="user" [(categories)]="categories"></app-profile>
+        <!--   Profile   --><app-profile [(user)]="user"></app-profile>
 
         <!--  Profile Navigation -->
         <div class="profile-nav">
@@ -75,7 +75,7 @@
 
     <!-- Table section -->
     <div class="col s12 l8">
-        <app-categories [(categories)]="categories"></app-categories>
+        <router-outlet></router-outlet>
     </div>
 
 </div>

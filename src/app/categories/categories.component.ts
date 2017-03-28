@@ -4,6 +4,7 @@ import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import {Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
+import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'app-categories',
@@ -14,13 +15,14 @@ export class CategoriesComponent implements OnInit {
   @Input() categories: Object[];
   private pageTable: Object[] = [];
   private subscription: Subscription;
-  private showNext = true;
-  private showPrev = false;
+  private showNext: boolean;
+  private showPrev: boolean;
     
 
   constructor(private router: Router, 
               private tableNavigationService: TableNavigationService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private requestService: RequestService) {
               
               this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
                 this.showNext = value; 
@@ -29,12 +31,17 @@ export class CategoriesComponent implements OnInit {
               this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => { 
                 this.showPrev = value; 
               });
+              
   }
 
   ngOnInit() {
-      this.pageTable = this.tableNavigationService.getFirstPage(this.categories);
+      this.requestService.getCategories(this.getCategoriesData.bind(this));   
   }
-  
+  getCategoriesData(){
+    this.categories = this.dataService.getCategories();
+    this.pageTable = this.tableNavigationService.getFirstPage(this.categories);
+    return this.pageTable;
+  }
   getPrev(): Object[] {
       this.pageTable = this.tableNavigationService.getPrev(this.categories);
       return this.pageTable;
@@ -45,7 +52,7 @@ export class CategoriesComponent implements OnInit {
       return this.pageTable;
   }
     
-  onClick (categorie) {
-    this.router.navigate(['home/:user', categorie]);
+  onClick (category) {
+    this.router.navigate(['home/:user', category]);
   }
 }

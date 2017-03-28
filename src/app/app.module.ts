@@ -18,6 +18,7 @@ import { GoogleSigninComponent } from './google-signin/google-signin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
+import { CategoryItemsComponent } from './category-items/category-items.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TableNavigationService } from './services/table-navigation.service';
     StartingPageComponent,
     GoogleSigninComponent,
     ProfileComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    CategoryItemsComponent
   ],
   imports: [
     BrowserModule,

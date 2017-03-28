@@ -28,9 +28,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemsAmount = this.categories.reduce(function (sum, curr) {
-      return {amountOfItems: sum.amountOfItems + curr.amountOfItems};
-    })       
+     
   }
 
   showChange() {
