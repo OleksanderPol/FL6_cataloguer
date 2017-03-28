@@ -62,3 +62,48 @@ textarea#message {
     padding: 7px;
 }
 
+/*
+* — Profile Navigation —
+*/
+.profile-nav {
+    margin-top: 14px;
+}
+.profile-nav-item {
+    height: 0;
+    margin-bottom: 14px;
+    padding-bottom: 30%;
+    width: 50%;
+    display: inline-block;
+    float: left;
+    position: relative;
+}
+.profile-nav-item div {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 300;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 7px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.profile-nav-item:nth-of-type(2n) div {
+    left: 7px;
+    right: 0;
+}
+.profile-nav-item div.active {
+    font-weight: 400;
+}
+.profile-nav-item div img {
+    margin-top: 3px;
+    height: 44px;
+    padding: 4px;
+}
+.profile-nav-item div span {
+    padding: 4px;
+}

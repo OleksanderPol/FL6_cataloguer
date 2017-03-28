@@ -2,32 +2,33 @@
 
 <div class="row container content">
 
-    <div class="col s12 l4 hide-on-med-and-down profile white-text">
+  <div class="col s12 l4 hide-on-med-and-down profile white-text">
 
-        <!--   Profile   --><app-profile [(user)]="user" [(categories)]="categories" *ngIf="isCategoryAvaileble"></app-profile>
+    <!--   Profile   -->
+    <app-profile [(user)]="user" [(categories)]="categories" *ngIf="isCategoryAvaileble"></app-profile>
 
-        <!--  Profile Navigation -->
-        <div class="profile-nav">
-            <div class="profile-nav-item">
-                <div class="yellow accent-3 active">
-                    <img src="/assets/icons/category-icon-active.svg">
-                    <span class="grey-text text-darken-3">CATEGORIES</span>
-                </div>
-            </div>
-            <div class="profile-nav-item">
-                <div class="grey darken-3">
-                    <img src="/assets/icons/item-icon.svg">
-                    <span class="">ITEMS</span>
-                </div>
-            </div>
+    <!--  Profile Navigation -->
+    <!--<div class="profile-nav">
+      <div class="profile-nav-item">
+        <div class="yellow accent-3 active">
+          <img src="/assets/icons/category-icon-active.svg">
+          <span class="grey-text text-darken-3">CATEGORIES</span>
         </div>
-        <!--  //Profile Navigation -->
-    </div>
+      </div>
+      <div class="profile-nav-item">
+        <div class="grey darken-3">
+          <img src="/assets/icons/item-icon.svg">
+          <span class="">ITEMS</span>
+        </div>
+      </div>
+    </div>-->
+    <!--  //Profile Navigation -->
+  </div>
 
-    <!-- Table section -->
-    <div class="col s12 l8">
-         <router-outlet> 
-         </router-outlet>         
-    </div>
+  <!-- Table section -->
+  <div class="col s12 l8">
+    <router-outlet>
+    </router-outlet>
+  </div>
 
 </div>

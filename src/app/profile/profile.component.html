@@ -1,32 +1,32 @@
 <div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger&&!infoTrigger">
 
-    <div class="profile-edit-btn hidden" *ngIf="editButton">
-        <a class="btn-floating btn-large yellow accent-3" (click)="showInfo()">
-            <i class="large material-icons grey-text text-darken-3">info_outline</i>
-        </a>
-    </div>
+  <div class="profile-edit-btn hidden" *ngIf="editButton">
+    <a class="btn-floating btn-large yellow accent-3" (click)="showInfo()">
+      <i class="large material-icons grey-text text-darken-3">info_outline</i>
+    </a>
+  </div>
 
 
-    <div class="prof-img grey darken-3">
-        <img class="responsive-img" [src]="user.photoUrl" onError="this.src='/assets/img/mock.jpg'">
-    </div>
+  <div class="prof-img grey darken-3">
+    <img class="responsive-img" [src]="user.photoUrl" onError="this.src='/assets/img/mock.jpg'">
+  </div>
 
-    <div class="profile-details grey darken-3">
-        <div class="profile-wrapper">
-            <div class="profile-icon">
-                <img src="/assets/icons/user-icon.svg">
-            </div>
-            <div class="profile-name">
-                <span class="user-name">{{user.username | uppercase}}</span>
-                <br>
-            </div>
-            <div class="user-stats">
-                <span>Collections:</span><span class="yellow-text text-accent-3"><b> {{categories.length}}</b></span>
-                <br>
-                <span>Items:</span><span class="yellow-text text-accent-3"><b> {{itemsAmount.amountOfItems}}</b></span>
-            </div>
-        </div>
+  <div class="profile-details grey darken-3">
+    <div class="profile-wrapper">
+      <div class="profile-icon">
+        <img src="/assets/icons/user-icon.svg">
+      </div>
+      <div class="profile-name">
+        <span class="user-name">{{user.username | uppercase}}</span>
+        <br>
+      </div>
+      <div class="user-stats">
+        <span>Collections:</span><span class="yellow-text text-accent-3"><b> {{categories.length}}</b></span>
+        <br>
+        <span>Items:</span><span class="yellow-text text-accent-3"><b> {{itemsAmount.amountOfItems}}</b></span>
+      </div>
     </div>
+  </div>
 
 </div>
 
@@ -60,12 +60,27 @@
       <label for="message" class="active">Info</label>
     </div>
     <div class="center-align">
-      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid" (click)="changeInfo()">Change Data
+      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid"
+        (click)="changeInfo()">Change Data
       </button>
       <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showUser()">Close
       </button>
     </div>
-    
+
   </form>
 </div>
 
+<div class="profile-nav">
+  <div class="profile-nav-item">
+    <div class="yellow accent-3 active">
+      <img src="/assets/icons/category-icon-active.svg">
+      <span class="grey-text text-darken-3">CATEGORIES</span>
+    </div>
+  </div>
+  <div class="profile-nav-item">
+    <div class="grey darken-3">
+      <img src="/assets/icons/item-icon.svg">
+      <span class="">ITEMS</span>
+    </div>
+  </div>
+</div>
