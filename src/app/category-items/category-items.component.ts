@@ -7,6 +7,9 @@ import { RequestService } from '../services/request.service';
 import { MaterializeAction } from 'angular2-materialize';
 import {Observable} from 'rxjs/Observable';
 
+import { SearchPipe } from '../search/search.pipe';
+import { FilterService } from '../services/filter.service';
+
 @Component({
   selector: 'app-category-items',
   templateUrl: './category-items.component.html',
@@ -21,12 +24,14 @@ export class CategoryItemsComponent implements OnInit {
   public items: Object[];
   public category: string;
   modalActions = new EventEmitter<string|MaterializeAction>();
+  private searchPipe = new SearchPipe();
     
 
   constructor(private router: Router, 
               private tableNavigationService: TableNavigationService,
               private requestService: RequestService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private filterService: FilterService) {
               
               this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
                 this.showNext = value; 
@@ -35,6 +40,11 @@ export class CategoryItemsComponent implements OnInit {
               this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => { 
                 this.showPrev = value; 
               });
+
+              filterService.searchFilter$.subscribe(searchInput => {
+                let filteredCategories = this.searchPipe.transform(this.items, searchInput);
+                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+              })
               
   }
 
