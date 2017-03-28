@@ -19,10 +19,14 @@ import { routing } from './app.routing';
 import { StartingPageComponent } from './starting-page/starting-page.component';
 import { GoogleSigninComponent } from './google-signin/google-signin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { TableNavigationService } from './services/table-navigation.service';
+import { CategoryItemsComponent } from './category-items/category-items.component';
+
 import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search/search.pipe';
-import { NavigationComponent } from './navigation/navigation.component';
 
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +37,13 @@ import { NavigationComponent } from './navigation/navigation.component';
     StartingPageComponent,
     GoogleSigninComponent,
     ProfileComponent,
+    CategoriesComponent,
+
     SearchComponent,
     SearchPipe,
-    NavigationComponent
+    NavigationComponent,
+
+    CategoryItemsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,8 @@ import { NavigationComponent } from './navigation/navigation.component';
         //  storageType: 'localStorage'
             storageType: 'sessionStorage'})
   ],
-  providers: [ValidationService, RequestService, DataService, ItemsService],
+  providers: [ValidationService, RequestService, DataService, ItemsService, TableNavigationService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
