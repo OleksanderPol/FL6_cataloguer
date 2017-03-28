@@ -5,7 +5,7 @@ var schema = new Schema({
   owner: {
     type: String,
     required: true,
-    unique: true
+    default: "some man"
   },
   category: {
     type: String,
