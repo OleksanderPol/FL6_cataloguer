@@ -117,6 +117,47 @@ router.get('/categories', function(req, res, next) {
   });
 });
 
+router.post('/categories', function(req, res, next) {
+  var category = new Category({
+    users: [req.user._id],
+    name: req.body.name
+    })
+  category.save(function(err) {
+    if (err) {
+      return next(err);
+    } else {
+      return next(200);
+    }
+  })
+});
+
+router.delete('/categories/:category', function(req, res, next){
+  Category.findOne({users: {}})
+});
+
+router.post('/:category/items', function(req, res, next) {
+
+  Item.findOne({category: req.params.category}, function(err, item) {
+    if(err) {
+      return next(err);
+    } else {
+      item.items.push({
+        name: req.body.name,
+        fotoUrl: req.body.fotoUrl,
+        info: req.body.info
+      });
+      item.save(function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          return next(200);
+        }
+      })
+    }
+  })
+  
+});
+
 router.get('/:category/items', function(req, res, next) {
   var categoryName = req.params.category;
 
@@ -124,7 +165,7 @@ router.get('/:category/items', function(req, res, next) {
     return next(401);
   }
 
-  Item.findOne({category: categoryName}, function(err, itemCell) {
+  Item.findOne({category: categoryName, owner: req.user._id}, function(err, itemCell) {
     if (err) {
       return next(err);
     }
@@ -133,6 +174,19 @@ router.get('/:category/items', function(req, res, next) {
   });
 
 });
+
+router.get('/items', function(req, res, next) {
+  // Item.find(function)
+  Item.find()
+    .populate('items', null, { name: { $in: [/^AC/] } } )
+    .sort({'name': 1})
+    .exec(function (err, items) {
+        // items = items.filter(function(user){
+        //     return user.roles.length;
+        // });
+        console.log(items);
+    });
+})
 
 router.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));

@@ -5,7 +5,7 @@ var schema = new Schema({
   owner: {
     type: String,
     required: true,
-    unique: true
+    default: "some man"
   },
   category: {
     type: String,
@@ -25,6 +25,13 @@ var schema = new Schema({
     created: {
       type: Date,
       default: Date.now
+    },
+    rating: {
+      type: Number,
+      default: 0
+    },
+    borrowedTo: {
+      type: String
     }
   }]
 });

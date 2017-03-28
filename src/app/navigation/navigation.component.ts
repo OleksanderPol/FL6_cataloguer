@@ -21,6 +21,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.update.emit('');
+    this.getItems();
   }
 
   signOutUser():void {
@@ -30,17 +31,30 @@ export class NavigationComponent implements OnInit {
 
   getItems(): void {
     this.itemsService
-        .getItems('/Music/items')
-        .then(items => this.items = items); //do everithyng we need here
+        .getItems('/Books/items')
+        .then(items => {
+          this.items = items;
+          console.log(this.items);
+        });
   }
+
   onChange(value: String): void {
-    if (value === 'alphabet') {
-      this.itemsService
-          .getByAlphabet('/Music/items')
-          .then(items => {
-            this.items = items;
-            console.log(this.items);
-          }); //do everithyng we need here
+    switch (value) {
+      case "alphabet":
+        console.log(this.itemsService.getByAlphabet());
+        break;
+
+      case "date+":
+        console.log(this.itemsService.getByDate('+'));
+        break;
+
+      case "date-":
+        console.log(this.itemsService.getByDate('-'));
+        break;
+
+      case "rate":
+        console.log(this.itemsService.getByRating());
+        break;
     }
   }
 }
