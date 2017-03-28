@@ -15,14 +15,15 @@
                     </div>
                     <div *ngIf="shown === 'filter'">
                       <select class="nav-select" #selected (change)="onChange(selected.value)">
-                        <option value="" disabled selected>Select a sorting method</option>
-                        <option value="date">Date</option>
+                        <option disabled selected>Click here to sort items</option>
+                        <option value="date-">Date: from old to new</option>
                         <option value="rate">Rate</option>
                         <option value="alphabet">Alphabet</option>
+                        <option value="date+">Date: from new to old</option>
                       </select>
                     </div>
                     <div *ngIf="shown === 'adds'">
-                      <button class="btn waves-effect waves-light" (click)="getItems()">Add category
+                      <button class="btn waves-effect waves-light nav-select" (click)="getItems()">Add category
                       </button>
                     </div>
 
@@ -34,8 +35,16 @@
                             <i class="material-icons grey-text lighten-2">search</i>
                           </label>
                         </li>
-                        <li (click)="shown = 'filter'"><i class="material-icons grey-text lighten-2">swap_vert</i></li>
-                        <li (click)="shown = 'adds'"><i class="material-icons grey-text lighten-2">playlist_add</i></li>
+                        <li (click)="shown = 'filter'">
+                          <i class="material-icons grey-text lighten-2">swap_vert</i>
+                        </li>
+                        <li (click)="shown = 'adds'">
+                          <i class="material-icons grey-text lighten-2">playlist_add</i>
+                        </li>
+                        <li (click)="signOutUser()" class="sign-out-btn">
+                          <i class="material-icons">power_settings_new</i>
+                        </li>
+
                     </ul>
                 </div>
                 <!-- //Navigation tag -->

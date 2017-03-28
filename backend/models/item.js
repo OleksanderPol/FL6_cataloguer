@@ -27,7 +27,8 @@ var schema = new Schema({
       default: Date.now
     },
     rating: {
-      type: String
+      type: Number,
+      default: 0
     },
     borrowedTo: {
       type: String
