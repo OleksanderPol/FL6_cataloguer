@@ -18,9 +18,8 @@
     position: relative;
 }
 .profile-form {
-    height: 0px;
     padding: 7px;
-    padding-bottom: 100%;
+    padding-bottom: 15px;
 }
 textarea#message {
     padding: 1rem 0rem 0rem 0rem;
@@ -49,8 +48,16 @@ textarea#message {
     flex: 0 1;
     width: 70%;
 }
-.user-stats {
+.user-stats, .user-stats-change {
     font-size: 17px;
     line-height: 18px;
     font-weight: 100;
+}
+.change-info-button {
+    margin: 10px;
+    margin-bottom: 2px;
+}
+.info {
+    height: inherit;
+    padding: 7px;
 }

@@ -1,8 +1,8 @@
-<div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger">
+<div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger&&!infoTrigger">
 
     <div class="profile-edit-btn hidden" *ngIf="editButton">
-        <a class="btn-floating btn-large yellow accent-3" (click)="showChange()">
-            <i class="large material-icons grey-text text-darken-3">mode_edit</i>
+        <a class="btn-floating btn-large yellow accent-3" (click)="showInfo()">
+            <i class="large material-icons grey-text text-darken-3">info_outline</i>
         </a>
     </div>
 
@@ -30,24 +30,41 @@
 
 </div>
 
+<div *ngIf="infoTrigger">
+  <div class="profile-details info grey darken-3">
+    <div class="user-stats-change">
+      <span>My email: </span><span class="yellow-text text-accent-3">{{user.email}}</span>
+      <br>
+      <span>About me: </span><span class="yellow-text text-accent-3">{{user.info}}</span>
+      <br>
+      <a class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
+        <i class="large material-icons grey-text text-darken-3">mode_edit</i>
+      </a>
+      <a class="btn-floating yellow accent-3 change-info-button" (click)="showUser()">
+        <i class="large material-icons grey-text text-darken-3">perm_identity</i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
 <div *ngIf="changeTrigger" class="change-user-data">
-    <form [formGroup]="infoForm" class="profile-form grey darken-3">
-        <div class="input-field">
-            <input id="email" type="email" formControlName="email" value={{user.email}}>
-            <label for="email" class="active">Email</label>
-        </div>
+  <form [formGroup]="infoForm" class="profile-form grey darken-3">
+    <div class="input-field">
+      <input id="email" type="email" formControlName="email" value={{user.email}}>
+      <label for="email" class="active">Email</label>
+    </div>
 
-
-        <div class="input-field">
-            <textarea id="message" class="materialize-textarea" length="150" formControlName="info" value={{user.info}}></textarea>
-            <label for="message" class="active">Info</label>
-            <div class="center-align">
-                <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid" (click)="changeInfo()">Change Data
-                </button>
-                <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showChange()">Close
-                </button>
-            </div>
-        </div>
-
-    </form>
+    <div class="input-field">
+      <textarea id="message" class="materialize-textarea" formControlName="info" value={{user.info}}></textarea>
+      <label for="message" class="active">Info</label>
+    </div>
+    <div class="center-align">
+      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid" (click)="changeInfo()">Change Data
+      </button>
+      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showUser()">Close
+      </button>
+    </div>
+    
+  </form>
 </div>
