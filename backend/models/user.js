@@ -30,6 +30,12 @@ var schema = new Schema({
   },
   photoUrl: {
     type: String
+  },
+  telephone: {
+    type: String
+  },
+  city: {
+    type: String
   }
 });
 

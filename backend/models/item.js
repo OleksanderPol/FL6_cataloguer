@@ -25,6 +25,12 @@ var schema = new Schema({
     created: {
       type: Date,
       default: Date.now
+    },
+    rating: {
+      type: String
+    },
+    borrowedTo: {
+      type: String
     }
   }]
 });
