@@ -10,7 +10,7 @@
                 <div class="col s8">
 
                     <div *ngIf="shown === 'search'" class="input-field">
-                      <input id="search" type="search" required placeholder="Type here to search" #input (input)="update.emit(input.value)">
+                      <input id="search" type="search" placeholder="Type here to search" #input (input)="update.emit(input.value)">
 
                     </div>
                     <div *ngIf="shown === 'filter'">
