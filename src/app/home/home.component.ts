@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     this.items = JSON.parse(items);
   }
 
-  testFunc(value){
+  inputSearchValue(value){
     this.filterService.addSearchPhrase(value);
   }
 }
