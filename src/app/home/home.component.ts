@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { MaterializeDirective } from "angular2-materialize";
 import { RequestService } from '../services/request.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import { SearchComponent } from '../search/search.component';
+import { SearchPipe } from '../search/search.pipe';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +18,8 @@ export class HomeComponent implements OnInit {
   public user: Object;
   public categories: Object[];
   public items: Object[];
+  public searchFilter: string;
+  public isCategoryAvaileble: boolean = false;
 
   constructor(private dataService: DataService, private requestService: RequestService) {
   }
@@ -22,12 +27,12 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.requestService.getCategories(this.getCategoriesData.bind(this));
     this.user = this.dataService.getUser();
-    console.log(this.user);
   }
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
-    console.log(this.categories);
+
+    this.isCategoryAvaileble = true;
   }
 
   showItems(target){
@@ -36,8 +41,5 @@ export class HomeComponent implements OnInit {
 
   getItemsData(items: string){
     this.items = JSON.parse(items);
-    console.log(this.items);
   }
-
 }
-
