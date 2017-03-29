@@ -11,13 +11,19 @@ import { ItemsService } from '../services/items.service';
 })
 export class NavigationComponent implements OnInit {
   @Output() update = new EventEmitter();
-  private items: Object[];
+    private items: Object[];
+    private locationLength: number;
 
   constructor(
     private RequestService: RequestService,
     private router: Router,
     private itemsService: ItemsService
-  ) { }
+  ) {
+    router.events.subscribe((val) => {
+      this.locationLength = val.url.split('/').length;
+      console.log(this.locationLength);
+    });
+  }
 
   ngOnInit() {
     this.update.emit('');
@@ -38,7 +44,7 @@ export class NavigationComponent implements OnInit {
         });
   }
 
-  onChange(value: String): void {
+  onChangeItems(value: String): void {
     switch (value) {
       case "alphabet":
         console.log(this.itemsService.getByAlphabet());

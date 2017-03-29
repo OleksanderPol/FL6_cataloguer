@@ -178,7 +178,7 @@ router.post('/:category/items', function(req, res, next) {
       })
     }
   })
-  
+
 });
 
 router.get('/:category/items', function(req, res, next) {
@@ -225,7 +225,7 @@ router.get('/items', function(req, res, next) {
   })
 })
 
-routes.get('/items/:id', function(req, res, next) {
+router.get('/items/:id', function(req, res, next) {
   Item.findOne({"items._id": req.params.id}, function(err, item) {
     if (err) {
       return next(err);
