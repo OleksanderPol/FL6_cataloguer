@@ -106,9 +106,18 @@ router.get('/categories', function(req, res, next) {
         return next(err);
       }
       //mongoose document does not allow adding props, we need to convert it to plain obj firstly.
+      
       var result = categories.map(function(category, index) {
         category = category.toJSON();
-        category.amountOfItems = itemCell[index] ? itemCell[index].items.length : 0;
+        // category.amountOfItems = 0;
+        itemCell.forEach((item)=>{
+          if (item.category == category.name) {
+            category.amountOfItems = item ? item.items.length : 0;
+          } else {
+            category.amountOfItems = 0;
+          }
+          })
+        // category.amountOfItems = itemCell[index] ? itemCell[index].items.length : 0;
         return category;
       });
 
@@ -189,7 +198,7 @@ router.get('/:category/items', function(req, res, next) {
   }
 
   if (categoryName == "allcategories") {
-    Item.find({owner: req.iser._id}, function(err, items) {
+    Item.find({owner: req.user._id}, function(err, items) {
       if (err) {
         return next(err);
       } else {
@@ -212,10 +221,12 @@ router.get('/:category/items', function(req, res, next) {
 
 });
 
+
+
 router.get('/items', function(req, res, next) {
   Item.find({"items.name": new RegExp(req.body.name, "i")}, function(err, items) {
     var result = [],
-        template = new RegExp(req.body.name, "i");
+        template = new RegExp(req.params.name, "i");
     items.forEach(function(elem) {
       elem.items.forEach(function(item) {
         if (template.test(item.name)) result.push(item);
@@ -225,7 +236,7 @@ router.get('/items', function(req, res, next) {
   })
 })
 
-routes.get('/items/:id', function(req, res, next) {
+router.get('/items/:id', function(req, res, next) {
   Item.findOne({"items._id": req.params.id}, function(err, item) {
     if (err) {
       return next(err);
@@ -239,6 +250,17 @@ routes.get('/items/:id', function(req, res, next) {
       });
     }
   })
+})
+
+router.delete('/items/:id', function(req, res, next){
+  Item.remove({"items._id": req.params.id},
+              function(error, removed) {
+                if (error) {
+                  return next(error);
+                } else {
+                  console.log(removed);
+                }
+              });
 })
 
 router.get('*', function(req, res) {
