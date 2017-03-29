@@ -110,10 +110,11 @@ export class RequestService {
           })
     }
 
-    itemsUser(id){
+    itemsUser(id, responseFunc){
         this.http
           .get(`items/${id}`)
           .subscribe(response => {
+              responseFunc(response.text());
               console.log(response.text())
           })
     }

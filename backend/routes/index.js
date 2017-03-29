@@ -241,7 +241,7 @@ router.get('/items/:id', function(req, res, next) {
     if (err) {
       return next(err);
     } else {
-      User.findById(items.owner, function(err, user) {
+      User.findById(item.owner, function(err, user) {
         if (err) {
           return next(err);
         } else {
