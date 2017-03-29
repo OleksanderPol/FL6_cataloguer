@@ -252,6 +252,23 @@ router.get('/items/:id', function(req, res, next) {
   })
 })
 
+router.put('/items/:id', function(req, res, next) {
+  Item.findOne({"items._id": req.params.id},
+                function(err, item) {
+                  for(var key in req.body) {
+                    item[prop] = req.body[prop];
+                  }
+                  item.save(function(err) {
+                    if (err) {
+                      next(err);
+                    } else {
+                      console.log('updated');
+                      res.json(send);
+                    }
+                  });
+                });
+});
+
 router.delete('/items/:id', function(req, res, next){
   Item.remove({"items._id": req.params.id},
               function(error, removed) {
