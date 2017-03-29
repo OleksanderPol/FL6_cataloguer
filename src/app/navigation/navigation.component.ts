@@ -11,23 +11,23 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-    private items: Object[];
-    private locationLength: number;
+  @Output() update = new EventEmitter();
+  private items: Object[];
+  private locationLength: number;
 
   constructor(
     private requestService: RequestService,
     private categoryService: CategoryService,
     private router: Router,
-    private itemsService: ItemsService
-  ) {
+    private itemsService: ItemsService) {
+
     router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
     });
-
   }
 
   ngOnInit() {
-
+    this.update.emit('');
   }
 
   onClick() {
