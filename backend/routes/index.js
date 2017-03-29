@@ -77,7 +77,7 @@ router.get('/home/:user', function(req, res) {
 
 
 router.put('/home/:user', function(req, res, next) {
-  User.findOne({ username: req.body.username }, (err, user)=>{
+  User.findOne({ username: req.body.username }, function(err, user) {
     user.email = req.body.email;
     user.info = req.body.info;
     user.save(function(err) {
@@ -132,7 +132,30 @@ router.post('/categories', function(req, res, next) {
 });
 
 router.delete('/categories/:category', function(req, res, next){
-  Category.findOne({users: {}})
+  Item.remove({owner: req.user._id, category: req.params.category},
+              function(error, removed) {
+                if (error) {
+                  return next(error);
+                } else {
+                  console.log(removed);
+                }
+              });
+  Category.findOne({name: req.params.category}, function(err, category) {
+    var userIndex = category.users.indexOf(req.user._id);
+    if (userIndex > -1) {
+      category.users.splice(userIndex, 1);
+      category.save(function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          return next(200);
+        }
+      })
+    } else {
+      console.log("user in category not found");
+      return next(500);
+    }
+  })
 });
 
 router.post('/:category/items', function(req, res, next) {
@@ -176,16 +199,32 @@ router.get('/:category/items', function(req, res, next) {
 });
 
 router.get('/items', function(req, res, next) {
-  // Item.find(function)
-  Item.find()
-    .populate('items', null, { name: { $in: [/^AC/] } } )
-    .sort({'name': 1})
-    .exec(function (err, items) {
-        // items = items.filter(function(user){
-        //     return user.roles.length;
-        // });
-        console.log(items);
-    });
+  Item.find({"items.name": new RegExp(req.body.name, "i")}, function(err, items) {
+    var result = [],
+        template = new RegExp(req.body.name, "i");
+    items.forEach(function(elem) {
+      elem.items.forEach(function(item) {
+        if (template.test(item.name)) result.push(item);
+      })
+    })
+    res.json(result);
+  })
+})
+
+routes.get('/items/:id', function(req, res, next) {
+  Item.findOne({"items._id": req.params.id}, function(err, item) {
+    if (err) {
+      return next(err);
+    } else {
+      User.findById(items.owner, function(err, user) {
+        if (err) {
+          return next(err);
+        } else {
+          res.json(user);
+        }
+      });
+    }
+  })
 })
 
 router.get('*', function(req, res) {
