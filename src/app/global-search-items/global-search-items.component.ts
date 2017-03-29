@@ -46,6 +46,7 @@ export class GlobalSearchItemsComponent implements OnInit {
     filterService.searchFilter$.subscribe(searchInput => {
       let filteredCategories = this.searchPipe.transform(this.items, searchInput);
       this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+      return this.pageTable;
     });
 
     router.events.subscribe(event => {
@@ -53,6 +54,7 @@ export class GlobalSearchItemsComponent implements OnInit {
         this.items = JSON.parse(this.dataService.getSearch());
         console.log(this.items);
         this.pageTable = this.tableNavigationService.getFirstPage(this.items);
+        return this.pageTable;
       }
     })
 
