@@ -28,6 +28,8 @@ import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,11 @@ import { NavigationComponent } from './navigation/navigation.component';
     SearchPipe,
     NavigationComponent,
 
-    CategoryItemsComponent
+    CategoryItemsComponent,
+
+    GlobalSearchComponent,
+
+    GlobalSearchItemsComponent
   ],
   imports: [
     BrowserModule,

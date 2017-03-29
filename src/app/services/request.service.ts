@@ -98,4 +98,15 @@ export class RequestService {
                 console.log(this.responseStatus);
             })
     }
+    searchItems(searchInput, responseFunc) {
+        this.http
+          .get(`items/${searchInput}`)
+          .subscribe(response => {
+              console.log(response.text());
+              responseFunc(response.text());
+          },
+          error => {
+              console.log(error);
+          })
+    }
 }

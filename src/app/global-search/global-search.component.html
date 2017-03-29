@@ -1,0 +1,6 @@
+<div>
+  <form>
+  <input type="text" #input placeholder="Search items of all users" required>
+  <button type="button" (click)="search(input.value)" [disabled]="input.value.length === 0">Search</button>
+  </form>
+</div>
