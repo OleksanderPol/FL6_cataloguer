@@ -53,9 +53,8 @@ export class CategoryItemsComponent implements OnInit {
     this.category = params['category'];
     });
     this.requestService.getItems(this.category, this.getItemsData.bind(this));
-    // this.itemsService
-    //     .getItems(`${this.category}/items`)
-    //     .then(result => this.getItemsData());
+    this.itemsService
+        .getItems(`${this.category}/items`)
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
@@ -64,7 +63,6 @@ export class CategoryItemsComponent implements OnInit {
 
   refresh() {
     this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
-    console.log('refresh');
   }
 
   getItemsData(items: string){

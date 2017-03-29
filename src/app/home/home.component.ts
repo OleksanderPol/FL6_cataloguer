@@ -8,7 +8,6 @@ import 'rxjs/Rx';
 import { SearchComponent } from '../search/search.component';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
-import { CategoriesComponent } from '../categories/categories.component';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +15,6 @@ import { CategoriesComponent } from '../categories/categories.component';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  // @ViewChild(CategoriesComponent)
-  // private categoriesComponent: CategoriesComponent;
   public user: Object;
   public categories: Object[];
   public items: Object[];
@@ -50,12 +47,4 @@ export class HomeComponent implements OnInit {
   inputSearchValue(value){
     this.filterService.addSearchPhrase(value);
   }
-
-  // abs() {
-  //   this.categoriesComponent.refresh();
-  // }
-
-  // ngAfterViewInit() {
-  //   this.categoriesComponent.refresh();
-  // }
 }

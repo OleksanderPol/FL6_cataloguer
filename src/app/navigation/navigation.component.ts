@@ -47,18 +47,22 @@ export class NavigationComponent implements OnInit {
     switch (value) {
       case "alphabet":
         this.itemsService.sortByAlphabet();
+        this.onItemClick();
         break;
 
       case "date+":
         this.itemsService.sortByDate('+');
+        this.onItemClick();
         break;
 
       case "date-":
         this.itemsService.sortByDate('-');
+        this.onItemClick();
         break;
 
       case "rate":
         this.itemsService.sortByRating();
+        this.onItemClick();
         break;
     }
   }
