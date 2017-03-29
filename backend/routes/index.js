@@ -211,6 +211,22 @@ router.get('/items', function(req, res, next) {
   })
 })
 
+routes.get('/items/:id', function(req, res, next) {
+  Item.findOne({"items._id": req.params.id}, function(err, item) {
+    if (err) {
+      return next(err);
+    } else {
+      User.findById(items.owner, function(err, user) {
+        if (err) {
+          return next(err);
+        } else {
+          res.json(user);
+        }
+      });
+    }
+  })
+})
+
 router.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
