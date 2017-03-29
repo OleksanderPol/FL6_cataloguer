@@ -188,13 +188,27 @@ router.get('/:category/items', function(req, res, next) {
     return next(401);
   }
 
-  Item.findOne({category: categoryName, owner: req.user._id}, function(err, itemCell) {
-    if (err) {
-      return next(err);
-    }
+  if (categoryName == "allcategories") {
+    Item.find({owner: req.iser._id}, function(err, items) {
+      if (err) {
+        return next(err);
+      } else {
+        var userItems = items.reduce((first, second)=>{
+          return first.concat(second.items);
+        }, [])
+        res.json(userItems)
+      }
+    })
+  } else {
 
-    res.json(itemCell.items);
-  });
+    Item.findOne({category: categoryName, owner: req.user._id}, function(err, itemCell) {
+      if (err) {
+        return next(err);
+      }
+
+      res.json(itemCell.items);
+    });
+  }
 
 });
 
