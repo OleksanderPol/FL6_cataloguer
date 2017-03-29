@@ -201,6 +201,8 @@ router.get('/:category/items', function(req, res, next) {
     Item.find({owner: req.user._id}, function(err, items) {
       if (err) {
         return next(err);
+      } else if (items == []) {
+        res.json([]);
       } else {
         var userItems = items.reduce((first, second)=>{
           return first.concat(second.items);
@@ -213,9 +215,11 @@ router.get('/:category/items', function(req, res, next) {
     Item.findOne({category: categoryName, owner: req.user._id}, function(err, itemCell) {
       if (err) {
         return next(err);
+      } else if (itemCell == null) {
+        res.json([]);
+      } else {
+        res.json(itemCell.items);
       }
-
-      res.json(itemCell.items);
     });
   }
 
