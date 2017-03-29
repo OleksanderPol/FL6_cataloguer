@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
+import { CategoryService } from '../services/category.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private RequestService: RequestService,
+    private CategoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService
   ) {
@@ -47,20 +49,30 @@ export class NavigationComponent implements OnInit {
   onChangeItems(value: String): void {
     switch (value) {
       case "alphabet":
-        console.log(this.itemsService.getByAlphabet());
+        this.itemsService.sortByAlphabet();
         break;
 
       case "date+":
-        console.log(this.itemsService.getByDate('+'));
+        this.itemsService.sortByDate('+');
         break;
 
       case "date-":
-        console.log(this.itemsService.getByDate('-'));
+        this.itemsService.sortByDate('-');
         break;
 
       case "rate":
-        console.log(this.itemsService.getByRating());
+        this.itemsService.sortByRating();
         break;
+    }
+  }
+
+  onChangeCategories(value: String): void {
+    if (value === 'alphabet') {
+      this.CategoryService.sortByAlphabet();
+    }
+
+    if (value === 'amount') {
+      this.CategoryService.sortByAlphabet();
     }
   }
 }

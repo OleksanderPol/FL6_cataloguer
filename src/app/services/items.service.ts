@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Item } from '../item.model';
+import { Item } from '../app.model';
 import { Headers, Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -21,26 +21,26 @@ export class ItemsService {
                .catch(this.handleError);
   }
 
-  getByAlphabet(): Item[] {
-    return this.items.sort((item: Item, nextItem: Item) => {
+  sortByAlphabet(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
       return item.name.localeCompare(nextItem.name);
     });
   }
 
-  getByRating(): Item[] {
-    return this.items.sort((item: Item, nextItem: Item) => {
+  sortByRating(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
       return nextItem.rating - item.rating;
     });
   }
 
-  getByDate(indicator: string): Item[] {
+  sortByDate(indicator: string): void {
     if (indicator === '+') {
-      return this.items.sort((item: Item, nextItem: Item) => {
+      this.items.sort((item: Item, nextItem: Item) => {
         return new Date(nextItem.created).getTime() - new Date(item.created).getTime();
       });
     }
 
-    return this.items.sort((item: Item, nextItem: Item) => {
+    this.items.sort((item: Item, nextItem: Item) => {
       return new Date(item.created).getTime() - new Date(nextItem.created).getTime();
     });
   }
@@ -49,5 +49,4 @@ export class ItemsService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
-
 }
