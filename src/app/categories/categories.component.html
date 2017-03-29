@@ -1,4 +1,4 @@
-<div class="row catalogue">
+<div class="row catalogue" *ngIf="ifCategories">
 
     <div class="col s12 m4" *ngIf="showPrev">
         <div class="card z-depth-0 yellow accent-1" (click)="getPrev()">

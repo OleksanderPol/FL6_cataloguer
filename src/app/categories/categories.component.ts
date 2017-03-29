@@ -6,6 +6,8 @@ import { TableNavigationService } from '../services/table-navigation.service';
 import {Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
+import { SearchPipe } from '../search/search.pipe';
+import { FilterService } from '../services/filter.service';
 
 @Component({
   selector: 'app-categories',
@@ -20,12 +22,15 @@ export class CategoriesComponent implements OnInit {
   private showNext = true;
   private showPrev = false;
 
-    
+  private search: string = '';
+  private ifCategories: boolean = false;
+  private searchPipe = new SearchPipe();
 
   constructor(private router: Router, 
               private tableNavigationService: TableNavigationService,
               private dataService: DataService,
-              private requestService: RequestService) {
+              private requestService: RequestService,
+              private filterService: FilterService) {
               
               this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
                 this.showNext = value; 
@@ -33,7 +38,12 @@ export class CategoriesComponent implements OnInit {
       
               this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => { 
                 this.showPrev = value; 
-              });              
+              });     
+
+              filterService.searchFilter$.subscribe(searchInput => {
+                let filteredCategories = this.searchPipe.transform(this.categories, searchInput);
+                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+              })         
   }
 
   ngOnInit() {
@@ -42,6 +52,7 @@ export class CategoriesComponent implements OnInit {
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
     this.pageTable = this.tableNavigationService.getFirstPage(this.categories);
+    this.ifCategories = true;
     return this.pageTable;
   }
 

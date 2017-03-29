@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
@@ -10,6 +10,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
+  @Output() update = new EventEmitter();
   private items: Object[];
 
   constructor(
@@ -19,6 +20,7 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.update.emit('');
     this.getItems();
   }
 

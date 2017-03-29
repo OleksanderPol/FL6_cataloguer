@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild, Output } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { MaterializeDirective } from "angular2-materialize";
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { SearchComponent } from '../search/search.component';
 import { SearchPipe } from '../search/search.pipe';
+import { FilterService } from '../services/filter.service';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +15,15 @@ import { SearchPipe } from '../search/search.pipe';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
   public user: Object;
   public categories: Object[];
   public items: Object[];
   public searchFilter: string;
   public isCategoryAvaileble: boolean = false;
 
-  constructor(private dataService: DataService, private requestService: RequestService) {
-  }
+  constructor(private dataService: DataService, 
+              private requestService: RequestService, 
+              private filterService: FilterService) {}
 
   ngOnInit() {
     this.requestService.getCategories(this.getCategoriesData.bind(this));
@@ -41,5 +42,9 @@ export class HomeComponent implements OnInit {
 
   getItemsData(items: string){
     this.items = JSON.parse(items);
+  }
+
+  inputSearchValue(value){
+    this.filterService.addSearchPhrase(value);
   }
 }
