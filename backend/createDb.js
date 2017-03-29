@@ -127,3 +127,13 @@ var User = require('./models/user').User,
 //       });
 //     }
 //   })
+Item.find({owner: '58d81859a0b90913b059d75c'}, function(err, items) {
+  if (err) {
+    console.log(err);
+  } else {
+    var rez = items.reduce((first, second)=>{
+      return first.concat(second.items);
+    }, [])
+    console.log(rez)
+  }
+})
