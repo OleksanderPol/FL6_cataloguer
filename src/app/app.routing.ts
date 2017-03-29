@@ -18,7 +18,7 @@ const appRoutes: Routes = [
               component: CategoryItemsComponent
           },
           {
-              path: 'items/:search',
+              path: 'items/search/:search',
               component: GlobalSearchItemsComponent
           }
       ]

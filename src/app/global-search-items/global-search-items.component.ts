@@ -77,8 +77,9 @@ export class GlobalSearchItemsComponent implements OnInit {
     return this.pageTable;
   }
 
-  openModal() {
-    this.modalActions.emit({ action: "modal", params: ['open'] });
+  openModal(id) {
+    // this.modalActions.emit({ action: "modal", params: ['open'] });
+    this.requestService.itemsUser(id);
   }
   closeModal() {
     this.modalActions.emit({ action: "modal", params: ['close'] });

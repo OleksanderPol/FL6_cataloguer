@@ -26,6 +26,6 @@ export class GlobalSearchComponent implements OnInit {
   }
   getItems(response){
     this.dataService.storeSearch(response);
-    this.router.navigate([`home/:user/items`, this.searchValue]);
+    this.router.navigate([`home/:user/items/search`, this.searchValue]);
   }
 }

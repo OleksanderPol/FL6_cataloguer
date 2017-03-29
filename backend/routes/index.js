@@ -223,7 +223,7 @@ router.get('/:category/items', function(req, res, next) {
 
 
 
-router.get('/items/:search', function(req, res, next) {
+router.get('/items/search/:search', function(req, res, next) {
   Item.find({"items.name": new RegExp(req.params.search, "i")}, function(err, items) {
     var result = [],
         template = new RegExp(req.params.search, "i");

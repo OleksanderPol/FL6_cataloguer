@@ -100,13 +100,21 @@ export class RequestService {
     }
     searchItems(searchInput, responseFunc) {
         this.http
-          .get(`items/${searchInput}`)
+          .get(`items/search/${searchInput}`)
           .subscribe(response => {
               console.log(response.text());
               responseFunc(response.text());
           },
           error => {
               console.log(error);
+          })
+    }
+
+    itemsUser(id){
+        this.http
+          .get(`items/${id}`)
+          .subscribe(response => {
+              console.log(response.text())
           })
     }
 }
