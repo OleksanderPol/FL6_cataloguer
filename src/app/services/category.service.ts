@@ -1,19 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Category } from '../app.model';
-
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CategoryService {
-  private categories: Category[];
+  public categories: Category[];
+  private subject = new Subject<any>();
 
   constructor(
     private http: Http
   ) { }
 
-  ngOnInit() {
+  newEvent(event) {
+    this.subject.next(event);
+  }
 
+  get events$() {
+    return this.subject.asObservable();
+  }
+
+  getCategories(): Category[] {
+    console.log('in service');
+    return this.categories;
   }
 
   getHttpCategories(categoriesUrl): Promise<Category[]> {
@@ -33,7 +43,7 @@ export class CategoryService {
 
   sortByAmountOfItems(): void {
     this.categories.sort((cat: Category, nextCat: Category) => {
-      return cat.amountOfItems - nextCat.amountOfItems;
+      return nextCat.amountOfItems - cat.amountOfItems;
     });
   }
 

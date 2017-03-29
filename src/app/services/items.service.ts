@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../app.model';
 import { Headers, Http, Response } from '@angular/http';
-
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ItemsService {
-  private items: Item[];
+  public items: Item[];
+  private subject = new Subject<string>();
 
   constructor(
     private http: Http
   ) { }
+
+  newEvent(event) {
+    this.subject.next(event);
+  }
+
+  get events$() {
+    return this.subject.asObservable();
+  }
 
   getItems(itemsUrl): Promise<Item[]> {
     return this.http.get(itemsUrl)

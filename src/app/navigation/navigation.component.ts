@@ -11,39 +11,36 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-  @Output() update = new EventEmitter();
     private items: Object[];
     private locationLength: number;
 
   constructor(
-    private RequestService: RequestService,
-    private CategoryService: CategoryService,
+    private requestService: RequestService,
+    private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService
   ) {
     router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
-      console.log(this.locationLength);
     });
+
   }
 
   ngOnInit() {
-    this.update.emit('');
-    this.getItems();
+
+  }
+
+  onClick() {
+    this.categoryService.newEvent('refreshCategories');
+  }
+
+  onItemClick() {
+    this.itemsService.newEvent('refreshItems');
   }
 
   signOutUser():void {
-    this.RequestService.signOut();
+    this.requestService.signOut();
     this.router.navigate(['/']);
-  }
-
-  getItems(): void {
-    this.itemsService
-        .getItems('/Books/items')
-        .then(items => {
-          this.items = items;
-          console.log(this.items);
-        });
   }
 
   onChangeItems(value: String): void {
@@ -68,11 +65,13 @@ export class NavigationComponent implements OnInit {
 
   onChangeCategories(value: String): void {
     if (value === 'alphabet') {
-      this.CategoryService.sortByAlphabet();
+      this.categoryService.sortByAlphabet();
+      this.onClick();
     }
 
     if (value === 'amount') {
-      this.CategoryService.sortByAlphabet();
+      this.categoryService.sortByAmountOfItems();
+      this.onClick();
     }
   }
 }

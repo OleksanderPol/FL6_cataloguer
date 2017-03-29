@@ -9,6 +9,7 @@ import {Observable} from 'rxjs/Observable';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
+import { ItemsService } from '../services/items.service';
 
 @Component({
   selector: 'app-category-items',
@@ -16,7 +17,6 @@ import { FilterService } from '../services/filter.service';
   styleUrls: ['./category-items.component.css']
 })
 export class CategoryItemsComponent implements OnInit {
-
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -25,57 +25,69 @@ export class CategoryItemsComponent implements OnInit {
   public category: string;
   modalActions = new EventEmitter<string|MaterializeAction>();
   private searchPipe = new SearchPipe();
-    
 
-  constructor(private router: Router, 
-              private tableNavigationService: TableNavigationService,
-              private requestService: RequestService,
-              private activatedRoute: ActivatedRoute,
-              private filterService: FilterService) {
-              
-              this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
-                this.showNext = value; 
-              });
-      
-              this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => { 
-                this.showPrev = value; 
-              });
+  constructor(
+    private router: Router,
+    private tableNavigationService: TableNavigationService,
+    private requestService: RequestService,
+    private activatedRoute: ActivatedRoute,
+    private filterService: FilterService,
+    private itemsService: ItemsService) {
 
-              filterService.searchFilter$.subscribe(searchInput => {
-                let filteredCategories = this.searchPipe.transform(this.items, searchInput);
-                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
-              })
-              
+    this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
+      this.showNext = value;
+    });
+
+    this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
+      this.showPrev = value;
+    });
+
+    filterService.searchFilter$.subscribe(searchInput => {
+      let filteredCategories = this.searchPipe.transform(this.itemsService.items, searchInput);
+      this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+    })
   }
 
   ngOnInit() {
-        this.activatedRoute.params.subscribe((params: Params) => {
-        this.category = params['category'];
-        });
-        this.requestService.getItems(this.category, this.getItemsData.bind(this));
+    this.activatedRoute.params.subscribe((params: Params) => {
+    this.category = params['category'];
+    });
+    this.requestService.getItems(this.category, this.getItemsData.bind(this));
+    // this.itemsService
+    //     .getItems(`${this.category}/items`)
+    //     .then(result => this.getItemsData());
+
+    this.itemsService.events$.forEach(event => {
+      this.refresh();
+    });
   }
-    getItemsData(items: string){
-        this.items = JSON.parse(items);
-        this.pageTable = this.tableNavigationService.getFirstPage(this.items);
-        return this.pageTable; 
-    }   
-    
- 
+
+  refresh() {
+    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
+    console.log('refresh');
+  }
+
+  getItemsData(items: string){
+    this.items = JSON.parse(items);
+    this.pageTable = this.tableNavigationService.getFirstPage(this.items);
+    return this.pageTable;
+  }
+
   getPrev(): Object[] {
-      this.pageTable = this.tableNavigationService.getPrev(this.items);
-      return this.pageTable;
+    this.pageTable = this.tableNavigationService.getPrev(this.itemsService.items);
+    return this.pageTable;
   }
-    
+
   getNext(): Object[] {
-      this.pageTable = this.tableNavigationService.getNext(this.items);
-      return this.pageTable;
+    this.pageTable = this.tableNavigationService.getNext(this.itemsService.items);
+    return this.pageTable;
   }
- 
+
   openModal() {
     this.modalActions.emit({action:"modal",params:['open']});
   }
+
   closeModal() {
     this.modalActions.emit({action:"modal",params:['close']});
   }
-
 }
