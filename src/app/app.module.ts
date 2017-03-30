@@ -13,7 +13,6 @@ import { DataService } from './services/data.service';
 import { RequestService } from './services/request.service';
 import { ItemsService } from './services/items.service';
 import { FilterService } from './services/filter.service';
-import { CategoryService } from './services/category.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -29,6 +28,8 @@ import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,11 @@ import { NavigationComponent } from './navigation/navigation.component';
     SearchPipe,
     NavigationComponent,
 
-    CategoryItemsComponent
+    CategoryItemsComponent,
+
+    GlobalSearchComponent,
+
+    GlobalSearchItemsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,15 +64,7 @@ import { NavigationComponent } from './navigation/navigation.component';
         //  storageType: 'localStorage'
             storageType: 'sessionStorage'})
   ],
-  providers: [
-    ValidationService,
-    RequestService,
-    DataService,
-    ItemsService,
-    TableNavigationService,
-    FilterService,
-    CategoryService
-  ],
+  providers: [ValidationService, RequestService, DataService, ItemsService, TableNavigationService, FilterService],
 
   bootstrap: [AppComponent]
 })

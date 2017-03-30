@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
-import { CategoryService } from '../services/category.service';
 
 
 @Component({
@@ -12,69 +11,50 @@ import { CategoryService } from '../services/category.service';
 })
 export class NavigationComponent implements OnInit {
   @Output() update = new EventEmitter();
-  private locationLength: number;
+  private items: Object[];
 
   constructor(
-    private requestService: RequestService,
-    private categoryService: CategoryService,
+    private RequestService: RequestService,
     private router: Router,
-    private itemsService: ItemsService) {
-
-    router.events.subscribe((val) => {
-      this.locationLength = val.url.split('/').length;
-    });
-  }
+    private itemsService: ItemsService
+  ) { }
 
   ngOnInit() {
     this.update.emit('');
-  }
-
-  onCategoryClick() {
-    this.categoryService.newEvent('refreshCategories');
-  }
-
-  onItemClick() {
-    this.itemsService.newEvent('refreshItems');
+    this.getItems();
   }
 
   signOutUser():void {
-    this.requestService.signOut();
+    this.RequestService.signOut();
     this.router.navigate(['/']);
   }
 
-  onChangeItems(value: String): void {
+  getItems(): void {
+    this.itemsService
+        .getItems('/Books/items')
+        .then(items => {
+          this.items = items;
+          console.log(this.items);
+        });
+  }
+
+  onChange(value: String): void {
     switch (value) {
       case "alphabet":
-        this.itemsService.sortByAlphabet();
-        this.onItemClick();
+        console.log(this.itemsService.getByAlphabet());
         break;
 
       case "date+":
-        this.itemsService.sortByDate('+');
-        this.onItemClick();
+        console.log(this.itemsService.getByDate('+'));
         break;
 
       case "date-":
-        this.itemsService.sortByDate('-');
-        this.onItemClick();
+        console.log(this.itemsService.getByDate('-'));
         break;
 
       case "rate":
-        this.itemsService.sortByRating();
-        this.onItemClick();
+        console.log(this.itemsService.getByRating());
         break;
-    }
-  }
-
-  onChangeCategories(value: String): void {
-    if (value === 'alphabet') {
-      this.categoryService.sortByAlphabet();
-      this.onCategoryClick();
-    }
-
-    if (value === 'amount') {
-      this.categoryService.sortByAmountOfItems();
-      this.onCategoryClick();
     }
   }
 }
