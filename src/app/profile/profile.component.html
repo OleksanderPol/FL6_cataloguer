@@ -71,18 +71,16 @@
 </div>
 
 <div class="profile-nav">
-  <div class="profile-nav-item">
+  <div class="profile-nav-item" (click)="showCategories()">
     <div class="yellow accent-3 active">
       <img src="/assets/icons/category-icon-active.svg">
       <span class="grey-text text-darken-3">CATEGORIES</span>
     </div>
   </div>
-  <div class="profile-nav-item">
+  <div class="profile-nav-item" (click)="showItems()">
     <div class="grey darken-3">
       <img src="/assets/icons/item-icon.svg">
       <span class="">ITEMS</span>
     </div>
   </div>
 </div>
-
-<app-global-search></app-global-search>

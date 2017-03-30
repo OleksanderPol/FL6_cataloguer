@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Item } from '../item.model';
+import { Item } from '../app.model';
 import { Headers, Http, Response } from '@angular/http';
-
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ItemsService {
-  private items: Item[];
+  public items: Item[];
+  private subject = new Subject<string>();
 
   constructor(
     private http: Http
   ) { }
+
+  newEvent(event) {
+    this.subject.next(event);
+  }
+
+  get events$() {
+    return this.subject.asObservable();
+  }
 
   getItems(itemsUrl): Promise<Item[]> {
     return this.http.get(itemsUrl)
@@ -21,33 +30,34 @@ export class ItemsService {
                .catch(this.handleError);
   }
 
-  getByAlphabet(): Item[] {
-    return this.items.sort((item: Item, nextItem: Item) => {
+  sortByAlphabet(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
       return item.name.localeCompare(nextItem.name);
     });
   }
 
-  getByRating(): Item[] {
-    return this.items.sort((item: Item, nextItem: Item) => {
+  sortByRating(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
       return nextItem.rating - item.rating;
     });
   }
 
-  getByDate(indicator: string): Item[] {
+  sortByDate(indicator: string): void {
     if (indicator === '+') {
-      return this.items.sort((item: Item, nextItem: Item) => {
+      this.items.sort((item: Item, nextItem: Item) => {
+        console.log('sorting by date in service');
         return new Date(nextItem.created).getTime() - new Date(item.created).getTime();
       });
+
+      return;
     }
 
-    return this.items.sort((item: Item, nextItem: Item) => {
+    this.items.sort((item: Item, nextItem: Item) => {
       return new Date(item.created).getTime() - new Date(nextItem.created).getTime();
     });
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
+  private handleError(error: Error): Promise<Error> {
     return Promise.reject(error.message || error);
   }
-
 }
