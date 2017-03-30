@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class CategoryService {
   public categories: Category[];
   private subject = new Subject<string>();
+  private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
     private http: Http
@@ -21,17 +22,13 @@ export class CategoryService {
     return this.subject.asObservable();
   }
 
-  getCategories(): Category[] {
-    return this.categories;
-  }
-
   getHttpCategories(categoriesUrl): Promise<Category[]> {
     return this.http.get(categoriesUrl)
-               .toPromise()
-               .then(response => {
-                 return this.categories = JSON.parse(response.text());
-               })
-               .catch(this.handleError);
+      .toPromise()
+      .then(response => {
+        return this.categories = JSON.parse(response.text());
+      })
+      .catch(this.handleError);
   }
 
   sortByAlphabet(): void {
@@ -44,6 +41,28 @@ export class CategoryService {
     this.categories.sort((cat: Category, nextCat: Category) => {
       return nextCat.amountOfItems - cat.amountOfItems;
     });
+  }
+
+  checkCategory(categoryName: string): boolean {
+    if (this.categories.map(category => category.name.toUpperCase()).indexOf(categoryName) + 1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  addCategory(categoryName: string): Promise<string> {
+    return this.http
+      .post('categories', JSON.stringify({name: categoryName}), {headers: this.headers})
+      .toPromise()
+      .then(res => {
+        if (res.status === 200) {
+          this.categories.push({name: categoryName, amountOfItems: 0});
+        } else {
+          return 'Not saved in db';
+        }
+      })
+      .catch(this.handleError);
   }
 
   private handleError(error: Error): Promise<Error> {

@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class ItemsService {
   public items: Item[];
   private subject = new Subject<string>();
+  private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
     private http: Http
@@ -30,6 +31,42 @@ export class ItemsService {
                .catch(this.handleError);
   }
 
+  addItem(
+    name: string,
+    info: string,
+    fotoUrl: string,
+    category: string): Promise<string> {
+
+    let itemObj: Item = {
+      name: name,
+      info: info,
+      fotoUrl: fotoUrl,
+      created: new Date(),
+      rating: 0,
+      borrowedTo: ''
+    }
+
+    return this.http
+      .post(`${category}/items`, JSON.stringify(itemObj), {headers: this.headers})
+      .toPromise()
+      .then(res => {
+        if (res.status === 200) {
+          this.items.push(itemObj);
+        } else {
+          return 'Not saved in db';
+        }
+      })
+      .catch(this.handleError);
+  }
+
+  checkItem(itemName: string): boolean {
+    if (this.items.map(item => item.name.toUpperCase()).indexOf(itemName) + 1) {
+      return false;
+    }
+
+    return true;
+  }
+
   sortByAlphabet(): void {
     this.items.sort((item: Item, nextItem: Item) => {
       return item.name.localeCompare(nextItem.name);
@@ -45,7 +82,6 @@ export class ItemsService {
   sortByDate(indicator: string): void {
     if (indicator === '+') {
       this.items.sort((item: Item, nextItem: Item) => {
-        console.log('sorting by date in service');
         return new Date(nextItem.created).getTime() - new Date(item.created).getTime();
       });
 
