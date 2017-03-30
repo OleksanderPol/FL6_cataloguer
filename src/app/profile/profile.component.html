@@ -33,16 +33,16 @@
 <div *ngIf="infoTrigger">
   <div class="profile-details info grey darken-3">
     <div class="user-stats-change">
-      <div>
+      <div *ngIf="user.email" class="user-props">
         <span>My email: </span><span class="yellow-text text-accent-3">{{user.email}}</span>
       </div>
-      <div *ngIf="user.telephone">
+      <div *ngIf="user.telephone" class="user-props">
         <span>My phone: </span><span class="yellow-text text-accent-3">{{user.telephone}}</span>
       </div>
-      <div *ngIf="user.city">
+      <div *ngIf="user.city" class="user-props">
         <span>My city: </span><span class="yellow-text text-accent-3">{{user.city}}</span>
       </div>
-      <div *ngIf="user.info">
+      <div *ngIf="user.info" class="user-props">
         <span>About me: </span><span class="yellow-text text-accent-3">{{user.info}}</span>
       </div>
       
@@ -65,22 +65,22 @@
     </div>
 
     <div class="input-field">
-      <input id="telephone" type="number" value={{user.telephone}}>
+      <input id="telephone" type="text" formControlName="telephone" value={{user.telephone}}>
       <label for="telephone" class="active">Phone</label>
     </div>
 
     <div class="input-field">
-      <input id="city" type="text" value={{user.city}}>
+      <input id="city" type="text" formControlName="city" value={{user.city}}>
       <label for="city" class="active">City</label>
     </div>
 
     <div class="input-field">
-      <input id="photo" type="text" value={{user.photoUrl}}>
+      <input id="photo" type="text" formControlName="photoUrl" value={{user.photoUrl}}>
       <label for="photo" class="active">Photo URL</label>
     </div>
 
     <div class="input-field">
-      <textarea id="message" class="materialize-textarea" value={{user.info}}></textarea>
+      <textarea id="message" class="materialize-textarea" formControlName="info" value={{user.info}}></textarea>
       <label for="message" class="active">Info</label>
     </div>
     <div class="center-align">

@@ -77,9 +77,10 @@ router.get('/home/:user', function(req, res) {
 
 
 router.put('/home/:user', function(req, res, next) {
-  User.findOne({ username: req.body.username }, function(err, user) {
-    user.email = req.body.email;
-    user.info = req.body.info;
+  User.findOne({ username: req.params.user }, function(err, user) {
+    for (var key in req.body) {
+      user[key] = req.body[key];
+    }
     user.save(function(err) {
       if (err) {
         console.log(err);
@@ -212,7 +213,8 @@ router.get('/:category/items', function(req, res, next) {
     })
   } else {
 
-    Item.findOne({category: categoryName, owner: req.user._id}, function(err, itemCell) {
+    Item.findOne({category: categoryName, owner: req.user._id},
+                  function(err, itemCell) {
       if (err) {
         return next(err);
       } else if (itemCell == null) {
@@ -226,7 +228,8 @@ router.get('/:category/items', function(req, res, next) {
 });
 
 router.get('/items/search/:search', function(req, res, next) {
-  Item.find({"items.name": new RegExp(req.params.search, "i")}, function(err, items) {
+  Item.find({"items.name": new RegExp(req.params.search, "i")},
+            function(err, items) {
     var result = [],
         template = new RegExp(req.params.search, "i");
     items.forEach(function(elem) {
@@ -257,39 +260,42 @@ router.get('/items/:id', function(req, res, next) {
 router.put('/items/:id', function(req, res, next) {
   Item.findOne({"items._id": req.params.id},
                 function(err, item) {
-                  for(var key in req.body) {
-                    item[prop] = req.body[prop];
-                  }
-                  item.save(function(err) {
-                    if (err) {
-                      next(err);
-                    } else {
-                      console.log('updated');
-                      res.json(send);
-                    }
-                  });
-                });
+    var searchedItem = item.items.find(function(elem) {
+      return elem._id == req.params.id;
+    })
+    for(var prop in req.body) {
+      searchedItem[prop] = req.body[prop];
+    }
+    item.save(function(err) {
+      if (err) {
+        next(err);
+      } else {
+        console.log('updated');
+        return next(200);
+      }
+    });
+  });
 });
 
-router.delete('/items/:id', function(req, res, next){
+router.delete('/items/:id', function(req, res, next) {
   Item.findOne({"items._id": req.params.id},
-              function(error, item) {
-                if (error) {
-                  return next(error);
-                } else {
-                  var itemIndex = item.items.findIndex(function(elem) {
-                    return elem._id == req.params.id;
-                  })
-                  item.items.split(itemIndex, 1);
-                  item.save(function(err) {
-                    if (err) {
-                      return next(err);
-                    } else {
-                      return next(200);
-                    }
-                  })
-                }
-              });
+                function(error, item) {
+    if (error) {
+      return next(error);
+    } else {
+      var itemIndex = item.items.findIndex(function(elem) {
+        return elem._id == req.params.id;
+      })
+      item.items.split(itemIndex, 1);
+      item.save(function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          return next(200);
+        }
+      })
+    }
+  });
 })
 
 router.get('*', function(req, res) {
@@ -297,5 +303,3 @@ router.get('*', function(req, res) {
 });
 
 module.exports = router;
-
-

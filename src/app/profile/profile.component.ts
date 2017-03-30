@@ -23,11 +23,11 @@ export class ProfileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
-      'email': ['', [Validators.required, ValidationService.emailValidator]]
-      // 'info': [''],
-      // 'city': [''],
-      // 'telephone': [''],
-      // 'photo': ['']
+      'email': ['', [Validators.required, ValidationService.emailValidator]],
+      'info': [''],
+      'city': [''],
+      'telephone': [''],
+      'photoUrl': ['']
     });     
   }
 
@@ -56,7 +56,11 @@ export class ProfileComponent implements OnInit {
   changeInfo() {
     this.showUser();
     if (this.infoForm.dirty && this.infoForm.valid) {
-      this.requestService.changeUserRequest(this.dataService.getUser().username, this.infoForm.value.email, this.infoForm.value.info, this.receiveResponseChange.bind(this));
+      this.requestService.changeUserRequest(this.dataService.getUser().username,
+                                            this.infoForm.value.email, this.infoForm.value.info,
+                                            this.infoForm.value.telephone, this.infoForm.value.city,
+                                            this.infoForm.value.photoUrl,
+                                            this.receiveResponseChange.bind(this));
     }
   }
 
