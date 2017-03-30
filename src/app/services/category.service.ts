@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CategoryService {
   public categories: Category[];
-  private subject = new Subject<any>();
+  private subject = new Subject<string>();
 
   constructor(
     private http: Http
@@ -22,7 +22,6 @@ export class CategoryService {
   }
 
   getCategories(): Category[] {
-    console.log('in service');
     return this.categories;
   }
 
@@ -47,8 +46,7 @@ export class CategoryService {
     });
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
+  private handleError(error: Error): Promise<Error> {
     return Promise.reject(error.message || error);
   }
 }

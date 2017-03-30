@@ -21,7 +21,6 @@ export class CategoryItemsComponent implements OnInit {
   private subscription: Subscription;
   private showNext: boolean;
   private showPrev: boolean;
-  public items: Object[];
   public category: string;
   modalActions = new EventEmitter<string|MaterializeAction>();
   private searchPipe = new SearchPipe();
@@ -52,9 +51,10 @@ export class CategoryItemsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
     this.category = params['category'];
     });
-    this.requestService.getItems(this.category, this.getItemsData.bind(this));
+
     this.itemsService
         .getItems(`${this.category}/items`)
+        .then(result => this.getItemsData());
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
@@ -65,9 +65,8 @@ export class CategoryItemsComponent implements OnInit {
     this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
   }
 
-  getItemsData(items: string){
-    this.items = JSON.parse(items);
-    this.pageTable = this.tableNavigationService.getFirstPage(this.items);
+  getItemsData(){
+    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
     return this.pageTable;
   }
 

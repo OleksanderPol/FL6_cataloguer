@@ -45,8 +45,11 @@ export class ItemsService {
   sortByDate(indicator: string): void {
     if (indicator === '+') {
       this.items.sort((item: Item, nextItem: Item) => {
+        console.log('sorting by date in service');
         return new Date(nextItem.created).getTime() - new Date(item.created).getTime();
       });
+
+      return;
     }
 
     this.items.sort((item: Item, nextItem: Item) => {
@@ -54,8 +57,7 @@ export class ItemsService {
     });
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
+  private handleError(error: Error): Promise<Error> {
     return Promise.reject(error.message || error);
   }
 }

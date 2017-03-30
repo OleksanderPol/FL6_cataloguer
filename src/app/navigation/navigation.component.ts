@@ -12,7 +12,6 @@ import { CategoryService } from '../services/category.service';
 })
 export class NavigationComponent implements OnInit {
   @Output() update = new EventEmitter();
-  private items: Object[];
   private locationLength: number;
 
   constructor(
@@ -30,7 +29,7 @@ export class NavigationComponent implements OnInit {
     this.update.emit('');
   }
 
-  onClick() {
+  onCategoryClick() {
     this.categoryService.newEvent('refreshCategories');
   }
 
@@ -70,12 +69,12 @@ export class NavigationComponent implements OnInit {
   onChangeCategories(value: String): void {
     if (value === 'alphabet') {
       this.categoryService.sortByAlphabet();
-      this.onClick();
+      this.onCategoryClick();
     }
 
     if (value === 'amount') {
       this.categoryService.sortByAmountOfItems();
-      this.onClick();
+      this.onCategoryClick();
     }
   }
 }
