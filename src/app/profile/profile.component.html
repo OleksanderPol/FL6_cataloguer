@@ -1,20 +1,20 @@
 <div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger&&!infoTrigger">
 
-  <div class="profile-edit-btn hidden" *ngIf="editButton">
-    <a class="btn-floating btn-large yellow accent-3" (click)="showInfo()">
-      <i class="large material-icons grey-text text-darken-3">info_outline</i>
-    </a>
-  </div>
-
-
   <div class="prof-img grey darken-3">
     <img class="responsive-img" [src]="user.photoUrl" onError="this.src='/assets/img/mock.jpg'">
   </div>
 
   <div class="profile-details grey darken-3">
+      
+  <div class="profile-edit-btn hidden" *ngIf="editButton">
+    <a class="btn-floating btn-medium yellow accent-3" (click)="showInfo()">
+      <i class="large material-icons grey-text text-darken-3">info_outline</i>
+    </a>
+  </div>
+   
     <div class="profile-wrapper">
-      <div class="profile-icon">
-        <img src="/assets/icons/user-icon.svg">
+      <div class="profile-icon valign-wrapper">
+        <img src="/assets/icons/user-icon.svg" class="valign">
       </div>
       <div class="profile-name">
         <span class="user-name">{{user.username | uppercase}}</span>
