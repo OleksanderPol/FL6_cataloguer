@@ -1,66 +1,69 @@
 <nav class="z-depth-0 grey darken-4" role="navigation">
     <div class="row container">
         <div class="col s4 logo">
-            <a id="logo-container" href="#" class="brand-logo"><img src="/assets/img/logo.svg"></a>
+          <a id="logo-container" href="#" class="brand-logo"><img src="/assets/img/logo.svg"></a>
         </div>
         <div class="col s8">
             <div class="row hide-on-med-and-down">
-
-                <!-- Navigation tag -->
-                <div class="col s8">
-
-                    <div *ngIf="shown === 'search'" class="input-field">
-                      <input id="search" type="search" placeholder="Type here to search" #input (input)="update.emit(input.value)">
-
-                    </div>
-                    <div *ngIf="shown === 'filter'">
-                      <select class="nav-select" #selected (change)="onChange(selected.value)">
-                        <option disabled selected>Click here to sort items</option>
-                        <option value="date-">Date: from old to new</option>
-                        <option value="rate">Rate</option>
-                        <option value="alphabet">Alphabet</option>
-                        <option value="date+">Date: from new to old</option>
-                      </select>
-                    </div>
-                    <div *ngIf="shown === 'adds'">
-                      <button class="btn waves-effect waves-light nav-select" (click)="getItems()">Add category
-                      </button>
-                    </div>
-
+              <!-- Navigation tag -->
+              <div class="col s8">
+                <!-- search input -->
+                <div *ngIf="shown === 'search'" class="input-field">
+                  <input id="search" type="search" placeholder="Type here to search" #input (input)="update.emit(input.value)">
                 </div>
-                <div class="col s4 nav-icons">
-                    <ul class="">
-                        <li (click)="shown = 'search'">
-                          <label class="label-icon" for="search">
-                            <i class="material-icons grey-text lighten-2">search</i>
-                          </label>
-                        </li>
-                        <li (click)="shown = 'filter'">
-                          <i class="material-icons grey-text lighten-2">swap_vert</i>
-                        </li>
-                        <li (click)="shown = 'adds'">
-                          <i class="material-icons grey-text lighten-2">playlist_add</i>
-                        </li>
-                        <li (click)="signOutUser()" class="sign-out-btn">
-                          <i class="material-icons">power_settings_new</i>
-                        </li>
-
-                    </ul>
+                <!-- show if items are displayed -->
+                <div *ngIf="locationLength === 4">
+                  <div *ngIf="shown === 'filter'">
+                    <select class="nav-select" #selected (change)="onChangeItems(selected.value)">
+                      <option disabled selected>Click here to sort items</option>
+                      <option value="rate">Rate</option>
+                      <option value="alphabet">Alphabet</option>
+                      <option value="date+">Date: from new to old</option>
+                      <option value="date-">Date: from old to new</option>
+                    </select>
+                  </div>
                 </div>
-                <!-- //Navigation tag -->
+                <!-- show if categories are displayed -->
+                <div *ngIf="locationLength === 3">
+                  <div *ngIf="shown === 'filter'">
+                    <select class="nav-select" #selected (change)="onChangeCategories(selected.value)">
+                      <option disabled selected>Click here to sort cotegories</option>
+                      <option value="amount">Amount of items</option>
+                      <option value="alphabet">Alphabet</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
+              <div class="col s4 nav-icons">
+                <ul class="">
+                  <li (click)="shown = 'search'">
+                    <label class="label-icon" for="search">
+                      <i class="material-icons grey-text lighten-2">search</i>
+                    </label>
+                  </li>
+                  <li (click)="shown = 'filter'">
+                    <i class="material-icons grey-text lighten-2">swap_vert</i>
+                  </li>
+                  <li class="nav-icon" title="add category/item" class="nav-icon">
+                    <i class="material-icons">playlist_add</i>
+                  </li>
+                  <li (click)="signOutUser()" class="nav-icon" title="sign-out">
+                    <i class="material-icons">power_settings_new</i>
+                  </li>
+                </ul>
+              </div>
             </div>
         </div>
         <!-- Collapsed Menu -->
         <ul class="side-nav" id="nav-mobile">
-            <li><a  href="#"><i class="material-icons">search</i></a></li>
-            <li><a href="#"><i class="material-icons">swap_vert</i></a></li>
-            <li><a href="#"><i class="material-icons">playlist_add</i></a></li>
+          <li><a  href="#"><i class="material-icons">search</i></a></li>
+          <li><a href="#"><i class="material-icons">swap_vert</i></a></li>
+          <li><a href="#"><i class="material-icons">playlist_add</i></a></li>
         </ul>
-        <!-- //Collapsed Menu -->
 
         <a href="#" materialize="sideNav" [materializeParams]="[{edge:'left'}]" data-activates="nav-mobile" class="button-collapse grey-text lighten-2">
-            <i class="material-icons">menu</i>
+          <i class="material-icons">menu</i>
         </a>
     </div>
 </nav>

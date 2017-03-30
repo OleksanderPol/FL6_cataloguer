@@ -8,6 +8,7 @@ import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-categories',
@@ -15,7 +16,6 @@ import { FilterService } from '../services/filter.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  @Input() categories: Object[];
   private pageTable: Object[] = [];
   private subscription: Subscription;
 
@@ -26,47 +26,59 @@ export class CategoriesComponent implements OnInit {
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
               private dataService: DataService,
               private requestService: RequestService,
-              private filterService: FilterService) {
-              
-              this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => { 
-                this.showNext = value; 
+              private filterService: FilterService,
+              private categoryService: CategoryService
+              ) {
+
+              this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
+                this.showNext = value;
               });
-      
-              this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => { 
-                this.showPrev = value; 
-              });     
+
+              this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
+                this.showPrev = value;
+              });
 
               filterService.searchFilter$.subscribe(searchInput => {
-                let filteredCategories = this.searchPipe.transform(this.categories, searchInput);
+                let filteredCategories = this.searchPipe.transform(this.categoryService.categories, searchInput);
                 this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
-              })         
+              })
   }
 
   ngOnInit() {
-      this.requestService.getCategories(this.getCategoriesData.bind(this));   
+    this.categoryService
+        .getHttpCategories('categories')
+        .then(result => this.getCategoriesData());
+
+    this.categoryService.events$.forEach(event => {
+      this.refresh();
+    });
   }
-  getCategoriesData(){
-    this.categories = this.dataService.getCategories();
-    this.pageTable = this.tableNavigationService.getFirstPage(this.categories);
+
+  refresh(): void {
+    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
+  }
+
+  getCategoriesData() {
+    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
     this.ifCategories = true;
     return this.pageTable;
   }
 
   getPrev(): Object[] {
-      this.pageTable = this.tableNavigationService.getPrev(this.categories);
-      return this.pageTable;
-  }
-    
-  getNext(): Object[] {
-      this.pageTable = this.tableNavigationService.getNext(this.categories);
-      return this.pageTable;
+    this.pageTable = this.tableNavigationService.getPrev(this.categoryService.categories);
+    return this.pageTable;
   }
 
-  onClick (category) {
+  getNext(): Object[] {
+    this.pageTable = this.tableNavigationService.getNext(this.categoryService.categories);
+    return this.pageTable;
+  }
+
+  onClick(category) {
     this.router.navigate(['home/:user', category]);
   }
 }
