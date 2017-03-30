@@ -3,6 +3,7 @@ import { StartingPageComponent } from './starting-page/starting-page.component';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryItemsComponent } from './category-items/category-items.component';
+import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 
 const appRoutes: Routes = [
     { path: '', component: StartingPageComponent },
@@ -15,6 +16,10 @@ const appRoutes: Routes = [
           {
               path: ':category',
               component: CategoryItemsComponent
+          },
+          {
+              path: 'items/search/:search',
+              component: GlobalSearchItemsComponent
           }
       ]
     },
