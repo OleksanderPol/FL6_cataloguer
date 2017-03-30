@@ -45,7 +45,9 @@
                   <li (click)="shown = 'filter'">
                     <i class="material-icons grey-text lighten-2">swap_vert</i>
                   </li>
-                  <li class="nav-icon" title="add category/item" class="nav-icon">
+                  <li class="nav-icon" title="add category/item" class="nav-icon"
+                  (click)="openModal(); show='';
+                  categoryError=''; categorySuccess=''">
                     <i class="material-icons">playlist_add</i>
                   </li>
                   <li (click)="signOutUser()" class="nav-icon" title="sign-out">
@@ -55,6 +57,69 @@
               </div>
             </div>
         </div>
+        <!-- Modal Structure-->
+        <div id="nav-modal" class="modal" materialize="modal" [materializeActions]="modalAction">
+          <div class="modal-content">
+
+            <!-- category form -->
+            <div *ngIf="show === 'categ'" class="row">
+              <h4 class="modal-heading">Add category</h4>
+              <div class="error">{{categoryError}}{{categorySuccess}}</div>
+              <form class="col s12">
+                <div class="row">
+                   <div class="input-field col s10">
+                      <input id="cateoryName" type="text" #name (input)="null">
+                      <label for="cateoryName">Category Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                  <button type="submit" class="waves-effect waves-light btn"
+                  (click)="addCategory(name.value); name.value='';"
+                  [disabled]="!name.value.length"
+                  >Add</button>
+                </div>
+              </form>
+            </div>
+            <!-- item form -->
+            <div *ngIf="show === 'item'" class="row">
+              <form class="col s12">
+                <h4 class="modal-heading">Add item</h4>
+                <div class="error">{{itemError}}{{itemSuccess}}</div>
+                <div class="row">
+                   <div class="input-field col s10">
+                      <input id="itemName" type="text" #name (input)="null">
+                      <label for="itemName">Item Name</label>
+                    </div>
+                    <div class="input-field col s10">
+                      <input id="info" type="text" #info (input)="null">
+                      <label for="info">Item Info</label>
+                    </div>
+                    <div class="input-field col s10">
+                      <input id="itemFoto" type="text" #url (input)="null">
+                      <label for="itemFoto">Foto Url</label>
+                    </div>
+                    <div class="input-field col s10">
+                      <input id="category" type="text" #category (input)="null">
+                      <label for="category">Category</label>
+                    </div>
+                </div>
+                <div class="row">
+                  <button type="submit" class="waves-effect waves-light btn"
+                  (click)="addItem(name.value, info.value, url.value, category.value);
+                  name.value=''; category.value=''"
+                  [disabled]="!name.value.length&&!category.value.length"
+                  >Add</button>
+                </div>
+              </form>
+            </div>
+          <div class="row">
+            <button class="waves-effect waves-light btn" (click)="show='categ'">
+            Add category</button>
+            <button class="waves-effect waves-light btn" (click)="show='item'">
+            Add item</button>
+          </div>
+          </div>
+      </div>
         <!-- Collapsed Menu -->
         <ul class="side-nav" id="nav-mobile">
           <li><a  href="#"><i class="material-icons">search</i></a></li>

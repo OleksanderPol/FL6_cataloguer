@@ -12,11 +12,12 @@ var User = require('./models/user').User,
 //     };
 
 // //we need every time when we add new item for user/
-// var itemObj = {
-//   name: 'AC/DC - Chervona Ruta',
-//   fotoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Acdc_logo_band.svg/220px-Acdc_logo_band.svg.png',
-//   info: 'Very nice music'
-// };
+var itemObj = {
+  name: 'Harry potter 4',
+  fotoUrl: 'http://schmoesknow.com/wp-content/uploads/2017/03/Avatar.jpg',
+  info: 'Very nice book',
+  reting: 4
+};
 
 // function createUser(userObj) {
 //   var user = new User(userObj);
@@ -79,7 +80,7 @@ var User = require('./models/user').User,
 
 //   var item = new Item({
 //     owner: '58d81859a0b90913b059d75c', //our users id
-//     category: 'Music', //related ctegory name
+//     category: 'Books', //related ctegory name
 //     items: userItems //our first item in category
 //   });
 
@@ -127,6 +128,9 @@ var User = require('./models/user').User,
 //       });
 //     }
 //   })
+
+// addItem(itemObj, {$and: [{owner: '58d81859a0b90913b059d75c'}, {category: 'Books'}]});
+// createTestItem(itemObj);
 Item.find({owner: '58d81859a0b90913b059d75c'}, function(err, items) {
   if (err) {
     console.log(err);
