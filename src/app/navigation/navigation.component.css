@@ -35,4 +35,23 @@ nav {
   color: #ffea00;
 }
 
+/*modals*/
+#nav-modal {
+  background-color: rgba(0, 0, 0, 0.87);
+}
 
+#nav-modal .input-field input{
+  height: 44px;
+  margin: 10px 0 0 0;
+  padding-left: 85px;
+  border-bottom: 1px solid #ffea00;
+}
+
+.btn {
+  background-color: #ffea00;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+label {
+  color: #ffea00;
+}

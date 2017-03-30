@@ -106,7 +106,7 @@ router.get('/categories', function(req, res, next) {
         return next(err);
       }
       //mongoose document does not allow adding props, we need to convert it to plain obj firstly.
-      
+
       var result = categories.map(function(category, index) {
         category = category.toJSON();
         // category.amountOfItems = 0;
