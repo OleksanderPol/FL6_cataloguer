@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
 	public changeError: string;
   public itemsAmount: Object;
 
-  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
+  constructor(private formBuilder: FormBuilder, private changeInfoService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': ['']
@@ -53,16 +53,8 @@ export class ProfileComponent implements OnInit {
   changeInfo() {
     this.showUser();
     if (this.infoForm.dirty && this.infoForm.valid) {
-      this.requestService.changeUserRequest(this.dataService.getUser().username, this.infoForm.value.email, this.infoForm.value.info, this.receiveResponseChange.bind(this));
+      this.changeInfoService.changeUserRequest(this.dataService.getUser().username, this.infoForm.value.email, this.infoForm.value.info, this.receiveResponseChange.bind(this));
     }
-  }
-
-  showCategories() {
-    this.router.navigate(['/home', this.dataService.getUser().username]);
-  }
-
-  showItems() {
-    this.router.navigate(['/home', this.dataService.getUser().username, 'allcategories']);
   }
 
   receiveResponseChange(status, response, username) {

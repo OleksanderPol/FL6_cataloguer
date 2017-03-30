@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild, Output, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild, Output } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { MaterializeDirective } from "angular2-materialize";
@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
   public searchFilter: string;
   public isCategoryAvaileble: boolean = false;
 
-  constructor(private dataService: DataService,
-              private requestService: RequestService,
+  constructor(private dataService: DataService, 
+              private requestService: RequestService, 
               private filterService: FilterService) {}
 
   ngOnInit() {
