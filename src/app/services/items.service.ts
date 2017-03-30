@@ -41,6 +41,7 @@ export class ItemsService {
       name: name,
       info: info,
       fotoUrl: fotoUrl,
+      category: category,
       created: new Date(),
       rating: 0,
       borrowedTo: ''

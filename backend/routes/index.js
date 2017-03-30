@@ -131,7 +131,7 @@ router.post('/categories', function(req, res, next) {
   var category = new Category({
     users: [req.user._id],
     name: req.body.name
-    })
+  });
   category.save(function(err) {
     if (err) {
       return next(err);
@@ -170,9 +170,11 @@ router.delete('/categories/:category', function(req, res, next){
 
 router.post('/:category/items', function(req, res, next) {
 
-  Item.findOne({category: req.params.category}, function(err, item) {
+  Item.findOne({category: req.body.category}, function(err, item) {
     if(err) {
       return next(err);
+    } else if (item == null) {
+      return next(404);
     } else {
       item.items.push({
         name: req.body.name,

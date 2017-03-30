@@ -11,6 +11,7 @@ export interface Item {
   fotoUrl: string;
   info: string;
   rating: number;
+  category: string;
   borrowedTo: string;
 }
 
