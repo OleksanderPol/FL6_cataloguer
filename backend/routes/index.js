@@ -260,23 +260,24 @@ router.get('/items/:id', function(req, res, next) {
 })
 
 router.put('/items/:id', function(req, res, next) {
-  Item.findOne({"items._id": req.params.id},
-                function(err, item) {
-    var searchedItem = item.items.find(function(elem) {
-      return elem._id == req.params.id;
-    })
-    for(var prop in req.body) {
-      searchedItem[prop] = req.body[prop];
-    }
-    item.save(function(err) {
-      if (err) {
-        next(err);
-      } else {
-        console.log('updated');
-        return next(200);
-      }
-    });
-  });
+
+ Item.findOne({"items._id": req.params.id},
+               function(err, item) {
+   var searchedItem = item.items.find(function(elem) {
+     return elem._id == req.params.id;
+   })
+   for(var prop in req.body) {
+     searchedItem[prop] = req.body[prop];
+   }
+     item.save(function(err) {
+     if (err) {
+       next(err);
+     } else {
+       console.log('updated');
+       return next(200);
+     }
+   });
+ });
 });
 
 router.delete('/items/:id', function(req, res, next) {
