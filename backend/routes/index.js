@@ -245,7 +245,7 @@ router.get('/items/:id', function(req, res, next) {
     if (err) {
       return next(err);
     } else {
-      User.findById(items.owner, function(err, user) {
+      User.findById(item.owner, function(err, user) {
         if (err) {
           return next(err);
         } else {
@@ -274,12 +274,22 @@ router.put('/items/:id', function(req, res, next) {
 });
 
 router.delete('/items/:id', function(req, res, next){
-  Item.remove({"items._id": req.params.id},
-              function(error, removed) {
+  Item.findOne({"items._id": req.params.id},
+              function(error, item) {
                 if (error) {
                   return next(error);
                 } else {
-                  console.log(removed);
+                  var itemIndex = item.items.findIndex(function(elem) {
+                    return elem._id == req.params.id;
+                  })
+                  item.items.split(itemIndex, 1);
+                  item.save(function(err) {
+                    if (err) {
+                      return next(err);
+                    } else {
+                      return next(200);
+                    }
+                  })
                 }
               });
 })

@@ -23,8 +23,11 @@ export class ProfileComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
-      'email': ['', [Validators.required, ValidationService.emailValidator]],
-      'info': ['']
+      'email': ['', [Validators.required, ValidationService.emailValidator]]
+      // 'info': [''],
+      // 'city': [''],
+      // 'telephone': [''],
+      // 'photo': ['']
     });     
   }
 
