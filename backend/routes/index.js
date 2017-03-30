@@ -227,10 +227,10 @@ router.get('/:category/items', function(req, res, next) {
 
 
 
-router.get('/items', function(req, res, next) {
-  Item.find({"items.name": new RegExp(req.body.name, "i")}, function(err, items) {
+router.get('/items/search/:search', function(req, res, next) {
+  Item.find({"items.name": new RegExp(req.params.search, "i")}, function(err, items) {
     var result = [],
-        template = new RegExp(req.params.name, "i");
+        template = new RegExp(req.params.search, "i");
     items.forEach(function(elem) {
       elem.items.forEach(function(item) {
         if (template.test(item.name)) result.push(item);
@@ -245,7 +245,7 @@ router.get('/items/:id', function(req, res, next) {
     if (err) {
       return next(err);
     } else {
-      User.findById(items.owner, function(err, user) {
+      User.findById(item.owner, function(err, user) {
         if (err) {
           return next(err);
         } else {

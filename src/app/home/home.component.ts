@@ -5,7 +5,6 @@ import { MaterializeDirective } from "angular2-materialize";
 import { RequestService } from '../services/request.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { SearchComponent } from '../search/search.component';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 
