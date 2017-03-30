@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
 
   getCategoriesData(){
     this.categories = this.dataService.getCategories();
-
     this.isCategoryAvaileble = true;
   }
 

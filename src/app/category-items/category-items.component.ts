@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
 import { MaterializeAction } from 'angular2-materialize';
 import {Observable} from 'rxjs/Observable';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
@@ -22,7 +23,10 @@ export class CategoryItemsComponent implements OnInit {
   private showNext: boolean;
   private showPrev: boolean;
   public category: string;
-  modalActions = new EventEmitter<string|MaterializeAction>();
+  public modalActions = [];
+  public itemForm: FormGroup;
+  public changeError: string;
+  public ratingNum: number[] = [1,2,3,4,5];
   private searchPipe = new SearchPipe();
 
   constructor(
@@ -31,8 +35,14 @@ export class CategoryItemsComponent implements OnInit {
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
     private filterService: FilterService,
-    private itemsService: ItemsService) {
+    private itemsService: ItemsService,
+    private formBuilder: FormBuilder) {
 
+    this.itemForm = this.formBuilder.group({
+      'itemName': ['', Validators.required],
+      'itemInfo': ['', Validators.required]
+    });        
+      
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;
     });
@@ -59,10 +69,20 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
+    this.createModals(9);    
   }
-
+  createModals(num) {
+    this.modalActions = [];
+    for (let i = 0; i < num; i++) {
+        this.modalActions.push(new EventEmitter<string|MaterializeAction>())
+    }
+  }
   refresh() {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
+    this.itemsService
+        .getItems(`${this.category}/items`)
+        .then(result => this.getItemsData());
+    this.createModals(this.pageTable.length);
+    return this.pageTable;
   }
 
   getItemsData(){
@@ -72,19 +92,45 @@ export class CategoryItemsComponent implements OnInit {
 
   getPrev(): Object[] {
     this.pageTable = this.tableNavigationService.getPrev(this.itemsService.items);
+    this.createModals(this.pageTable.length);
     return this.pageTable;
   }
 
   getNext(): Object[] {
     this.pageTable = this.tableNavigationService.getNext(this.itemsService.items);
+    this.createModals(this.pageTable.length);
     return this.pageTable;
   }
 
-  openModal() {
-    this.modalActions.emit({action:"modal",params:['open']});
+  openModal(i) {
+    this.modalActions[i].emit({action:"modal",params:['open']});
   }
-
-  closeModal() {
-    this.modalActions.emit({action:"modal",params:['close']});
+  closeModal(i) {
+    this.modalActions[i].emit({action:"modal",params:['close']});
+  }
+    
+  deleteItem(event, id) {
+   event.stopPropagation();
+//   this.requestService.deleteItem(id);
+   this.refresh();
+   console.log('deleted')
+  }
+  changeItemInfo(id) {
+    if (this.itemForm.dirty && this.itemForm.valid) {
+      this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
+    }
+  }
+  changeItemRating(changed, id, ratingNum) {
+    if (changed) {
+      this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
+      this.itemForm.reset();
+    }
+  }
+  receiveResponseChange(status, response, id) {
+    if (status === 200) {
+        this.refresh();
+    } else {
+      this.changeError = response;
+    }
   }
 }

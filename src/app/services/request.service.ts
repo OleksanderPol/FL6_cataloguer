@@ -118,4 +118,40 @@ export class RequestService {
               console.log(response.text())
           })
     }
+    
+    changeItemInfo(id: string, itemData, responseFunc) {
+        var body = `name=${itemData.value.itemName}&info=${itemData.value.itemInfo}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        
+        this.http
+            .put(`items/${id}`, body, { headers: headers })
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                this.responseText = response.text();
+                responseFunc(this.responseStatus, this.responseText, id);
+            }, error => {
+                this.responseStatus = error.status;
+                this.responseText = JSON.parse(error.text()).message;
+                responseFunc(this.responseStatus, this.responseText, id);
+            })
+    }
+    
+    changeItemRating(id: string, itemRating: number, responseFunc) {
+        var body = `rating=${itemRating}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        
+        this.http
+            .put(`items/${id}`, body, { headers: headers })
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                this.responseText = response.text();
+                responseFunc(this.responseStatus, this.responseText, id);
+            }, error => {
+                this.responseStatus = error.status;
+                this.responseText = JSON.parse(error.text()).message;
+                responseFunc(this.responseStatus, this.responseText, id);
+            })
+    }
 }
