@@ -85,19 +85,12 @@ export class GlobalSearchItemsComponent implements OnInit {
     this.modalActions.emit({ action: "modal", params: ['open'] });
     this.requestService.itemsUser(id, this.getUserData.bind(this));
   }
-  openModal() {
-    this.modalActions.emit({ action: "modal", params: ['open'] });
-  }
 
   getUserData(foundUser){
     this.searchedUser = JSON.parse(foundUser);
-    console.log("My user - ", this.searchedUser);
-    // this.openModal();
   }
   closeModal() {
     this.modalActions.emit({ action: "modal", params: ['close'] });
   }
-
-
 }
 
