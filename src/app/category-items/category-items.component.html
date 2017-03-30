@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="col s12 m4" *ngFor="let item of pageTable; let itemIndex = index;" (click)="openModal(itemIndex)" #itemEl>
+    <div class="col s12 m4" *ngFor="let item of pageTable; trackBy:index;let itemIndex = index;" (click)="openModal(itemIndex)" #itemEl>
         <!-- Modal Structure -->
         <div class="modal grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions[itemIndex]">
             <div class="modal-content">
@@ -35,7 +35,7 @@
                         <form class="col s12" [formGroup]="itemForm">
                             <div class="row">
                                 <label for="item-heading" class="black-text">Item name:</label>
-                                <input id="item-heading" type="text" formControlName="itemName" [(value)]="item.name">
+                                <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="item.name">
                                 <div class="input-field col s12">
                                     <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(value)]="item.info"></textarea>
                                     <label class="active black-text" for="textarea1">Type description</label>

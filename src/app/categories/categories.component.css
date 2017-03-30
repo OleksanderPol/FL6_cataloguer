@@ -1,5 +1,5 @@
 .catalogue .col {
-    padding: 7px;
+    padding: 5px;
 }
 
 .catalogue div.card {
@@ -14,7 +14,7 @@
 }
 
 .catalogue div.card:hover {
-    transform: scale(1.04);
+    transform: scale(1.03);
     z-index: 1;
 }
 
@@ -31,14 +31,14 @@
 .catalogue .card-title {
     display: block;
     text-align: center;
-    font-size: 21px;
+    font-size: 16px;
     font-weight: 600;
-    padding: 7px;
+    padding: 5px;
 }
 .catalogue .item-ammount {
     display: block;
     text-align: center;
-    font-size: 100px;
-    line-height: 100px;
+    font-size: 80px;
+    line-height: 80px;
     font-weight: 100;
 }

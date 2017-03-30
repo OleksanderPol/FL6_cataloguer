@@ -78,9 +78,7 @@ export class CategoryItemsComponent implements OnInit {
     }
   }
   refresh() {
-    this.itemsService
-        .getItems(`${this.category}/items`)
-        .then(result => this.getItemsData());
+    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
     this.createModals(this.pageTable.length);
     return this.pageTable;
   }
