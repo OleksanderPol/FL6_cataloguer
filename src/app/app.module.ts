@@ -24,11 +24,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
 import { CategoryItemsComponent } from './category-items/category-items.component';
-
-import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 
 @NgModule({
   declarations: [
@@ -40,12 +40,12 @@ import { NavigationComponent } from './navigation/navigation.component';
     GoogleSigninComponent,
     ProfileComponent,
     CategoriesComponent,
-
-    SearchComponent,
     SearchPipe,
     NavigationComponent,
 
-    CategoryItemsComponent
+    CategoryItemsComponent,
+    GlobalSearchComponent,
+    GlobalSearchItemsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +56,6 @@ import { NavigationComponent } from './navigation/navigation.component';
     routing,
     LocalStorageModule.withConfig({
             prefix: 'my-app',
-        //  storageType: 'localStorage'
             storageType: 'sessionStorage'})
   ],
   providers: [
