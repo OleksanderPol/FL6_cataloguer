@@ -135,7 +135,7 @@ router.post('/categories', function(req, res, next) {
         if (err) {
           return next(err);
         } else {
-          res.status(409).send("Welcome to existing category");
+          res.status(200).send("Welcome to existing category");
         }
       })
     } else {
