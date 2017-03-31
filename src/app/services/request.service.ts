@@ -47,8 +47,8 @@ export class RequestService {
             })
     }
 
-    changeUserRequest(username, email, info, responseFunc) {
-        var body = `email=${email}&info=${info}&username=${username}`;
+    changeUserRequest(username, email, info, telephone, city, photoUrl, responseFunc) {
+        var body = `email=${email}&info=${info}&telephone=${telephone}&city=${city}&photoUrl=${photoUrl}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 

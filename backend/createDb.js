@@ -131,13 +131,33 @@ var itemObj = {
 
 // addItem(itemObj, {$and: [{owner: '58d81859a0b90913b059d75c'}, {category: 'Books'}]});
 // createTestItem(itemObj);
-Item.find({owner: '58d81859a0b90913b059d75c'}, function(err, items) {
-  if (err) {
-    console.log(err);
-  } else {
-    var rez = items.reduce((first, second)=>{
-      return first.concat(second.items);
-    }, [])
-    console.log(rez)
-  }
+// var music = new Item({
+//   owner: '58d81859a0b90913b059d75c',
+//   category: 'Music',
+//   items: [{
+//     name: "Nothing else matters",
+//     info: "Good music",
+//     rating: 5,
+//     fotoUrl: "http://mycoverpoint.com/wp-content/uploads/Nothing-Else-Matters-Facebook-Cover.png"
+//   }]
+// })
+
+// music.save(err=>{
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log('success');
+//   }
+// })
+
+// Category.remove({name: "Bikes1"}, (err, removed)=>{
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log(removed);
+//   }
+// })
+
+Category.find((err, items)=>{
+  console.log(items)
 })

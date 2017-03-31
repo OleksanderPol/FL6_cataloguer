@@ -1,13 +1,14 @@
 nav {
-  padding: 14px 0px 0px 0px;
-  height: 78px;
+  padding: 10px 0px 5px;
+  height: 64px;
 }
-
+nav .container {
+    height: 49px;
+}
 #search {
-  height: 44px;
-  margin: 10px 0 0 0;
+  height: 49px;
+  margin: 0px;
 }
-
 .nav-icons ul {
   display: flex;
   justify-content: center;
@@ -15,20 +16,27 @@ nav {
 
 .nav-icons ul li {
   cursor: pointer;
-  width: 64px;
+  width: 49px;
   text-align: center;
 }
 
 .nav-icons ul li:hover {
   background: #424242;
 }
-
+div.filter {
+    height: 49px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
 .nav-select {
   background-color: #ffea00;
   display: inline-block;
   color: rgba(0, 0, 0, 0.870588);
-  margin-bottom: 4px;
   border: none;
+  height: 49px;
+  position: absolute;
+  top: 0;
 }
 
 .nav-icon {
