@@ -5,6 +5,7 @@ import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { CategoryService } from '../services/category.service';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -21,7 +22,11 @@ export class ProfileComponent implements OnInit {
 	public changeError: string;
   public itemsAmount: number;
 
-  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
+  constructor(private formBuilder: FormBuilder,
+              private requestService: RequestService,
+              private router: Router,
+              private dataService: DataService,
+              private categoryService: CategoryService) {
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': [''],
