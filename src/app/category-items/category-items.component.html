@@ -1,68 +1,19 @@
 <div class="row bottom-nav">
     <div class="col s6 m4">
-        <a class="prev-btn" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
+        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
     </div>
     <div class="col s12 m4">
-        <a class="toggle-btn">{{category}}</a>
+        <a class="toggle-btn" (click)="showCategories()">{{category}}</a>
     </div>
     <div class="col s6 m4">
-        <a class="next-btn" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
+        <a class="next-btn grey-text text-darken-3" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
     </div>
 </div>
 
 
 <div class="row catalogue">
 
-    <div class="col s12 m4" *ngFor="let item of pageTable; trackBy:index;let itemIndex = index;" (click)="openModal(itemIndex)" #itemEl>
-        <!-- Modal Structure -->
-        <div class="modal grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions[itemIndex]">
-            <div class="modal-content">
-                <div class="modal-img grey lighten-2" *ngIf="item.fotoUrl" [style.background-image]="'url('+ item.fotoUrl +')'">
-                </div>
-                <div class="item-modal-info" [class.full-width]="!item.fotoUrl">
-                    <div *ngIf="!modalEdit">
-                        <h3>{{item.name | uppercase}}</h3>
-                        <p>{{item.info}}</p>
-                        <div class="rating">
-                            <span *ngIf="item.rating == 0">Please set rating</span>
-                            <br>
-                            <a *ngFor="let number of ratingNum">
-                            <img src="/assets/icons/full-star-rate.svg" *ngIf="item.rating >= number"
-                             (click)="item.rating = number"
-                             (click)="ratingChanged = true">
-                            <img src="/assets/icons/empty-star-rate.svg" *ngIf="item.rating < number"
-                             (click)="item.rating = number"
-                             (click)="ratingChanged = true">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="modal-edit-active" *ngIf="modalEdit">
-
-                        <form class="col s12" [formGroup]="itemForm">
-                            <div class="row">
-                                <label for="item-heading" class="black-text">Item name:</label>
-                                <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="item.name">
-                                <div class="input-field col s12">
-                                    <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(value)]="item.info"></textarea>
-                                    <label class="active black-text" for="textarea1">Type description</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid" (click)="changeItemInfo(item._id)" (click)="closeModal(itemIndex)" (click)="modalEdit = false">Send</button>
-                        </form>
-
-
-                    </div>
-                </div>
-                <div class="modal-edits">
-                    <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
-                    <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-                    <button class="waves-effect waves-grey btn-flat" (click)="closeModal(itemIndex)" (click)="changeItemRating(ratingChanged, item._id, item.rating)" (click)="ratingChanged = false" (click)="modalEdit = false">Close</button>
-                </div>
-
-            </div>
-
-        </div>
-        <!-- //Modal Structure -->
+    <div class="col s12 m4" *ngFor="let item of pageTable" (click)="createModal(item)" #itemEl>
 
         <div class="ct-item z-depth-0" (mouseenter)="itemEl.showDelete = true" (mouseleave)="itemEl.showDelete = false">
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
@@ -80,5 +31,56 @@
         </div>
 
     </div>
+
+    <!-- Modal Structure -->
+    <div class="modal grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+        <div class="modal-content">
+            <div class="modal-img grey lighten-2" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
+            </div>
+            <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
+                <div *ngIf="!modalEdit">
+                    <h4>{{modalItem.name | uppercase}}</h4>
+                    <p>{{modalItem.info}}</p>
+                    <div class="rating">
+                        <span *ngIf="modalItem.rating == 0">Please set rating</span>
+                        <br>
+                        <a *ngFor="let number of ratingNum">
+                            <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
+                             (click)="modalItem.rating = number"
+                             (click)="changeItemRating(ratingChanged, modalItem._id, modalItem.rating)">
+                            <img src="/assets/icons/empty-star-rate.svg" *ngIf="modalItem.rating < number"
+                             (click)="modalItem.rating = number"
+                             (click)="changeItemRating(ratingChanged, modalItem._id, modalItem.rating)">
+                            </a>
+                    </div>
+                </div>
+                <div class="modal-edit-active" *ngIf="modalEdit">
+
+                    <form class="col s12" [formGroup]="itemForm">
+                        <div class="row">
+                            <label for="item-heading" class="black-text">Item name:</label>
+                            <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
+                            <div class="input-field col s12">
+                                <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
+                                <label class="active black-text" for="textarea1">Type description</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid" (click)="changeItemInfo(modalItem._id)">Send</button>
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="modal-edits">
+                <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
+                <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
+                <button class="waves-effect waves-grey btn-flat" (click)="closeModal()">Close</button>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- //Modal Structure -->
+
 
 </div>
