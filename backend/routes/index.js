@@ -18,11 +18,11 @@ router.post('/register', function(req, res, next) {
       password = req.body.password,
       email = req.body.email;
 
-  User.findOne({username: username}, function(err, user) {
+  User.findOne({username: username}, function(err, oldUser) {
     if (err) return next(err);
 
-    if (user) {
-      next(new HttpError(403, 'Such user exist'));
+    if (oldUser) {
+      return next(new HttpError(403, 'Such user exist'));
     } else {
       var user = new User ({
         username: username,
@@ -32,9 +32,11 @@ router.post('/register', function(req, res, next) {
 
       user.save(function(err) {
         if (err) return next(err);
-        req.session.user = user._id;
-        console.log('new user creater: ' + username);
-        res.send(user);
+        else {
+          req.session.user = user._id;
+          console.log('new user creater: ' + username);
+          res.json(user);
+        }
       });
     }
   });
@@ -74,7 +76,6 @@ router.get('/home/:user', function(req, res) {
     res.redirect('/');
   }
 });
-
 
 router.put('/home/:user', function(req, res, next) {
   User.findOne({ username: req.params.user }, function(err, user) {
@@ -128,15 +129,24 @@ router.get('/categories', function(req, res, next) {
 });
 
 router.post('/categories', function(req, res, next) {
-  var category = new Category({
-    users: [req.user._id],
-    name: req.body.name
-  });
-  category.save(function(err) {
+  Category.findOne({name: req.body.name}, function(err, category) {
     if (err) {
       return next(err);
+    } else if (category) {
+      category.users.push(req.user._id);
+      res.status(409).send("Welcome to existing category");
     } else {
-      return next(200);
+      var category = new Category({
+        users: [req.user._id],
+        name: req.body.name
+      });
+      category.save(function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).send("Congratulations! You are a pioneer in this category!");
+        }
+      })
     }
   })
 });
@@ -170,7 +180,7 @@ router.delete('/categories/:category', function(req, res, next){
 
 router.post('/:category/items', function(req, res, next) {
 
-  Item.findOne({category: req.body.category}, function(err, item) {
+  Item.findOne({category: req.params.category, owner: req.user._id}, function(err, item) {
     if(err) {
       return next(err);
     } else if (item == null) {
@@ -263,21 +273,21 @@ router.put('/items/:id', function(req, res, next) {
 
  Item.findOne({"items._id": req.params.id},
                function(err, item) {
-   var searchedItem = item.items.find(function(elem) {
-     return elem._id == req.params.id;
-   })
-   for(var prop in req.body) {
-     searchedItem[prop] = req.body[prop];
-   }
-     item.save(function(err) {
-     if (err) {
-       next(err);
-     } else {
-       console.log('updated');
-       return next(200);
-     }
-   });
- });
+    var searchedItem = item.items.find(function(elem) {
+      return elem._id == req.params.id;
+    })
+    for(var prop in req.body) {
+      searchedItem[prop] = req.body[prop];
+    }
+    item.save(function(err) {
+      if (err) {
+        next(err);
+      } else {
+        console.log('updated');
+        return next(200);
+      }
+    });
+  });
 });
 
 router.delete('/items/:id', function(req, res, next) {

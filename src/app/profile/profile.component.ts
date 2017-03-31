@@ -4,8 +4,6 @@ import { ValidationService } from '../services/validation.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { CategoryService } from '../services/category.service';
-import { ItemsService } from '../services/items.service';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import 'rxjs/add/operator/map';
 
@@ -15,20 +13,15 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-	public user: Object;
-  public categories: any;
+	@Input() user: Object;
+  @Input() categories: any;
 	public changeTrigger: boolean = false;
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
   public itemsAmount: Object;
 
-  constructor(private formBuilder: FormBuilder,
-              private requestService: RequestService,
-              private router: Router,
-              private dataService: DataService,
-              private categoryService: CategoryService,
-              private itemsService: ItemsService) {
+  constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': [''],
@@ -39,8 +32,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.dataService.getUser();
-    this.categories = this.dataService.getCategories();
+
     this.itemsAmount = this.categories.reduce(function (sum, curr) {
       return {amountOfItems: sum.amountOfItems + curr.amountOfItems};
     })       
