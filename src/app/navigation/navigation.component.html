@@ -62,7 +62,7 @@
           <div class="modal-content">
 
             <!-- category form -->
-            <div *ngIf="show === 'categ'" class="row">
+            <div *ngIf="locationLength === 3" class="row">
               <h4 class="modal-heading">Add category</h4>
               <div class="error">{{categoryError}}{{categorySuccess}}</div>
               <form class="col s12">
@@ -74,14 +74,15 @@
                 </div>
                 <div class="row">
                   <button type="submit" class="waves-effect waves-light btn"
-                  (click)="addCategory(name.value); name.value='';"
+                  (click)="addCategory(name.value); name.value='';
+                  closeModal('categories');"
                   [disabled]="!name.value.length"
                   >Add</button>
                 </div>
               </form>
             </div>
             <!-- item form -->
-            <div *ngIf="show === 'item'" class="row">
+            <div *ngIf="locationLength === 4" class="row">
               <form class="col s12">
                 <h4 class="modal-heading">Add item</h4>
                 <div class="error">{{itemError}}{{itemSuccess}}</div>
@@ -98,26 +99,17 @@
                       <input id="itemFoto" type="text" #url (input)="null">
                       <label for="itemFoto">Foto Url</label>
                     </div>
-                    <div class="input-field col s10">
-                      <input id="category" type="text" #category (input)="null">
-                      <label for="category">Category</label>
-                    </div>
                 </div>
                 <div class="row">
                   <button type="submit" class="waves-effect waves-light btn"
-                  (click)="addItem(name.value, info.value, url.value, category.value);
-                  name.value=''; category.value=''"
-                  [disabled]="!name.value.length&&!category.value.length"
+                  (click)="addItem(name.value, info.value, url.value);
+                  name.value=''; info.value=''; url.value='';
+                  closeModal('items');"
+                  [disabled]="!name.value.length"
                   >Add</button>
                 </div>
               </form>
             </div>
-          <div class="row">
-            <button class="waves-effect waves-light btn" (click)="show='categ'">
-            Add category</button>
-            <button class="waves-effect waves-light btn" (click)="show='item'">
-            Add item</button>
-          </div>
           </div>
       </div>
         <!-- Collapsed Menu -->

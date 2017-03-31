@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   private categorySuccess: string;
   private itemError: string;
   private itemSuccess: string;
+  private currentCategory: string;
 
   constructor(
     private requestService: RequestService,
@@ -33,14 +34,27 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.update.emit('');
+    this.currentCategory = this.router.url.split('/')[3];
   }
 
   openModal() {
     this.modalAction.emit({ action: "modal", params: ['open'] });
   }
 
-  closeModal() {
-    this.modalAction.emit({ action: "modal", params: ['close'] });
+  closeModal(location: string) {
+    if (this.categorySuccess && location === 'categories') {
+      setTimeout(() => {
+        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.categorySuccess = '';
+      }, 1000);
+    }
+
+    if (this.itemSuccess && location === 'items') {
+      setTimeout(() => {
+        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.itemSuccess = '';
+      }, 1000);
+    }
   }
 
   onCategoryClick() {
@@ -105,30 +119,25 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  addItem(name, info = '', fotoUrl = '', category): void {
-    let uppercaseCategory = category.toUpperCase(),
-        uppercaseName = name.toUpperCase();
-    console.log(name, category);
+  checkItem(name: string, info: string, fotoUrl: string): void {
+    let uppercaseName = name.toUpperCase();
 
-    if (!this.itemsService.items) {
-      console.log(this.itemsService.items);
-      this.itemsService.getItems(`${category}/items`)
-        .then(result => {
-          if (!this.categoryService.checkCategory(uppercaseCategory)) {
-            if (this.itemsService.checkItem(uppercaseName)) {
-              this.itemsService.addItem(name, info, fotoUrl, category);
-              this.itemSuccess = 'Item successfully added';
-            } else {
-              this.itemSuccess = '';
-              this.itemError = 'Such Item already exist';
-            }
-          } else {
-            this.itemSuccess = '';
-            this.itemError = 'Such category dont exist';
-          }
-        });
+    if (this.itemsService.checkItem(uppercaseName)) {
+      this.itemsService.addItem(name, info, fotoUrl, this.currentCategory);
+      this.itemSuccess = 'Item successfully added';
+    } else {
+      this.itemError = 'Such Item already exist in ${this.currentCategory} category';
     }
+  }
 
-
+  addItem(name, info = '', fotoUrl = ''): void {
+    if (!this.itemsService.items) {
+      this.itemsService.getItems(`${this.currentCategory}/items`)
+        .then(result => {
+            this.checkItem(name, info, fotoUrl);
+        });
+    } else {
+      this.checkItem(name, info, fotoUrl);
+    }
   }
 }
