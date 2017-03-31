@@ -110,9 +110,7 @@
     line-height: 100%;
 }
 .catalogue .close-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    float: right;
 }
 
 h2.nothing-found {
