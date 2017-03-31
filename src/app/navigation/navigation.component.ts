@@ -34,7 +34,6 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.update.emit('');
-    this.currentCategory = this.router.url.split('/')[3];
   }
 
   openModal() {
@@ -123,21 +122,28 @@ export class NavigationComponent implements OnInit {
     let uppercaseName = name.toUpperCase();
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.currentCategory);
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split("/")[3]);
       this.itemSuccess = 'Item successfully added';
     } else {
-      this.itemError = 'Such Item already exist in ${this.currentCategory} category';
+      this.itemError = 'Such Item already exist in ${this.router.url.split("/")[3]} category';
     }
   }
 
   addItem(name, info = '', fotoUrl = ''): void {
-    if (!this.itemsService.items) {
-      this.itemsService.getItems(`${this.currentCategory}/items`)
-        .then(result => {
-            this.checkItem(name, info, fotoUrl);
+    let uppercaseName = name.toUpperCase();
+
+    if (this.itemsService.checkItem(uppercaseName)) {
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split("/")[3])
+        .then(res => {
+          if (res !== 'Server Error') {
+            this.itemError = '';
+            this.itemSuccess = 'Item successfully added';
+          } else {
+            this.itemError = 'Server error 500';
+          }
         });
     } else {
-      this.checkItem(name, info, fotoUrl);
+      this.itemError = 'Such Item already exist';
     }
   }
 }

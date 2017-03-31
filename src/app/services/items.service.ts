@@ -53,7 +53,7 @@ export class ItemsService {
         if (res.status === 200) {
           this.items.push(itemObj);
         } else {
-          return 'Not saved in db';
+          return 'Server error';
         }
       })
       .catch(this.handleError);
