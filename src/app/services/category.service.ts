@@ -26,7 +26,9 @@ export class CategoryService {
     return this.http.get(categoriesUrl)
       .toPromise()
       .then(response => {
-        return this.categories = JSON.parse(response.text());
+        this.categories = JSON.parse(response.text());
+        this.newEvent('getCategories');
+        return this.categories;
       })
       .catch(this.handleError);
   }
@@ -58,6 +60,7 @@ export class CategoryService {
       .then(res => {
         if (res.status === 200) {
           this.categories.push({name: categoryName, amountOfItems: 0});
+          this.newEvent('addCategory');
         } else {
           return 'Not saved in db';
         }
