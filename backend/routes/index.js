@@ -204,13 +204,14 @@ router.post('/:category/items', function(req, res, next) {
       newItemCell.save(function(err) {
         if (err) return next(err);
         console.log('Items cell crearted');
+        res.send('New item saved');
       });
     } else {
       Item.findOneAndUpdate(query,
         {$push: {'items': itemObj}},
         function(err, model) {
           if (err) return next(err);
-          console.log('New item added to itemCell');
+          res.send('New item saved');
         });
     }
   });

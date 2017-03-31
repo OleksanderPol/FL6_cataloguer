@@ -38,6 +38,8 @@ export class NavigationComponent implements OnInit {
 
   openModal() {
     this.modalAction.emit({ action: "modal", params: ['open'] });
+    this.categoryError = '';
+    this.itemError = '';
   }
 
   closeModal(location: string) {
@@ -118,17 +120,6 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  checkItem(name: string, info: string, fotoUrl: string): void {
-    let uppercaseName = name.toUpperCase();
-
-    if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split("/")[3]);
-      this.itemSuccess = 'Item successfully added';
-    } else {
-      this.itemError = 'Such Item already exist in ${this.router.url.split("/")[3]} category';
-    }
-  }
-
   addItem(name, info = '', fotoUrl = ''): void {
     let uppercaseName = name.toUpperCase();
 
@@ -138,6 +129,7 @@ export class NavigationComponent implements OnInit {
           if (res !== 'Server Error') {
             this.itemError = '';
             this.itemSuccess = 'Item successfully added';
+            this.closeModal('items');
           } else {
             this.itemError = 'Server error 500';
           }
