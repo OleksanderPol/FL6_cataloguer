@@ -25,6 +25,7 @@ export class CategoriesComponent implements OnInit {
   private search: string = '';
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
+  // private initOn: number;
 
   constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
@@ -49,17 +50,17 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService
-        .getHttpCategories('categories')
-        .then(result => this.getCategoriesData());
-
     this.categoryService.events$.forEach(event => {
-      this.refresh();
+      if (event === 'addCategory' || event === 'getCategories') {
+        this.getCategoriesData();
+      }
     });
-  }
 
-  refresh(): void {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
+    this.router.events.subscribe((val) => {
+      if (this.categoryService.categories && val.url.split('/').length === 3) {
+        this.getCategoriesData();
+      }
+    });
   }
 
   getCategoriesData() {

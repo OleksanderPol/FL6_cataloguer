@@ -12,7 +12,17 @@ export class CategoryService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+
+    this.onInit();
+  }
+
+  onInit() {
+    this.getHttpCategories('categories')
+      .then(res => {
+        this.newEvent('getCategories');
+      });
+  }
 
   newEvent(event) {
     this.subject.next(event);
@@ -26,9 +36,7 @@ export class CategoryService {
     return this.http.get(categoriesUrl)
       .toPromise()
       .then(response => {
-        this.categories = JSON.parse(response.text());
-        this.newEvent('getCategories');
-        return this.categories;
+        return this.categories = JSON.parse(response.text());
       })
       .catch(this.handleError);
   }
