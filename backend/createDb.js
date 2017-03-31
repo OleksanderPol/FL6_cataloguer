@@ -158,6 +158,46 @@ var itemObj = {
 //   }
 // })
 
-Category.find((err, items)=>{
-  console.log(items)
+// Category.find({}, (err, items)=>{
+//   console.log(items)
+// })
+
+
+var item = new Category({
+  // owner: '58de232f740eb9126f7c93ac',
+  // category: 'COINS',
+  // items: [{
+  //   name: "coin"
+  // }]
+  name: "COINS",
+  users: ['58de232f740eb9126f7c93ac']
 })
+
+item.save(err=>{
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(item);
+  }
+})
+
+// Item.findById('58de20dd2b771610b1163ad9', (err, item)=>{
+//   if (err) {
+//     console.log(err);
+//   } else if (item) {
+//     item.items.push({
+//       name: "Ponyashka",
+//       info: 'My pony',
+//       rating: 5
+//     });
+//     item.save(err=>{
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log(item);
+//       }
+//     })
+//   } else {
+//     console.log("jopa");
+//   }
+// })

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://qwerty:qwerty@tastbaar.mongo.xervo.io:27017/inidA8mi');
+mongoose.connect('mongodb://admin:admin@tastbaar.mongo.xervo.io:27017/o5wuSaxu');
 
 module.exports = mongoose;
