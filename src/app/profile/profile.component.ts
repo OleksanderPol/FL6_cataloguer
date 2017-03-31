@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
    private itemsService: ItemsService,
    private categoryService: CategoryService) {
 
+
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': [''],

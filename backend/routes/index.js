@@ -111,12 +111,10 @@ router.get('/categories', function(req, res, next) {
 
       var result = categories.map(function(category, index) {
         category = category.toJSON();
-        // category.amountOfItems = 0;
+        category.amountOfItems = 0;
         itemCell.forEach((item)=>{
-          if (item.category == category.name) {
-            category.amountOfItems = item ? item.items.length : 0;
-          } else {
-            category.amountOfItems = 0;
+          if (item && item.category == category.name) {
+            category.amountOfItems = item.items.length;
           }
         })
         return category;

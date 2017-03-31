@@ -53,7 +53,7 @@ export class CategoryItemsComponent implements OnInit {
 
     filterService.searchFilter$.subscribe(searchInput => {
       let filteredCategories = this.searchPipe.transform(this.itemsService.items, searchInput);
-      this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+      this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
     })
   }
 
@@ -78,27 +78,25 @@ export class CategoryItemsComponent implements OnInit {
     }
   }
   refresh() {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
+    this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
     this.createModals(this.pageTable.length);
     return this.pageTable;
   }
 
   getItemsData(){
-    this.pageTable = this.tableNavigationService.getFirstPage(this.itemsService.items);
+    this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
     return this.pageTable;
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPrev(this.itemsService.items);
-    this.createModals(this.pageTable.length);
+    this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'prev');
     return this.pageTable;
   }
 
   getNext(): Object[] {
-    this.pageTable = this.tableNavigationService.getNext(this.itemsService.items);
-    this.createModals(this.pageTable.length);
+    this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'next');
     return this.pageTable;
-  }
+  } 
 
   openModal(i) {
     this.modalActions[i].emit({action:"modal",params:['open']});

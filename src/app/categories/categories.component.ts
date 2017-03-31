@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit {
   private search: string = '';
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
-  // private initOn: number;
+
 
   constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
@@ -45,7 +45,7 @@ export class CategoriesComponent implements OnInit {
 
               filterService.searchFilter$.subscribe(searchInput => {
                 let filteredCategories = this.searchPipe.transform(this.categoryService.categories, searchInput);
-                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+                this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
               })
   }
 
@@ -64,18 +64,18 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategoriesData() {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'first');
     this.ifCategories = true;
     return this.pageTable;
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPrev(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');
     return this.pageTable;
   }
 
   getNext(): Object[] {
-    this.pageTable = this.tableNavigationService.getNext(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'next');
     return this.pageTable;
   }
 
