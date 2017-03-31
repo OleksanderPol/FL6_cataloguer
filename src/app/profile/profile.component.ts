@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
-  public itemsAmount: Object;
+  public itemsAmount: number;
 
   constructor(private formBuilder: FormBuilder, private requestService: RequestService, private router: Router, private dataService: DataService) {
   	this.infoForm = this.formBuilder.group({
@@ -34,8 +34,8 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
 
     this.itemsAmount = this.categories.reduce(function (sum, curr) {
-      return {amountOfItems: sum.amountOfItems + curr.amountOfItems};
-    })       
+      return sum + curr.amountOfItems;
+    }, 0)       
   }
 
   showChange() {

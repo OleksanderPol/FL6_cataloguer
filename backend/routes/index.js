@@ -35,7 +35,7 @@ router.post('/register', function(req, res, next) {
         else {
           req.session.user = user._id;
           console.log('new user creater: ' + username);
-          res.json(user);
+          res.send(user);
         }
       });
     }
@@ -84,10 +84,10 @@ router.put('/home/:user', function(req, res, next) {
     }
     user.save(function(err) {
       if (err) {
-        console.log(err);
-        next(new HttpError(500));
+        // console.log(err);
+        next(new HttpError(500, err));
       } else {
-        console.log(user);
+        // console.log(user);
         res.send(user);
       }
     })
@@ -118,8 +118,7 @@ router.get('/categories', function(req, res, next) {
           } else {
             category.amountOfItems = 0;
           }
-          })
-        // category.amountOfItems = itemCell[index] ? itemCell[index].items.length : 0;
+        })
         return category;
       });
 
@@ -134,7 +133,13 @@ router.post('/categories', function(req, res, next) {
       return next(err);
     } else if (category) {
       category.users.push(req.user._id);
-      res.status(409).send("Welcome to existing category");
+      category.save(function(err) {
+        if (err) {
+          return next(err);
+        } else {
+          res.status(409).send("Welcome to existing category");
+        }
+      })
     } else {
       var category = new Category({
         users: [req.user._id],
@@ -144,7 +149,7 @@ router.post('/categories', function(req, res, next) {
         if (err) {
           return next(err);
         } else {
-          res.status(200).send("Congratulations! You are a pioneer in this category!");
+          res.status(200).send("Congratulations! You are a pioneer in this field!");
         }
       })
     }
@@ -173,7 +178,7 @@ router.delete('/categories/:category', function(req, res, next){
       })
     } else {
       console.log("user in category not found");
-      return next(500);
+      return next(404);
     }
   })
 });
@@ -181,10 +186,60 @@ router.delete('/categories/:category', function(req, res, next){
 router.post('/:category/items', function(req, res, next) {
 
   Item.findOne({category: req.params.category, owner: req.user._id}, function(err, item) {
-    if(err) {
+    if (err) {
       return next(err);
     } else if (item == null) {
-      return next(404);
+      
+      var newItem = new Item({
+        category: req.params.category,
+        owner: req.user._id,
+        items: [{
+          name: req.body.name,
+          fotoUrl: req.body.fotoUrl,
+          info: req.body.info
+        }]
+      });
+      
+      Category.findOne({name: req.params.category}, function(err, category) {
+        if (err) {
+          return next(err);
+        } else if (category == null) {
+          var newCategory = new Category({
+            users: [req.user._id],
+            name: req.params.category
+          });
+          
+          newCategory.save(function(err) {
+            if (err) {
+              return next(err);
+            } else {
+              newItem.save(function(err) {
+                if (err) {
+                  return next(err);
+                } else {
+                  return next(200);
+                }
+              });
+            }
+          });
+
+        } else {
+          category.users.push(req.user._id);
+          category.save(function(err) {
+            if (err) {
+              return next(err);
+            } else {
+              newItem.save(function(err) {
+                if (err) {
+                  return next(err);
+                } else {
+                  return next(200);
+                }
+              });
+            }
+          });
+        }
+      });
     } else {
       item.items.push({
         name: req.body.name,
@@ -200,7 +255,6 @@ router.post('/:category/items', function(req, res, next) {
       })
     }
   })
-
 });
 
 router.get('/:category/items', function(req, res, next) {
@@ -271,7 +325,7 @@ router.get('/items/:id', function(req, res, next) {
 
 router.put('/items/:id', function(req, res, next) {
 
- Item.findOne({"items._id": req.params.id},
+  Item.findOne({"items._id": req.params.id},
                function(err, item) {
     var searchedItem = item.items.find(function(elem) {
       return elem._id == req.params.id;
@@ -299,7 +353,7 @@ router.delete('/items/:id', function(req, res, next) {
       var itemIndex = item.items.findIndex(function(elem) {
         return elem._id == req.params.id;
       })
-      item.items.split(itemIndex, 1);
+      item.items.splice(itemIndex, 1);
       item.save(function(err) {
         if (err) {
           return next(err);

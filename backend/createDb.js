@@ -157,3 +157,7 @@ var itemObj = {
 //     console.log(removed);
 //   }
 // })
+
+Category.find((err, items)=>{
+  console.log(items)
+})
