@@ -4,8 +4,9 @@ import { Routes, Router, ActivatedRoute, Params } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
+import { DataService } from '../services/data.service';
 import { MaterializeAction } from 'angular2-materialize';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { SearchPipe } from '../search/search.pipe';
@@ -23,11 +24,14 @@ export class CategoryItemsComponent implements OnInit {
   private showNext: boolean;
   private showPrev: boolean;
   public category: string;
-  public modalActions = [];
+  public modalActions = new EventEmitter<string|MaterializeAction>();
   public itemForm: FormGroup;
   public changeError: string;
   public ratingNum: number[] = [1,2,3,4,5];
   private searchPipe = new SearchPipe();
+  private modalItem: Object[] = [];
+  private ratingChanged: boolean;
+  private modalEdit: boolean;
 
   constructor(
     private router: Router,
@@ -36,7 +40,8 @@ export class CategoryItemsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private filterService: FilterService,
     private itemsService: ItemsService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private dataService: DataService) {
 
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
@@ -69,17 +74,14 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
-    this.createModals(9);
+
   }
-  createModals(num) {
-    this.modalActions = [];
-    for (let i = 0; i < num; i++) {
-        this.modalActions.push(new EventEmitter<string|MaterializeAction>())
-    }
+  createModal(data) {
+      this.modalItem = data;
+      this.openModal();
   }
   refresh() {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
-    this.createModals(this.pageTable.length);
     return this.pageTable;
   }
 
@@ -98,11 +100,16 @@ export class CategoryItemsComponent implements OnInit {
     return this.pageTable;
   } 
 
-  openModal(i) {
-    this.modalActions[i].emit({action:"modal",params:['open']});
+  showCategories() {
+    this.router.navigate(['/home', this.dataService.getUser().username]);
   }
-  closeModal(i) {
-    this.modalActions[i].emit({action:"modal",params:['close']});
+    
+  openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+    
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
   }
 
   deleteItem(event, id) {
@@ -111,17 +118,18 @@ export class CategoryItemsComponent implements OnInit {
    this.refresh();
    console.log('deleted')
   }
+    
   changeItemInfo(id) {
     if (this.itemForm.dirty && this.itemForm.valid) {
       this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
     }
+    this.modalEdit = false;
   }
+    
   changeItemRating(changed, id, ratingNum) {
-    if (changed) {
       this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
-      this.itemForm.reset();
-    }
   }
+    
   receiveResponseChange(status, response, id) {
     if (status === 200) {
         this.refresh();
