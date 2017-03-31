@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./global-search.component.css']
 })
 export class GlobalSearchComponent implements OnInit {
-  private searchValue: string;
+  private searchValue: string = '';
   private user: Object;
 
   constructor(private requestService: RequestService,
@@ -22,10 +22,11 @@ export class GlobalSearchComponent implements OnInit {
 
   search(searchInput){
     this.searchValue = searchInput;
-    this.requestService.searchItems(searchInput, this.getItems.bind(this));
+    this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
   }
   getItems(response){
     this.dataService.storeSearch(response);
     this.router.navigate([`home/:user/items/search`, this.searchValue]);
+    this.searchValue = '';
   }
 }

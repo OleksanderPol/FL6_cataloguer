@@ -7,3 +7,8 @@
     margin-top: 0px;
     margin-bottom: 0px;
 }
+.input-yellow[type="search"]:focus:not([readonly]),
+.input-yellow[type="text"]:focus:not([readonly]) {
+    border-bottom: 1px solid #ffea00;
+    box-shadow: 0 1px 0 0 #ffea00;
+}

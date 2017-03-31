@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
-
-import { User } from '../app.model';
 import { Routes, Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -11,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
+import { User, Item } from '../app.model';
 
 
 @Component({
@@ -19,11 +18,23 @@ import { FilterService } from '../services/filter.service';
   styleUrls: ['./global-search-items.component.css']
 })
 export class GlobalSearchItemsComponent implements OnInit {
-  public searchedUser: Object = {
-    username: "",
-    email: ""
+  private searchedUser: User = {
+    username: '',
+    email: '',
+    city: '',
+    telephone: '',
+    info: '',
+    photoUrl: '',
   };
-  private items: any;
+  private activeItem: Item = {
+    name: '',
+    created: new Date(),
+    fotoUrl: '',
+    info: '',
+    rating: 0,
+    borrowedTo: ''
+  };
+  private items: any[];
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -31,7 +42,7 @@ export class GlobalSearchItemsComponent implements OnInit {
   public category: string;
   modalActions = new EventEmitter<string | MaterializeAction>();
   private searchPipe = new SearchPipe();
-  private ifItem: boolean = false;
+  public ratingNum: number[] = [1,2,3,4,5];
 
   constructor(private dataService: DataService,
     private router: Router,
@@ -66,7 +77,6 @@ export class GlobalSearchItemsComponent implements OnInit {
 
   ngOnInit() {
     this.items = JSON.parse(this.dataService.getSearch());
-    this.ifItem = true;
     this.pageTable = this.tableNavigationService.getFirstPage(this.items);
     return this.pageTable;
   }
@@ -81,13 +91,14 @@ export class GlobalSearchItemsComponent implements OnInit {
     return this.pageTable;
   }
 
-  openModalRequest(id){
-    this.modalActions.emit({ action: "modal", params: ['open'] });
-    this.requestService.itemsUser(id, this.getUserData.bind(this));
+  openModalRequest(item) {
+    this.requestService.itemsUser(item._id, this.getUserData.bind(this));
+    this.activeItem = item;
   }
 
-  getUserData(foundUser){
+  getUserData(foundUser) {
     this.searchedUser = JSON.parse(foundUser);
+    this.modalActions.emit({ action: "modal", params: ['open'] });
   }
   closeModal() {
     this.modalActions.emit({ action: "modal", params: ['close'] });

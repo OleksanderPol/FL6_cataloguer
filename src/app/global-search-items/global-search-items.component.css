@@ -18,7 +18,24 @@
     z-index: 1;
 }
 
-.catalogue div.card div {
+.catalogue .col {
+    padding: 5px;
+}
+.catalogue div.ct-item {
+    margin: 0px;
+    border-radius: 0px;
+    padding-bottom: 100%;
+    height: 0;
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+}
+.catalogue div.ct-item:hover {
+    transform: scale(1.03);
+    z-index: 1;
+}
+.catalogue div.ct-item > div {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -27,21 +44,78 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
-.catalogue .card-title {
+.catalogue div.ct-item .ct-item-title {
     display: block;
     text-align: center;
-    font-size: 21px;
+    font-size: 16px;
     font-weight: 600;
-    padding: 7px;
+    padding: 5px;
+    position: relative;
 }
-.catalogue .item-ammount {
+.catalogue div.ct-item .ct-item-title .el-delete {
+    position: absolute;
+    top: -8px;
+    right: 2px;
+}
+.catalogue div.ct-item div.rating {
     display: block;
     text-align: center;
-    font-size: 100px;
-    line-height: 100px;
-    font-weight: 100;
+    padding-top: 3px;
+    margin: 0;
 }
-.modal-img {
-    max-height: 400px;
+.catalogue div.modal-content {
+    padding: 0px;
+    margin: 0px;
+    height: 450px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+
+}
+.catalogue .modal-img {
+    padding: 10px;
+    flex: 1 1 100%;
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.catalogue .item-modal-info {
+    padding: 20px;
+    text-align: left;
+    width: 50%;
+}
+.catalogue .item-modal-info.full-width{
+    width: 100%;
+}
+.catalogue .modal-edits {
+    padding: 20px;
+    text-align: right;
+}
+/*.catalogue .modal-edit-active input::-webkit-input-placeholder {
+    color: black;
+}*/
+.catalogue .owner-modal-info {
+    line-height: 100%;
+}
+.catalogue .close-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+h2.nothing-found {
+    color: #ffea00;
+    text-align: center;
 }

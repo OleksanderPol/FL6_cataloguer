@@ -1,8 +1,10 @@
 export interface User{
     username: string;
     email: string;
-    categories: string[];
-    items: string[];
+    city: string;
+    telephone: string;
+    info: string;
+    photoUrl: string;  
 }
 
 export interface Item {
