@@ -42,3 +42,24 @@
     line-height: 80px;
     font-weight: 100;
 }
+div.bottom-nav div {
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+div.bottom-nav div > a {
+    display: inline-block;
+    width: 100%;
+    padding: 3px;
+    color: black;
+    cursor: pointer;
+    background: #ffff8d;
+}
+div.bottom-nav div > a.disabled {
+    pointer-events: none;
+    cursor: default;
+    background: #424242;
+}
+.bottom-nav a.toggle-btn {
+    font-weight: 600;
+}

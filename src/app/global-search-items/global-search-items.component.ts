@@ -61,14 +61,14 @@ export class GlobalSearchItemsComponent implements OnInit {
 
     filterService.searchFilter$.subscribe(searchInput => {
       let filteredCategories = this.searchPipe.transform(this.items, searchInput);
-      this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+      this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
     });
 
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.items = JSON.parse(this.dataService.getSearch());
-        this.pageTable = this.tableNavigationService.getFirstPage(this.items);
+        this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
         return this.pageTable;
       }
     })
@@ -77,17 +77,17 @@ export class GlobalSearchItemsComponent implements OnInit {
 
   ngOnInit() {
     this.items = JSON.parse(this.dataService.getSearch());
-    this.pageTable = this.tableNavigationService.getFirstPage(this.items);
+    this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
     return this.pageTable;
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPrev(this.items);
+    this.pageTable = this.tableNavigationService.getPage(this.items, 'prev');
     return this.pageTable;
   }
 
   getNext(): Object[] {
-    this.pageTable = this.tableNavigationService.getNext(this.items);
+    this.pageTable = this.tableNavigationService.getPage(this.items, 'next');
     return this.pageTable;
   }
 

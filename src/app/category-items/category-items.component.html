@@ -1,12 +1,17 @@
-<div class="row catalogue">
-
-    <div class="col s12 m4" *ngIf="showPrev">
-        <div class="card z-depth-0 yellow accent-1" (click)="getPrev()">
-            <div>
-                <img src="assets/icons/prev.svg">
-            </div>
-        </div>
+<div class="row bottom-nav">
+    <div class="col s6 m4">
+        <a class="prev-btn" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
     </div>
+    <div class="col s12 m4">
+        <a class="toggle-btn">{{category}}</a>
+    </div>
+    <div class="col s6 m4">
+        <a class="next-btn" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
+    </div>
+</div>
+
+
+<div class="row catalogue">
 
     <div class="col s12 m4" *ngFor="let item of pageTable; trackBy:index;let itemIndex = index;" (click)="openModal(itemIndex)" #itemEl>
         <!-- Modal Structure -->
@@ -19,7 +24,8 @@
                         <h3>{{item.name | uppercase}}</h3>
                         <p>{{item.info}}</p>
                         <div class="rating">
-                            <span *ngIf="item.rating == 0">Please set rating</span><br>
+                            <span *ngIf="item.rating == 0">Please set rating</span>
+                            <br>
                             <a *ngFor="let number of ratingNum">
                             <img src="/assets/icons/full-star-rate.svg" *ngIf="item.rating >= number"
                              (click)="item.rating = number"
@@ -62,7 +68,7 @@
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
                     <span>{{item.name | uppercase}}</span>
-                    <span class="el-delete" *ngIf="itemEl.showDelete" >&times;</span>
+                    <span class="el-delete" *ngIf="itemEl.showDelete">&times;</span>
                 </div>
                 <div class="rating yellow accent-1">
                     <span *ngFor="let number of ratingNum">
@@ -73,18 +79,6 @@
             </div>
         </div>
 
-
-
     </div>
-
-    <div class="col s12 m4" *ngIf="showNext">
-        <div class="card z-depth-0 yellow accent-1" (click)="getNext()">
-            <div>
-                <img src="assets/icons/next.svg">
-            </div>
-        </div>
-    </div>
-
-
 
 </div>
