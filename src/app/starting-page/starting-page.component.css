@@ -1,6 +1,9 @@
 #login, #register {
     width: 400px;
 }
+#login.open {
+    top: 15%;
+}
 .input-field {
     margin-top: 0;
 }
@@ -32,7 +35,7 @@ control-messages {
 }
 
 .background {
-    background-image: url('https://lh3.googleusercontent.com/StNFcOjkQUILmpdAm9L7XwIbuQAwjWGptkCjmwxiX7d7FIglNouhDogE-edy_i-54HAipsDruvB80eE=w1366-h613-rw');
+    background-image: url('../../assets/img/background.jpg');
     background-size: cover;
     max-height: 100%;
     height: 100vh;
