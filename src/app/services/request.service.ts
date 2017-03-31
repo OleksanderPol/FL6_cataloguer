@@ -89,10 +89,9 @@ export class RequestService {
 
     signOut() {
         this.http
-            .get('/signout')
+            .post('/signout','signout')
             .subscribe(response => {
                 this.responseStatus = response.status;
-                console.log(this.responseStatus);
             }, error => {
                 this.responseStatus = error.status;
                 console.log(this.responseStatus);
@@ -118,12 +117,12 @@ export class RequestService {
               console.log(response.text())
           })
     }
-    
+
     changeItemInfo(id: string, itemData, responseFunc) {
         var body = `name=${itemData.value.itemName}&info=${itemData.value.itemInfo}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        
+
         this.http
             .put(`items/${id}`, body, { headers: headers })
             .subscribe(response => {
@@ -136,12 +135,12 @@ export class RequestService {
                 responseFunc(this.responseStatus, this.responseText, id);
             })
     }
-    
+
     changeItemRating(id: string, itemRating: number, responseFunc) {
         var body = `rating=${itemRating}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        
+
         this.http
             .put(`items/${id}`, body, { headers: headers })
             .subscribe(response => {

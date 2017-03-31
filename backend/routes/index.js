@@ -64,7 +64,7 @@ router.post('/signin', function(req, res, next) {
   });
 });
 
-router.get('/signout', function(req, res) {
+router.post('/signout', function(req, res) {
   req.session.destroy();
   res.redirect('/');
 });
@@ -201,7 +201,6 @@ router.post('/:category/items', function(req, res, next) {
 
       newItemCell.save(function(err) {
         if (err) return next(err);
-        console.log('Items cell crearted');
         res.send('New item saved');
       });
     } else {

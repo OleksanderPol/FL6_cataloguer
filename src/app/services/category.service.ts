@@ -13,8 +13,7 @@ export class CategoryService {
   constructor(
     private http: Http
   ) {
-
-    this.onInit();
+    // this.onInit();
   }
 
   onInit() {
