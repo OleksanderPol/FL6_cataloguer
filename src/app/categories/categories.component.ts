@@ -26,6 +26,7 @@ export class CategoriesComponent implements OnInit {
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
 
+
   constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
               private dataService: DataService,
@@ -44,37 +45,37 @@ export class CategoriesComponent implements OnInit {
 
               filterService.searchFilter$.subscribe(searchInput => {
                 let filteredCategories = this.searchPipe.transform(this.categoryService.categories, searchInput);
-                this.pageTable = this.tableNavigationService.getFirstPage(filteredCategories);
+                this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
               })
   }
 
   ngOnInit() {
-    this.categoryService
-        .getHttpCategories('categories')
-        .then(result => this.getCategoriesData());
-
     this.categoryService.events$.forEach(event => {
-      this.refresh();
+      if (event === 'addCategory' || event === 'getCategories') {
+        this.getCategoriesData();
+      }
+    });
+
+    this.router.events.subscribe((val) => {
+      if (this.categoryService.categories && val.url.split('/').length === 3) {
+        this.getCategoriesData();
+      }
     });
   }
 
-  refresh(): void {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
-  }
-
   getCategoriesData() {
-    this.pageTable = this.tableNavigationService.getFirstPage(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'first');
     this.ifCategories = true;
     return this.pageTable;
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPrev(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');
     return this.pageTable;
   }
 
   getNext(): Object[] {
-    this.pageTable = this.tableNavigationService.getNext(this.categoryService.categories);
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'next');
     return this.pageTable;
   }
 

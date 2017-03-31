@@ -5,6 +5,7 @@ import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
 import 'rxjs/add/operator/map';
 
@@ -15,32 +16,55 @@ import 'rxjs/add/operator/map';
 })
 export class ProfileComponent implements OnInit {
 	@Input() user: Object;
-  @Input() categories: any;
 	public changeTrigger: boolean = false;
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
-  public itemsAmount: number;
+  private itemsAmount: number;
+  private categoriesAmount: number;
 
-  constructor(private formBuilder: FormBuilder,
-              private requestService: RequestService,
-              private router: Router,
-              private dataService: DataService,
-              private categoryService: CategoryService) {
+  constructor(
+   private formBuilder: FormBuilder,
+   private requestService: RequestService,
+   private router: Router,
+   private dataService: DataService,
+   private itemsService: ItemsService,
+   private categoryService: CategoryService) {
+
+
   	this.infoForm = this.formBuilder.group({
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': [''],
       'city': [''],
       'telephone': [''],
       'photoUrl': ['']
-    });     
+    });
   }
 
   ngOnInit() {
+    this.categoryService.events$.forEach(event => {
+      this.refreshCategories();
+    });
+     this.itemsService.events$.forEach(event => {
+      this.refreshItems(event);
+    });
+  }
 
-    this.itemsAmount = this.categories.reduce(function (sum, curr) {
-      return sum + curr.amountOfItems;
-    }, 0)       
+  refreshItems(indicator: string): void {
+    if (indicator === 'add') {
+      this.itemsAmount += 1;
+    }
+
+    if (indicator === 'remove') {
+      this.itemsAmount -= 1;
+    }
+  }
+
+  refreshCategories(): void {
+    this.categoriesAmount = this.categoryService.categories.length;
+    this.itemsAmount = this.categoryService.categories.reduce((sum,category) => {
+      return sum += category.amountOfItems;
+    }, 0);
   }
 
   showChange() {

@@ -52,6 +52,7 @@ export class ItemsService {
       .then(res => {
         if (res.status === 200) {
           this.items.push(itemObj);
+          this.newEvent('add');
         } else {
           return 'Server error';
         }

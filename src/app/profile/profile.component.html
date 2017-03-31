@@ -5,13 +5,13 @@
   </div>
 
   <div class="profile-details grey darken-3">
-      
+
   <div class="profile-edit-btn hidden" *ngIf="editButton">
     <a class="btn-floating btn-medium yellow accent-3" (click)="showInfo()">
       <i class="large material-icons grey-text text-darken-3">info_outline</i>
     </a>
   </div>
-   
+
     <div class="profile-wrapper">
       <div class="profile-icon valign-wrapper">
         <img src="/assets/icons/user-icon.svg" class="valign">
@@ -21,7 +21,7 @@
         <br>
       </div>
       <div class="user-stats">
-        <span>Collections:</span><span class="yellow-text text-accent-3"><b> {{categories.length}}</b></span>
+        <span>Collections:</span><span class="yellow-text text-accent-3"><b> {{categoriesAmount}}</b></span>
         <br>
         <span>Items:</span><span class="yellow-text text-accent-3"><b> {{itemsAmount}}</b></span>
       </div>
@@ -45,7 +45,7 @@
       <div *ngIf="user.info" class="user-props">
         <span>About me: </span><span class="yellow-text text-accent-3">{{user.info}}</span>
       </div>
-      
+
       <a class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
         <i class="large material-icons grey-text text-darken-3">mode_edit</i>
       </a>

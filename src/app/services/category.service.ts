@@ -12,7 +12,17 @@ export class CategoryService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+
+    this.onInit();
+  }
+
+  onInit() {
+    this.getHttpCategories('categories')
+      .then(res => {
+        this.newEvent('getCategories');
+      });
+  }
 
   newEvent(event) {
     this.subject.next(event);
@@ -58,6 +68,7 @@ export class CategoryService {
       .then(res => {
         if (res.status === 200) {
           this.categories.push({name: categoryName, amountOfItems: 0});
+          this.newEvent('addCategory');
         } else {
           return 'Not saved in db';
         }
