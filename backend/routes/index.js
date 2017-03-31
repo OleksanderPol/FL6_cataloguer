@@ -111,12 +111,10 @@ router.get('/categories', function(req, res, next) {
 
       var result = categories.map(function(category, index) {
         category = category.toJSON();
-        // category.amountOfItems = 0;
+        category.amountOfItems = 0;
         itemCell.forEach((item)=>{
-          if (item.category == category.name) {
-            category.amountOfItems = item ? item.items.length : 0;
-          } else {
-            category.amountOfItems = 0;
+          if (item && item.category == category.name) {
+            category.amountOfItems = item.items.length;
           }
         })
         return category;
@@ -184,77 +182,37 @@ router.delete('/categories/:category', function(req, res, next){
 });
 
 router.post('/:category/items', function(req, res, next) {
-
-  Item.findOne({category: req.params.category, owner: req.user._id}, function(err, item) {
-    if (err) {
-      return next(err);
-    } else if (item == null) {
-      
-      var newItem = new Item({
-        category: req.params.category,
-        owner: req.user._id,
-        items: [{
-          name: req.body.name,
-          fotoUrl: req.body.fotoUrl,
-          info: req.body.info
-        }]
-      });
-      
-      Category.findOne({name: req.params.category}, function(err, category) {
-        if (err) {
-          return next(err);
-        } else if (category == null) {
-          var newCategory = new Category({
-            users: [req.user._id],
-            name: req.params.category
-          });
-          
-          newCategory.save(function(err) {
-            if (err) {
-              return next(err);
-            } else {
-              newItem.save(function(err) {
-                if (err) {
-                  return next(err);
-                } else {
-                  return next(200);
-                }
-              });
-            }
-          });
-
-        } else {
-          category.users.push(req.user._id);
-          category.save(function(err) {
-            if (err) {
-              return next(err);
-            } else {
-              newItem.save(function(err) {
-                if (err) {
-                  return next(err);
-                } else {
-                  return next(200);
-                }
-              });
-            }
-          });
-        }
-      });
-    } else {
-      item.items.push({
+  var query = {$and: [{owner: req.user._id}, {category: req.params.category}]},
+      itemObj = {
         name: req.body.name,
         fotoUrl: req.body.fotoUrl,
         info: req.body.info
+      };
+
+  Item.findOne(query, function(err, item) {
+    if (err) return next(err);
+
+    if (item == null) {
+      var newItemCell = new Item({
+        category: req.params.category,
+        owner: req.user._id,
+        items: [itemObj]
       });
-      item.save(function(err) {
-        if (err) {
-          return next(err);
-        } else {
-          return next(200);
-        }
-      })
+
+      newItemCell.save(function(err) {
+        if (err) return next(err);
+        console.log('Items cell crearted');
+        res.send('New item saved');
+      });
+    } else {
+      Item.findOneAndUpdate(query,
+        {$push: {'items': itemObj}},
+        function(err, model) {
+          if (err) return next(err);
+          res.send('New item saved');
+        });
     }
-  })
+  });
 });
 
 router.get('/:category/items', function(req, res, next) {

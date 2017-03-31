@@ -19,6 +19,7 @@ export class NavigationComponent implements OnInit {
   private categorySuccess: string;
   private itemError: string;
   private itemSuccess: string;
+  private currentCategory: string;
 
   constructor(
     private requestService: RequestService,
@@ -37,10 +38,24 @@ export class NavigationComponent implements OnInit {
 
   openModal() {
     this.modalAction.emit({ action: "modal", params: ['open'] });
+    this.categoryError = '';
+    this.itemError = '';
   }
 
-  closeModal() {
-    this.modalAction.emit({ action: "modal", params: ['close'] });
+  closeModal(location: string) {
+    if (this.categorySuccess && location === 'categories') {
+      setTimeout(() => {
+        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.categorySuccess = '';
+      }, 1000);
+    }
+
+    if (this.itemSuccess && location === 'items') {
+      setTimeout(() => {
+        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.itemSuccess = '';
+      }, 1000);
+    }
   }
 
   onCategoryClick() {
@@ -105,30 +120,22 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  addItem(name, info = '', fotoUrl = '', category): void {
-    let uppercaseCategory = category.toUpperCase(),
-        uppercaseName = name.toUpperCase();
-    console.log(name, category);
+  addItem(name, info = '', fotoUrl = ''): void {
+    let uppercaseName = name.toUpperCase();
 
-    if (!this.itemsService.items) {
-      console.log(this.itemsService.items);
-      this.itemsService.getItems(`${category}/items`)
-        .then(result => {
-          if (!this.categoryService.checkCategory(uppercaseCategory)) {
-            if (this.itemsService.checkItem(uppercaseName)) {
-              this.itemsService.addItem(name, info, fotoUrl, category);
-              this.itemSuccess = 'Item successfully added';
-            } else {
-              this.itemSuccess = '';
-              this.itemError = 'Such Item already exist';
-            }
+    if (this.itemsService.checkItem(uppercaseName)) {
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split("/")[3])
+        .then(res => {
+          if (res !== 'Server Error') {
+            this.itemError = '';
+            this.itemSuccess = 'Item successfully added';
+            this.closeModal('items');
           } else {
-            this.itemSuccess = '';
-            this.itemError = 'Such category dont exist';
+            this.itemError = 'Server error 500';
           }
         });
+    } else {
+      this.itemError = 'Such Item already exist';
     }
-
-
   }
 }

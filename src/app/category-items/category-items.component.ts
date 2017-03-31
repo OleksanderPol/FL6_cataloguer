@@ -41,8 +41,8 @@ export class CategoryItemsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required]
-    });        
-      
+    });
+
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;
     });
@@ -69,7 +69,7 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
-    this.createModals(9);    
+    this.createModals(9);
   }
   createModals(num) {
     this.modalActions = [];
@@ -106,7 +106,7 @@ export class CategoryItemsComponent implements OnInit {
   closeModal(i) {
     this.modalActions[i].emit({action:"modal",params:['close']});
   }
-    
+
   deleteItem(event, id) {
    event.stopPropagation();
 //   this.requestService.deleteItem(id);
