@@ -43,6 +43,7 @@ export class GlobalSearchItemsComponent implements OnInit {
   modalActions = new EventEmitter<string | MaterializeAction>();
   private searchPipe = new SearchPipe();
   public ratingNum: number[] = [1,2,3,4,5];
+  private modalItem: Item;
 
   constructor(private dataService: DataService,
     private router: Router,
