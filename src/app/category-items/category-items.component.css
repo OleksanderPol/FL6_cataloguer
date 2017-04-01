@@ -129,6 +129,15 @@ float: none;
 text-align: center;
 }
 
+#warning-modal {
+    width: 280px !important ;
+    height: 220px !important ;
+    text-align: center;
+}
+#warning-modal .modal-content {
+    padding: 20px;
+    overflow: hidden;
+}
 @media screen and (min-width: 993px) {
     .catalogue .modal {
     width: 75% !important ;

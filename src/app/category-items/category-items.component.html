@@ -19,7 +19,7 @@
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
                     <span>{{item.name | uppercase}}</span>
-                    <span class="el-delete" *ngIf="item.showDelete" (click)="deleteItem($event, item._id, item.name)">&times;</span>
+                    <span class="el-delete" *ngIf="item.showDelete" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
                 </div>
                 <div class="rating yellow accent-1">
                     <span *ngFor="let number of ratingNum">
@@ -85,6 +85,16 @@
         </div>
     </div>
     <!-- //Modal Structure -->
-
+    <!-- Warning Modal -->
+    <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalWarning">
+        <div class="modal-content">
+            <h4>You shall not delete this!</h4>
+            <p>Shall you?</p>
+        </div>
+        <div class="modal-footer grey lighten-1">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
+            <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+        </div>
+    </div>
 
 </div>

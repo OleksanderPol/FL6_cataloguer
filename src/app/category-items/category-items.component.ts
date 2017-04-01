@@ -25,6 +25,7 @@ export class CategoryItemsComponent implements OnInit {
   private showPrev: boolean;
   public category: string;
   public modalActions = new EventEmitter<string|MaterializeAction>();
+  public modalWarning = new EventEmitter<string|MaterializeAction>();
   public itemForm: FormGroup;
   public changeError: string;
   public ratingNum: number[] = [1,2,3,4,5];
@@ -32,6 +33,7 @@ export class CategoryItemsComponent implements OnInit {
   private modalItem: Object[] = [];
   private ratingChanged: boolean;
   private modalEdit: boolean;
+  public warningAction: Object;
 
   constructor(
     private router: Router,
@@ -113,9 +115,17 @@ export class CategoryItemsComponent implements OnInit {
     this.modalActions.emit({action:"modal",params:['close']});
   }
 
-  deleteItem(event, id, name) {
-   event.stopPropagation();
-   this.itemsService.removeItem(id, name);
+  openWarning(item, func) {
+      this.modalWarning.emit({action:"modal",params:['open']});
+      this.warningAction = function(){func(item)};
+  }
+  
+  closeWarning(){
+       this.modalWarning.emit({action:"modal",params:['close']});
+  }
+  
+  deleteItem(item) {
+   this.itemsService.removeItem(item._id, item.name);
    this.refresh();
    console.log('deleted')
   }
