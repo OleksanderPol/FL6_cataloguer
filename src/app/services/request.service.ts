@@ -153,4 +153,11 @@ export class RequestService {
                 responseFunc(this.responseStatus, this.responseText, id);
             })
     }
+    getUsers(responseFunc){
+        this.http
+          .get("users/BOOKS")
+          .subscribe(response => {
+              responseFunc(response.text());
+          })
+    }
 }

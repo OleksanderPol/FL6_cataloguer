@@ -29,6 +29,7 @@ import { SearchPipe } from './search/search.pipe';
 import { NavigationComponent } from './navigation/navigation.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
+import { ClubUsersComponent } from './club-users/club-users.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { GlobalSearchItemsComponent } from './global-search-items/global-search-
 
     CategoryItemsComponent,
     GlobalSearchComponent,
-    GlobalSearchItemsComponent
+    GlobalSearchItemsComponent,
+    ClubUsersComponent
   ],
   imports: [
     BrowserModule,

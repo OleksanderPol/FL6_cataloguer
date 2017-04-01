@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
+// import { User } from '../app.model';
 
 @Injectable()
 export class DataService {
   private user: Object;
   private searchResult: any;
+  private clubUsers: any;
 
   constructor(private localStorageService: LocalStorageService){}
 
@@ -34,5 +36,11 @@ export class DataService {
 
   getSearch() {
     return this.searchResult;
+  }
+  storeClubUsers(users){
+    this.clubUsers = users;
+  }
+  getClubUsers(){
+    return JSON.parse(this.clubUsers);
   }
 }

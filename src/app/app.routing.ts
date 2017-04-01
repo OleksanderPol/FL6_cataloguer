@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoryItemsComponent } from './category-items/category-items.component';
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
+import { ClubUsersComponent } from './club-users/club-users.component';
 
 const appRoutes: Routes = [
     { path: '', component: StartingPageComponent },
@@ -20,6 +21,10 @@ const appRoutes: Routes = [
           {
               path: 'items/search/:search',
               component: GlobalSearchItemsComponent
+          },
+          {
+              path: ':category/users',
+              component: ClubUsersComponent
           }
       ]
     },

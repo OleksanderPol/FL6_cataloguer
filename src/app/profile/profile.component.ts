@@ -110,4 +110,12 @@ export class ProfileComponent implements OnInit {
       this.changeError = response;
     }
   }
+
+  showClubUsers(){
+    this.requestService.getUsers(this.clubUsersResponse.bind(this));
+  }
+  clubUsersResponse(users){
+    this.dataService.storeClubUsers(users);
+    this.router.navigate([`home/${this.dataService.getUser().username}/BOOKS/users`])
+  }
 }
