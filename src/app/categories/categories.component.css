@@ -1,0 +1,98 @@
+.catalogue .col {
+    padding: 5px;
+}
+
+.catalogue div.card {
+    margin: 0px;
+    border-radius: 0px;
+    padding-bottom: 100%;
+    height: 0;
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+}
+
+.catalogue div.card:hover {
+    transform: scale(1.03);
+    z-index: 1;
+}
+
+.catalogue div.card div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+.catalogue div.card div .el-delete {
+    position: absolute;
+    top: -6px;
+    right: 2px;
+}
+
+.catalogue .card-title {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px;
+}
+.catalogue .item-ammount {
+    display: block;
+    text-align: center;
+    font-size: 80px;
+    line-height: 80px;
+    font-weight: 100;
+}
+div.bottom-nav div {
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+div.bottom-nav div > a {
+    display: inline-block;
+    width: 100%;
+    padding: 3px;
+    color: black;
+    cursor: pointer;
+    background: #ffff8d;
+    -webkit-transition: background-color 300ms ease;
+    -ms-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+div.bottom-nav div > a:hover {
+    background-color: #ffea00;
+}
+div.bottom-nav div > a.disabled {
+    pointer-events: none;
+    cursor: default;
+    background: #424242;
+}
+.bottom-nav a.toggle-btn {
+    font-weight: 600;
+    background-color: #ffea00;
+    -webkit-transition: background-color 300ms ease;
+    -ms-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+.bottom-nav a.toggle-btn:hover {
+    background-color: #ffd600;
+}
+.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
+float: none;
+text-align: center;
+}
+#warning-modal {
+    width: 280px !important ;
+    height: 220px !important ;
+    text-align: center;
+}
+#warning-modal .modal-content {
+    padding: 20px;
+    overflow: hidden;
+}

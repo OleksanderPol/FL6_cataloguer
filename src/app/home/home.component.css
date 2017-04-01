@@ -1,0 +1,16 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.87);
+  color:#FFF;
+}
+
+.container > .btn {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  border-radius: none;
+}
+
+div.col.profile {
+    padding: 5px;
+    position: relative;
+}

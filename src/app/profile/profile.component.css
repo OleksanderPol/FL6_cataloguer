@@ -1,0 +1,110 @@
+/*
+* — Profile —
+*/
+.profile-edit-btn {
+    position: absolute;
+    top: -24px;
+    right: 20px;
+}
+.prof-img img {
+    width: 100%;
+}
+.profile-details {
+    height: 0;
+    padding: 5px 5px 31% 5px;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 100;
+    position: relative;
+}
+.profile-form {
+    padding: 5px;
+    padding-bottom: 15px;
+}
+textarea#message {
+    padding: 1rem 0rem 0rem 0rem;
+    min-height: 2rem;
+    height: 2rem;
+}
+.profile-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+.profile-icon {
+    flex: 0 1 100%;
+    width: 30%;
+    padding-left: 10%;
+}
+.profile-name,
+.user-stats {
+    flex: 0 1;
+    width: 70%;
+}
+.user-stats, .user-stats-change {
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 100;
+}
+.change-info-button {
+    margin: 10px;
+    margin-bottom: 2px;
+}
+.info {
+    height: inherit;
+    padding: 5px;
+}
+.user-props {
+    margin-bottom: 5px;
+}
+
+/*
+* — Profile Navigation —
+*/
+.profile-nav {
+    margin-top: 10px;
+}
+.profile-nav-item {
+    height: 0;
+    margin-bottom: 10px;
+    padding-bottom: 30%;
+    width: 50%;
+    display: inline-block;
+    float: left;
+    position: relative;
+}
+.profile-nav-item div {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 5px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.profile-nav-item:nth-of-type(2n) div {
+    left: 5px;
+    right: 0;
+}
+.profile-nav-item div.active {
+    font-weight: 400;
+}
+.profile-nav-item div img {
+    margin-top: 3px;
+    height: 34px;
+    padding: 4px;
+}
+.profile-nav-item div span {
+    padding: 4px;
+}
