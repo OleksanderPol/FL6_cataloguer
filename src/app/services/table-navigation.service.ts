@@ -17,7 +17,10 @@ export class TableNavigationService {
         if (navDirection === 'first' && data.length > this.end) {         
             this.showNext = true;
             this.showNextChange.next(this.showNext);
-        } 
+        } else if (navDirection === 'first') {
+            this.showNext = false;
+            this.showNextChange.next(this.showNext);
+        }
         if (navDirection === 'next' && (data.length - 9) > this.end) {
             this.start += 9;
             this.end += 9;
