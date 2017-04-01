@@ -70,11 +70,11 @@ router.post('/signout', function(req, res) {
 });
 
 router.get('/home/:user', function(req, res) {
-  if (req.user.username === req.params.user) {
+  // if (req.user.username === req.params.user) {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
-  } else {
-    res.redirect('/');
-  }
+  // } else {
+  //   res.redirect('/');
+  // }
 });
 
 router.put('/home/:user', function(req, res, next) {
