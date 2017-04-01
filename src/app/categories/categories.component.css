@@ -28,6 +28,13 @@
     flex-flow: column wrap;
     justify-content: center;
 }
+
+.catalogue div.card div .el-delete {
+    position: absolute;
+    top: -6px;
+    right: 2px;
+}
+
 .catalogue .card-title {
     display: block;
     text-align: center;

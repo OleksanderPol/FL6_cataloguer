@@ -59,6 +59,25 @@ export class ItemsService {
       })
       .catch(this.handleError);
   }
+  
+    removeItem(id: string, name: string): Promise<string> {
+      return this.http
+          .delete(`/items/${id}`)
+          .toPromise()
+          .then(res => {
+            if (res.status === 200) {
+                var itemIndex;
+                this.items.forEach(function(elem, i) {
+                if (elem.name === name) {itemIndex = i};
+                })
+                this.items.splice(itemIndex, 1);
+                this.newEvent('remove');
+            } else {
+              return 'Server error';
+            }
+          })
+          .catch(this.handleError);
+  }
 
   checkItem(itemName: string): boolean {
     if (this.items.map(item => item.name.toUpperCase()).indexOf(itemName) + 1) {

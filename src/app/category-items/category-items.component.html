@@ -13,13 +13,16 @@
 
 <div class="row catalogue">
 
-    <div class="col s12 m4" *ngFor="let item of pageTable" (click)="createModal(item)" #itemEl>
+    <div class="col s12 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
 
-        <div class="ct-item z-depth-0" (mouseenter)="itemEl.showDelete = true" (mouseleave)="itemEl.showDelete = false">
+        <div class="ct-item z-depth-0"
+          (mouseenter)="item.showDelete = true"
+          (mouseleave)="item.showDelete = false"
+          (click)="item.showDelete = false">
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
                     <span>{{item.name | uppercase}}</span>
-                    <span class="el-delete" *ngIf="itemEl.showDelete">&times;</span>
+                    <span class="el-delete" *ngIf="item.showDelete" (click)="deleteItem($event, item._id, item.name)">&times;</span>
                 </div>
                 <div class="rating yellow accent-1">
                     <span *ngFor="let number of ratingNum">
@@ -40,19 +43,8 @@
             <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
                 <div *ngIf="!modalEdit">
                     <h4>{{modalItem.name | uppercase}}</h4>
-                    <p>{{modalItem.info}}</p>
-                    <div class="rating">
-                        <span *ngIf="modalItem.rating == 0">Please set rating</span>
-                        <br>
-                        <a *ngFor="let number of ratingNum">
-                            <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
-                             (click)="modalItem.rating = number"
-                             (click)="changeItemRating(ratingChanged, modalItem._id, modalItem.rating)">
-                            <img src="/assets/icons/empty-star-rate.svg" *ngIf="modalItem.rating < number"
-                             (click)="modalItem.rating = number"
-                             (click)="changeItemRating(ratingChanged, modalItem._id, modalItem.rating)">
-                            </a>
-                    </div>
+                    <p class="item-details">{{modalItem.info}}</p>
+
                 </div>
                 <div class="modal-edit-active" *ngIf="modalEdit">
 
@@ -71,7 +63,21 @@
 
                 </div>
             </div>
+
             <div class="modal-edits">
+                <div class="left rating">
+                    <span *ngIf="modalItem.rating == 0">Please set rating</span>
+                    <br>
+                    <a *ngFor="let number of ratingNum">
+                            <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
+                             (click)="modalItem.rating = number"
+                             (click)="changeItemRating(modalItem._id, modalItem.rating)">
+                            <img src="/assets/icons/empty-star-rate.svg" *ngIf="modalItem.rating < number"
+                             (click)="modalItem.rating = number"
+                             (click)="changeItemRating(modalItem._id, modalItem.rating)">
+                            </a>
+                </div>
+
                 <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                 <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
                 <button class="waves-effect waves-grey btn-flat" (click)="closeModal()">Close</button>

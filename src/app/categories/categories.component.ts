@@ -51,7 +51,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.events$.forEach(event => {
-      if (event === 'addCategory' || event === 'getCategories') {
+      if (event === 'addCategory' || event === 'getCategories' || event === 'deleteCategory') {
         this.getCategoriesData();
       }
     });
@@ -68,6 +68,11 @@ export class CategoriesComponent implements OnInit {
     this.ifCategories = true;
     return this.pageTable;
   }
+    
+  deleteCategory(event, categoryName) {
+      event.stopPropagation();
+      this.categoryService.removeCategory(categoryName);
+  }    
 
   getPrev(): Object[] {
     this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');

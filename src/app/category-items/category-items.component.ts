@@ -112,9 +112,9 @@ export class CategoryItemsComponent implements OnInit {
     this.modalActions.emit({action:"modal",params:['close']});
   }
 
-  deleteItem(event, id) {
+  deleteItem(event, id, name) {
    event.stopPropagation();
-//   this.requestService.deleteItem(id);
+   this.itemsService.removeItem(id, name);
    this.refresh();
    console.log('deleted')
   }
@@ -126,7 +126,7 @@ export class CategoryItemsComponent implements OnInit {
     this.modalEdit = false;
   }
     
-  changeItemRating(changed, id, ratingNum) {
+  changeItemRating(id, ratingNum) {
       this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
   }
     

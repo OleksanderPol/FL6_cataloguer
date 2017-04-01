@@ -11,11 +11,15 @@
 </div>
 <div class="row catalogue" *ngIf="ifCategories">
 
-    <div class="col s12 m4" *ngFor="let category of pageTable">
-        <div class="card z-depth-0 yellow accent-3" (click)="onClick(category.name)">
+    <div class="col s12 m4" *ngFor="let category of pageTable"
+       (mouseover)="category.showDelete = true"
+       (mouseleave)="category.showDelete = false"
+       (click)="onClick(category.name)">
+        <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
             <div>
                 <span class="card-title">{{category.name | uppercase}}</span>
                 <span class="item-ammount">{{category.amountOfItems}}</span>
+                <span class="el-delete" *ngIf="category.showDelete" (click)="deleteCategory($event, category.name)">&times;</span>
             </div>
         </div>
     </div>

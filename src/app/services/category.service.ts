@@ -75,6 +75,25 @@ export class CategoryService {
       })
       .catch(this.handleError);
   }
+  
+    removeCategory(categoryName: string): Promise<string> {
+      return this.http
+        .delete(`/categories/${categoryName}`)
+        .toPromise()
+        .then(res => {
+            if (res.status === 200) {
+                var catIndex;
+                this.categories.forEach(function(elem, i) {
+                    if (elem.name === categoryName) {catIndex = i}
+                })
+                this.categories.splice(catIndex, 1);
+                this.newEvent('deleteCategory');
+            } else {
+              return 'Cant delete category'
+            }
+        })
+        .catch(this.handleError)
+  }
 
   private handleError(error: Error): Promise<Error> {
     return Promise.reject(error.message || error);
