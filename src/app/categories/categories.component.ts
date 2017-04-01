@@ -3,7 +3,7 @@ import { User } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
 import { SearchPipe } from '../search/search.pipe';
@@ -16,6 +16,7 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
+  private user : User;
   private pageTable: Object[] = [];
   private subscription: Subscription;
 
@@ -50,6 +51,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
     this.categoryService.onInit();
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' ||
@@ -84,6 +86,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   onClick(category) {
-    this.router.navigate(['home/:user', category]);
+    this.router.navigate([`home/${this.user.username}`, category]);
   }
 }

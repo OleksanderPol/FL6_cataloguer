@@ -94,6 +94,36 @@ router.put('/home/:user', function(req, res, next) {
   })
 })
 
+router.get('/allcategories', function(req, res, next) {
+  Category.find({}, function(err, categories) {
+    if (err) {
+      return next(err);
+    } else {
+      res.json(categories);
+    }
+  })
+})
+
+router.get('/users/:category', function(req, res, next) {
+  Category.findOne({name: req.params.category}, function(err, category) {
+    if (err) {
+      return next(err);
+    } else if (category == null) {
+      res.status(404).send([]);
+    } else if (category.users == []) {
+      res.json([]);
+    } else {
+      User.find({ "_id": { "$in": category.users }}, function(err, users) {
+        if (err) {
+          return next(err);
+        } else {
+          res.json(users);
+        }
+      });
+    }
+  })
+})
+
 router.get('/categories', function(req, res, next) {
   if (!req.user) {
     return next(401);

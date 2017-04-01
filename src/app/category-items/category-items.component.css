@@ -85,41 +85,53 @@ div.bottom-nav div > a.disabled {
 .bottom-nav a.toggle-btn:hover {
     background-color: #ffd600;
 }
-
+.catalogue .modal {
+    min-width: 280px;
+}
 .catalogue div.modal-content {
     padding: 0px;
     margin: 0px;
-    height: 450px;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    align-items: stretch;
-    align-content: stretch;
-
 }
 .catalogue .modal-img {
     padding: 10px;
-    flex: 1 1 100%;
     display: flex;
-    width: 50%;
     justify-content: center;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    height: 100%;
+    float: left;
+    margin-right: 10px;
 }
 .catalogue .item-modal-info {
     padding: 20px;
     text-align: left;
-    width: 50%;
-    max-height: 450px;
+    margin-bottom: 60px;
 }
 .catalogue .item-modal-info.full-width{
     width: 100%;
 }
+.catalogue .modal-edit-active form {
+    display: inline-block;
+    margin-bottom: 60px;
+}
 .catalogue .modal-edits {
-    padding: 20px;
-    text-align: right;
+    background: #bdbdbd;
+    height: auto;
+    width: calc(100% - 7px);
+    text-align: center;
 }
 .catalogue .modal-edit-active input::-webkit-input-placeholder {
     color: black;
+}
+.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
+float: none;
+text-align: center;
+}
+
+@media screen and (min-width: 993px) {
+    .catalogue .modal {
+    width: 75% !important ;
+    height: 85% !important ;
+}
 }
