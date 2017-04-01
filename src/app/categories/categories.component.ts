@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { User } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
+import { MaterializeAction } from 'angular2-materialize';
 
 import { Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
@@ -22,6 +23,8 @@ export class CategoriesComponent implements OnInit {
 
   private showNext: boolean;
   private showPrev: boolean;
+  public modalWarning = new EventEmitter<string|MaterializeAction>();
+  public warningAction: Object;
 
   private search: string = '';
   private ifCategories: boolean = false;
@@ -70,8 +73,7 @@ export class CategoriesComponent implements OnInit {
     return this.pageTable;
   }
 
-  deleteCategory(event, categoryName) {
-      event.stopPropagation();
+  deleteCategory(categoryName) {
       this.categoryService.removeCategory(categoryName);
   }
 
@@ -87,5 +89,13 @@ export class CategoriesComponent implements OnInit {
 
   onClick(category) {
     this.router.navigate([`home/${this.user.username}`, category]);
+  }
+  openWarning(category, func) {
+      this.modalWarning.emit({action:"modal",params:['open']});
+      this.warningAction = function(){func(category)};
+  }
+  
+  closeWarning(){
+       this.modalWarning.emit({action:"modal",params:['close']});
   }
 }

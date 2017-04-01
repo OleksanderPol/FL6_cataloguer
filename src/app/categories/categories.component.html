@@ -11,16 +11,27 @@
 </div>
 <div class="row catalogue" *ngIf="ifCategories">
 
-    <div class="col s6 m4" *ngFor="let category of pageTable"
-       (mouseover)="category.showDelete = true"
-       (mouseleave)="category.showDelete = false"
-       (click)="onClick(category.name)">
+    <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false" (click)="onClick(category.name)">
         <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
             <div>
                 <span class="card-title">{{category.name | uppercase}}</span>
                 <span class="item-ammount">{{category.amountOfItems}}</span>
-                <span class="el-delete" *ngIf="category.showDelete" (click)="deleteCategory($event, category.name)">&times;</span>
+                <span class="el-delete" *ngIf="category.showDelete"
+                    (click)="$event.stopPropagation(); openWarning(category.name, deleteCategory.bind(this))">
+                    &times;</span>
             </div>
+        </div>
+    </div>
+
+    <!-- //Warning Modal -->
+    <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalWarning">
+        <div class="modal-content">
+            <h4>You shall not delete this!</h4>
+            <p>Shall you?</p>
+        </div>
+        <div class="modal-footer grey lighten-1">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
+            <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
         </div>
     </div>
 </div>
