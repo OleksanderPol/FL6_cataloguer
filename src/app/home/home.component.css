@@ -10,3 +10,7 @@
   border-radius: none;
 }
 
+div.col.profile {
+    padding: 5px;
+    position: relative;
+}
