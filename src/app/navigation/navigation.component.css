@@ -11,8 +11,8 @@ nav .container {
   height: 49px;
 }
 
-.clearfix {
-  height: 30px;
+.profile-icon {
+  cursor: pointer;
 }
 
 #search {
