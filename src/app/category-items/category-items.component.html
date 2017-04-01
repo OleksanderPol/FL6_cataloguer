@@ -1,9 +1,9 @@
 <div class="row bottom-nav">
-    <div class="col s6 m4">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
-    </div>
-    <div class="col s12 m4">
+    <div class="col s12 m4 push-m4">
         <a class="toggle-btn" (click)="showCategories()">{{category}}</a>
+    </div>
+    <div class="col s6 m4 pull-m4">
+        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
     </div>
     <div class="col s6 m4">
         <a class="next-btn grey-text text-darken-3" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
@@ -13,7 +13,7 @@
 
 <div class="row catalogue">
 
-    <div class="col s12 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
+    <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
 
         <div class="ct-item z-depth-0"
           (mouseenter)="item.showDelete = true"

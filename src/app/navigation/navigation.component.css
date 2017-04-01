@@ -11,6 +11,10 @@ nav .container {
   height: 49px;
 }
 
+.clearfix {
+  height: 30px;
+}
+
 #search {
   height: 35px;
   margin: 0px;
@@ -65,5 +69,27 @@ div.filter {
   color: #ffea00;
 }
 
+@media (max-width: 992px) {
+  #search {
+    position: static;
+    margin: 10px 0 4px 0;
+  }
 
+  .brand-logo {
+    top: 0;
+    height: 64px;
+  }
+
+  .pull-l4 {
+    padding: 0 5px;
+  }
+}
+
+@media (max-width: 602px) {
+  .brand-logo {
+    height: 35px;
+    margin-top: 5px;
+    left: 40%;
+  }
+}
 
