@@ -2,13 +2,22 @@ nav {
   padding: 10px 0px 5px;
   height: 64px;
 }
+
+nav label {
+  color: #ffea00;
+}
+
 nav .container {
-    height: 49px;
-}
-#search {
   height: 49px;
-  margin: 0px;
 }
+
+#search {
+  height: 35px;
+  margin: 0px;
+  position: absolute;
+  top: 10px;
+}
+
 .nav-icons ul {
   display: flex;
   justify-content: center;
@@ -23,20 +32,23 @@ nav .container {
 .nav-icons ul li:hover {
   background: #424242;
 }
+
 div.filter {
-    height: 49px;
-    margin: 0px;
-    padding: 0px;
-    position: relative;
+  height: 49px;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
 }
+
 .nav-select {
   background-color: #ffea00;
   display: inline-block;
   color: rgba(0, 0, 0, 0.870588);
   border: none;
-  height: 49px;
+  height: 35px;
   position: absolute;
-  top: 0;
+  top: 10px;
+  cursor: pointer;
 }
 
 .nav-icon {
@@ -44,22 +56,14 @@ div.filter {
 }
 
 /*modals*/
-#nav-modal {
-  background-color: rgba(0, 0, 0, 0.87);
-}
-
-#nav-modal .input-field input{
-  height: 44px;
-  margin: 10px 0 0 0;
-  padding-left: 85px;
+.input-yellow[type="text"]:focus:not([readonly]) {
   border-bottom: 1px solid #ffea00;
+  box-shadow: 0 1px 0 0 #ffea00;
 }
 
-.btn {
-  background-color: #ffea00;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-label {
+.input-yellow[type="text"]:focus:not([readonly]) + label {
   color: #ffea00;
 }
+
+
+
