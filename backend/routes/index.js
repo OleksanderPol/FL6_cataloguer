@@ -160,7 +160,7 @@ router.delete('/categories/:category', function(req, res, next){
                 if (error) {
                   return next(error);
                 } else {
-                  console.log(removed);
+                  console.log(req.params.category + ' deleted');
                 }
               });
   Category.findOne({name: req.params.category}, function(err, category) {

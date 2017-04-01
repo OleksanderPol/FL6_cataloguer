@@ -51,32 +51,33 @@ export class ItemsService {
       .toPromise()
       .then(res => {
         if (res.status === 200) {
-          this.items.push(itemObj);
-          this.newEvent('add');
+          this.getItems(`${category}/items`)
+            .then(res => {
+              this.newEvent('add');
+            });
         } else {
           return 'Server error';
         }
       })
       .catch(this.handleError);
   }
-  
-    removeItem(id: string, name: string): Promise<string> {
-      return this.http
-          .delete(`/items/${id}`)
-          .toPromise()
-          .then(res => {
-            if (res.status === 200) {
-                var itemIndex;
-                this.items.forEach(function(elem, i) {
-                if (elem.name === name) {itemIndex = i};
-                })
-                this.items.splice(itemIndex, 1);
-                this.newEvent('remove');
-            } else {
-              return 'Server error';
-            }
-          })
-          .catch(this.handleError);
+
+  removeItem(id: string, name: string): Promise<string> {
+    return this.http
+      .delete(`/items/${id}`)
+      .toPromise()
+      .then(res => {
+        if (res.status === 200) {
+          let itemIndex = this.items.findIndex(item => {
+            return item.name === name;
+          });
+          this.items.splice(itemIndex, 1);
+          this.newEvent('remove');
+        } else {
+          return 'Server error';
+        }
+      })
+      .catch(this.handleError);
   }
 
   checkItem(itemName: string): boolean {
