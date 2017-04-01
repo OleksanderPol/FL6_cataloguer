@@ -48,7 +48,7 @@
                 </div>
                 <div class="modal-edit-active" *ngIf="modalEdit">
 
-                    <form class="col s12" [formGroup]="itemForm">
+                    <form class="col s12" [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)">
                         <div class="row">
                             <label for="item-heading" class="black-text">Item name:</label>
                             <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
@@ -57,7 +57,7 @@
                                 <label class="active black-text" for="textarea1">Type description</label>
                             </div>
                         </div>
-                        <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid" (click)="changeItemInfo(modalItem._id)">Send</button>
+                        <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid">Send</button>
                     </form>
 
 
