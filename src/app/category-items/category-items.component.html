@@ -15,10 +15,7 @@
 
     <div class="col s12 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
 
-        <div class="ct-item z-depth-0"
-          (mouseenter)="item.showDelete = true"
-          (mouseleave)="item.showDelete = false"
-          (click)="item.showDelete = false">
+        <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
                     <span>{{item.name | uppercase}}</span>
@@ -36,9 +33,9 @@
     </div>
 
     <!-- Modal Structure -->
-    <div class="modal grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
-        <div class="modal-content">
-            <div class="modal-img grey lighten-2" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
+    <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+        <div class="modal-content row">
+            <div class="modal-img grey lighten-2 col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
             </div>
             <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
                 <div *ngIf="!modalEdit">
@@ -46,12 +43,14 @@
                     <p class="item-details">{{modalItem.info}}</p>
 
                 </div>
-                <div class="modal-edit-active" *ngIf="modalEdit">
+                <div class="modal-edit-active col s12 m5" *ngIf="modalEdit">
 
-                    <form class="col s12" [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)">
-                        <div class="row">
+                    <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)">
+                        <div>
                             <label for="item-heading" class="black-text">Item name:</label>
                             <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
+                            <label for="item-url" class="black-text">Item Url:</label>
+                            <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                             <div class="input-field col s12">
                                 <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
                                 <label class="active black-text" for="textarea1">Type description</label>
@@ -64,11 +63,12 @@
                 </div>
             </div>
 
-            <div class="modal-edits">
-                <div class="left rating">
-                    <span *ngIf="modalItem.rating == 0">Please set rating</span>
-                    <br>
-                    <a *ngFor="let number of ratingNum">
+        </div>
+        <div class="modal-edits modal-footer row">
+            <div class="center-align rating col s12 m6">
+                <span *ngIf="modalItem.rating == 0">Please set rating</span>
+                <br>
+                <a *ngFor="let number of ratingNum">
                             <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
                              (click)="modalItem.rating = number"
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
@@ -76,15 +76,13 @@
                              (click)="modalItem.rating = number"
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
                             </a>
-                </div>
-
+            </div>
+            <div class="col s12 m6">
                 <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                 <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-                <button class="waves-effect waves-grey btn-flat" (click)="closeModal()">Close</button>
+                <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
             </div>
-
         </div>
-
     </div>
     <!-- //Modal Structure -->
 
