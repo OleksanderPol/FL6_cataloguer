@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
+import { User } from '../app.model';
 
 @Component({
   selector: 'app-global-search',
@@ -10,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class GlobalSearchComponent implements OnInit {
   private searchValue: string = '';
-  private user: Object;
+  private user: User;
 
   constructor(private requestService: RequestService,
               private dataService: DataService,
               private router: Router) { }
 
   ngOnInit() {
-    this.user = this.dataService.getUser().username;
+    this.user = this.dataService.getUser();
   }
 
   search(searchInput){
@@ -26,7 +27,7 @@ export class GlobalSearchComponent implements OnInit {
   }
   getItems(response){
     this.dataService.storeSearch(response);
-    this.router.navigate([`home/:user/items/search`, this.searchValue]);
+    this.router.navigate([`home/${this.user.username}/items/search`, this.searchValue]);
     this.searchValue = '';
   }
 }
