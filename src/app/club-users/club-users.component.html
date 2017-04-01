@@ -12,17 +12,16 @@
 
 <div class="row catalogue">
 
-  <div class="col s12 m4" *ngFor="let user of users">
+  <div class="col s12 m4" *ngFor="let user of users" (click)="showUser(user.username)">
     <div class="ct-item z-depth-0">
-      <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + user.photoUrl + ')'">
+      <div class="ct-item-img grey darken-3" [style.background]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
         <div class="ct-item-title yellow accent-3">
           <span>{{user.username | uppercase}}</span>
-          <div class="ct-item-title-detailed">
-            <hr/>
+        </div>
+        <div class="ct-item-title-detailed">
             <p>{{user.email}}</p>
             <p>{{user.city}}</p>
           </div>
-        </div>
       </div>
     </div>
   </div>

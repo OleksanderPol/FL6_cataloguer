@@ -54,8 +54,9 @@ div.bottom-nav div > a.disabled {
     z-index: 1;
 }
 
-.catalogue div.card:hover div.ct-item .ct-item-title .ct-item-title-detailed {
+.catalogue > div:hover > div.ct-item .ct-item-img .ct-item-title-detailed {
     display: block;
+    background-color: #ffff8d;
 }
 
 .catalogue .col {
@@ -100,12 +101,12 @@ div.bottom-nav div > a.disabled {
     position: relative;
 }
 
-.catalogue div.ct-item .ct-item-title p {
+.catalogue div.ct-item .ct-item-title-detailed p {
     line-height: 100%;
     font-size: 12px;
-    font-weight: normal;
+    font-weight: 600;
 }
 
-.catalogue div.ct-item .ct-item-title .ct-item-title-detailed {
+.catalogue div.ct-item .ct-item-title-detailed {
     display: none;
 }
