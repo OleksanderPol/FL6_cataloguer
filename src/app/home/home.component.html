@@ -1,17 +1,27 @@
-<app-navigation (update)="inputSearchValue($event)">
+<app-navigation (update)="inputSearchValue($event)" (showUser)="openModal()">
 </app-navigation>
 
 <div class="row container content">
-
   <div class="col s12 l4 hide-on-med-and-down profile white-text">
     <!--   Profile   -->
     <app-profile [(user)]="user"></app-profile>
   </div>
-
   <!-- Table section -->
   <div class="col s12 l8">
     <router-outlet>
     </router-outlet>
   </div>
 
+</div>
+<!-- Modal Structure-->
+<div id="nav-modal" class="modal" materialize="modal" [materializeActions]="modalAction">
+  <div class="modal-content">
+    <h4 class="modal-heading">{{user.username}} info</h4>
+    <app-profile [(user)]="user"></app-profile>
+  </div>
+
+  <div class="container">
+    <button class="waves-effect waves-light yellow accent-3 black-text btn"
+    (click)="closeModal()">Close modal</button>
+  </div>
 </div>

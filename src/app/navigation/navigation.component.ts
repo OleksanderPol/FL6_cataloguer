@@ -17,7 +17,8 @@ import { DataService } from '../services/data.service';
 })
 export class NavigationComponent implements OnInit {
   @Output() update = new EventEmitter();
-  public modalAction = new EventEmitter<string | MaterializeAction>();
+  @Output() showUser = new EventEmitter();
+  private modalAction = new EventEmitter<string | MaterializeAction>();
   private locationLength: number;
   private categoryError: string;
   private categorySuccess: string;
@@ -61,6 +62,10 @@ export class NavigationComponent implements OnInit {
         this.itemSuccess = '';
       }, 1000);
     }
+  }
+
+  onUserClick() {
+    this.showUser.emit('');
   }
 
   onCategoryClick() {

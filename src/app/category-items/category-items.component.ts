@@ -45,7 +45,8 @@ export class CategoryItemsComponent implements OnInit {
 
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
-      'itemInfo': ['', Validators.required]
+      'itemInfo': ['', Validators.required],
+      'itemFotoUrl': [''],
     });
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {

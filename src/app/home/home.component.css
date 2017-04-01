@@ -1,27 +1,12 @@
-/*
-* — Navigation —
-*/
-nav {
-    padding: 10px 0px 0px 0px;
-    height: 64px;
-}
-.nav-icons ul {
-    display: flex;
-    justify-content: center;
-}
-.nav-icons ul li {
-    cursor: pointer;
-    width: 54px;
-    text-align: center;
-}
-.nav-icons ul li:hover {
-    background: #424242;
+.modal {
+  background-color: rgba(0, 0, 0, 0.87);
+  color:#FFF;
 }
 
-
-div.col.profile {
-    padding: 5px;
-    position: relative;
+.container > .btn {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  border-radius: none;
 }
-
 
