@@ -50,6 +50,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.categoryService.onInit();
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' || event === 'getCategories' || event === 'deleteCategory') {
         this.getCategoriesData();

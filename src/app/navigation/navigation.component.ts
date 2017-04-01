@@ -1,9 +1,13 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { MaterializeAction } from 'angular2-materialize';
+
 import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
-import { MaterializeAction } from 'angular2-materialize';
+import { DataService } from '../services/data.service';
+
+
 
 
 @Component({
@@ -25,7 +29,8 @@ export class NavigationComponent implements OnInit {
     private requestService: RequestService,
     private categoryService: CategoryService,
     private router: Router,
-    private itemsService: ItemsService) {
+    private itemsService: ItemsService,
+    private dataSerice: DataService) {
 
     router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
@@ -37,7 +42,7 @@ export class NavigationComponent implements OnInit {
   }
 
   openModal() {
-    this.modalAction.emit({ action: "modal", params: ['open'] });
+    this.modalAction.emit({ action: 'modal', params: ['open'] });
     this.categoryError = '';
     this.itemError = '';
   }
@@ -45,14 +50,14 @@ export class NavigationComponent implements OnInit {
   closeModal(location: string) {
     if (this.categorySuccess && location === 'categories') {
       setTimeout(() => {
-        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.categorySuccess = '';
       }, 1000);
     }
 
     if (this.itemSuccess && location === 'items') {
       setTimeout(() => {
-        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.itemSuccess = '';
       }, 1000);
     }
@@ -68,27 +73,28 @@ export class NavigationComponent implements OnInit {
 
   signOutUser():void {
     this.requestService.signOut();
+    this.dataSerice.removeUser();
     this.router.navigate(['/']);
   }
 
   onChangeItems(value: String): void {
     switch (value) {
-      case "alphabet":
+      case 'alphabet':
         this.itemsService.sortByAlphabet();
         this.onItemClick();
         break;
 
-      case "date+":
+      case 'date+':
         this.itemsService.sortByDate('+');
         this.onItemClick();
         break;
 
-      case "date-":
+      case 'date-':
         this.itemsService.sortByDate('-');
         this.onItemClick();
         break;
 
-      case "rate":
+      case 'rate':
         this.itemsService.sortByRating();
         this.onItemClick();
         break;
@@ -124,7 +130,7 @@ export class NavigationComponent implements OnInit {
     let uppercaseName = name.toUpperCase();
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split("/")[3])
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[3])
         .then(res => {
           if (res !== 'Server Error') {
             this.itemError = '';

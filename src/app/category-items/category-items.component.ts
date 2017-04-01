@@ -98,16 +98,16 @@ export class CategoryItemsComponent implements OnInit {
   getNext(): Object[] {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'next');
     return this.pageTable;
-  } 
+  }
 
   showCategories() {
     this.router.navigate(['/home', this.dataService.getUser().username]);
   }
-    
+
   openModal() {
     this.modalActions.emit({action:"modal",params:['open']});
   }
-    
+
   closeModal() {
     this.modalActions.emit({action:"modal",params:['close']});
   }
@@ -118,7 +118,7 @@ export class CategoryItemsComponent implements OnInit {
    this.refresh();
    console.log('deleted')
   }
-    
+
   changeItemInfo(id) {
     if (this.itemForm.dirty && this.itemForm.valid) {
       this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
@@ -129,7 +129,7 @@ export class CategoryItemsComponent implements OnInit {
   changeItemRating(id, ratingNum) {
       this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
   }
-    
+
   receiveResponseChange(status, response, id) {
     if (status === 200) {
         this.refresh();

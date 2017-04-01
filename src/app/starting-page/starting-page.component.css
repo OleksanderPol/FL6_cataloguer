@@ -1,6 +1,9 @@
 #login, #register {
     width: 400px;
 }
+#login.open {
+    top: 15%;
+}
 .input-field {
     margin-top: 0;
 }
@@ -20,6 +23,7 @@
 
 control-messages {
     color: red;
+    font-weight: bold;
 }
 
 .error {
@@ -27,4 +31,17 @@ control-messages {
     text-align: center;
     color: red;
     padding: 10px;
+    font-weight: bold;
+}
+
+.background {
+    background-image: url('../../assets/img/background.jpg');
+    background-size: cover;
+    max-height: 100%;
+    height: 100vh;
+    width: auto;
+}
+
+.modal {
+    color: yellow;
 }
