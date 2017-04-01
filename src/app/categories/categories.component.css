@@ -61,6 +61,12 @@ div.bottom-nav div > a {
     color: black;
     cursor: pointer;
     background: #ffff8d;
+    -webkit-transition: background-color 300ms ease;
+    -ms-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+div.bottom-nav div > a:hover {
+    background-color: #ffea00;
 }
 div.bottom-nav div > a.disabled {
     pointer-events: none;
@@ -69,4 +75,11 @@ div.bottom-nav div > a.disabled {
 }
 .bottom-nav a.toggle-btn {
     font-weight: 600;
+    background-color: #ffea00;
+    -webkit-transition: background-color 300ms ease;
+    -ms-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+.bottom-nav a.toggle-btn:hover {
+    background-color: #ffd600;
 }

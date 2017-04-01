@@ -19,8 +19,8 @@ export class CategoriesComponent implements OnInit {
   private pageTable: Object[] = [];
   private subscription: Subscription;
 
-  private showNext = true;
-  private showPrev = false;
+  private showNext: boolean;
+  private showPrev: boolean;
 
   private search: string = '';
   private ifCategories: boolean = false;
@@ -76,7 +76,7 @@ export class CategoriesComponent implements OnInit {
   }    
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');  
     return this.pageTable;
   }
 
