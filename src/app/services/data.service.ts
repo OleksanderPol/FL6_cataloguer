@@ -20,6 +20,7 @@ export class DataService {
 
   removeUser(): void {
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("logedInUser");
   }
 
   storeCategories(categories: string) {
@@ -42,5 +43,11 @@ export class DataService {
   }
   getClubUsers(){
     return JSON.parse(this.clubUsers);
+  }
+  storeLogedInUserId(id: string){
+    sessionStorage.setItem("logedInUser", id);
+  }
+  getLogedInUserId(){
+    return sessionStorage.getItem("logedInUser");
   }
 }
