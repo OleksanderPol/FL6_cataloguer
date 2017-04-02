@@ -8,18 +8,26 @@ export class TableNavigationService {
     showNextChange = new BehaviorSubject<boolean>(false);
     public showPrev: boolean;
     showPrevChange = new BehaviorSubject<boolean>(false);
-    private start: number = 0;
-    private end: number = 9;
+    public start: number = 0;
+    public end: number = 9;
 
   constructor() {}
       
     getPage(data: Array<Object>, navDirection: string):Object[] {
-        if (navDirection === 'first' && data.length > this.end) {         
+        if (navDirection === 'first' && data.length > this.end) {
+            this.start = 0;
+            this.end = 9;
             this.showNext = true;
             this.showNextChange.next(this.showNext);
+            this.showPrev = false;
+            this.showPrevChange.next(this.showPrev);
         } else if (navDirection === 'first') {
+            this.start = 0;
+            this.end = 9;
             this.showNext = false;
             this.showNextChange.next(this.showNext);
+            this.showPrev = false;
+            this.showPrevChange.next(this.showPrev);
         }
         if (navDirection === 'next' && (data.length - 9) > this.end) {
             this.start += 9;
