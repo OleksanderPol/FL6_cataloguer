@@ -48,7 +48,7 @@
                     <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)">
                         <div>
                             <label for="item-heading" class="black-text">Item name:</label>
-                            <input id="item-heading" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
+                            <input id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
                             <label for="item-url" class="black-text">Item Url:</label>
                             <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                             <div class="input-field col s12">
