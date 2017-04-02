@@ -12,18 +12,14 @@ export class TicTacToeComponent implements OnInit {
 
   ngOnInit() {
     this.createPlaground();
-    this.refreshTable();
   }
 
   createPlaground(): void {
-    this.playingGround = new Array(3);
-
-    for (let i = 0; i < 3; i++) {
-      this.playingGround[i] = new Array(3);
-       for (let j = 0; j < 3; j++) {
-        this.playingGround[i][j] = "";
-      }
-    }
+    this.playingGround = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ];
   }
 
   nextStep(event): void {
@@ -33,39 +29,44 @@ export class TicTacToeComponent implements OnInit {
       if (!!target.innerHTML) return;
 
       let x = target.parentNode.parentNode.rowIndex,
-          y = target.parentNode.cellIndex,
-          table = target.parentNode.parentNode.parentNode;
+          y = target.parentNode.cellIndex;
 
-      if (this.isWinner()) {
-        alert("You lost");
-        this.refreshTable();
-        return;
-      }
-      else {
-        this.setCell(table, x, y, 'X');
-      }
+
+      // if (this.isWinner()) {
+      //   alert("You lost");
+      //   this.refreshTable();
+      //   return;
+      // }
+      // else {
+        this.setCell(x, y, 'X');
+      // }
 
       if (this.isWinner()) {
         alert("You win!");
         this.refreshTable();
         return;
-      }
-      else {
-        this.PCstep(table);
+      } else {
+        this.PCstep();
+        if (this.isWinner()) {
+          setTimeout(() => {
+            alert('You lost');
+            this.refreshTable();
+          }, 1000);
+
+        }
       }
 
       if (this.checkDrow()) {
-        // this.refreshTable();
         alert('Drow');
+        this.refreshTable();
       }
     }
 
     return;
   }
 
-  setCell(elem, x: number, y: number, sign: string): void {
+  setCell(x: number, y: number, sign: string): void {
     this.playingGround[x][y] = sign;
-    elem.rows[x].cells[y].firstChild.innerHTML = sign;
   }
 
   isWinner() {
@@ -142,7 +143,7 @@ export class TicTacToeComponent implements OnInit {
     return false;
   }
 
-  PCstep(table): void {
+  PCstep(): void {
     let PCx = null,
         PCy = null,
         priority = 0,
@@ -150,7 +151,7 @@ export class TicTacToeComponent implements OnInit {
         userSign = 'X';
 
     if (this.playingGround[1][1] !== PCsign && this.playingGround[1][1] !== userSign) {
-      this.setCell(table, 1, 1, PCsign);
+      this.setCell(1, 1, PCsign);
       return;
     }
 
@@ -198,7 +199,8 @@ export class TicTacToeComponent implements OnInit {
     }
 
     if (PCx !== null && PCy !== null) {
-      this.setCell(table, PCx, PCy, PCsign);
+      this.setCell(PCx, PCy, PCsign);
+      debugger;
     }
   }
 
@@ -213,17 +215,10 @@ export class TicTacToeComponent implements OnInit {
   }
 
   refreshTable(): void {
-    // let cells = this.elementRef.nativeElement.querySelectorAll("div");
-    // debugger;
-    // console.log(cells);
-  //   cells.forEach(cell => {
-  //     cell.innerHtml = '';
-  //   });
-
-  //   for (let i = 0; i < 3; i++) {
-  //     for (let j = 0; j < 3; j++) {
-  //       this.playingGround[i][j] === '';
-  //     }
-  //   }
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        this.playingGround[i][j] = '';
+      }
+    }
   }
 }
