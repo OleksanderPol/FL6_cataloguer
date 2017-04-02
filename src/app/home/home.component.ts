@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild, Output, AfterViewInit, EventEmitter } from '@angular/core';
-import { Routes, ActivatedRoute } from '@angular/router';
+import { Routes, Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { MaterializeDirective } from "angular2-materialize";
 import { MaterializeAction } from 'angular2-materialize';
@@ -21,8 +21,16 @@ export class HomeComponent implements OnInit {
   private modalAction = new EventEmitter<string | MaterializeAction>();
 
   constructor(private dataService: DataService,
-              private requestService: RequestService,
-              private filterService: FilterService) {}
+    private requestService: RequestService,
+    private filterService: FilterService,
+    private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.user = this.dataService.getUser();
+      }
+    })
+
+  }
 
   ngOnInit() {
     this.user = this.dataService.getUser();
@@ -38,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.modalAction.emit({ action: 'modal', params: ['close'] });
   }
 
-  inputSearchValue(value){
+  inputSearchValue(value) {
     this.filterService.addSearchPhrase(value);
   }
 }
