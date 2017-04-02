@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'tic-tac-toe',
@@ -8,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class TicTacToeComponent implements OnInit {
   private playingGround: string[][];
 
-  constructor() { }
+  constructor(private elementRef: ElementRef) { }
 
   ngOnInit() {
     this.createPlaground();
+    this.refreshTable();
   }
 
   createPlaground(): void {
@@ -28,33 +29,43 @@ export class TicTacToeComponent implements OnInit {
   nextStep(event): void {
     let target = event.target;
 
-    if (target.tagName !== 'TD') return;
-    if (!!target.innerHTML) return;
+    if (target.tagName === 'DIV') {
+      if (!!target.innerHTML) return;
 
-    let x = target.parentNode.rowIndex,
-        y = target.cellIndex,
-        table = target.parentNode.parentNode;
+      let x = target.parentNode.parentNode.rowIndex,
+          y = target.parentNode.cellIndex,
+          table = target.parentNode.parentNode.parentNode;
 
-    if (this.isWinner()) {
-      alert("You lost");
-      return;
-    }
-    else {
-      this.setCell(table, x, y, 'X');
+      if (this.isWinner()) {
+        alert("You lost");
+        this.refreshTable();
+        return;
+      }
+      else {
+        this.setCell(table, x, y, 'X');
+      }
+
+      if (this.isWinner()) {
+        alert("You win!");
+        this.refreshTable();
+        return;
+      }
+      else {
+        this.PCstep(table);
+      }
+
+      if (this.checkDrow()) {
+        // this.refreshTable();
+        alert('Drow');
+      }
     }
 
-    if (this.isWinner()) {
-      alert("You win!");
-      return;
-    }
-    else {
-      this.PCstep(table);
-    }
+    return;
   }
 
   setCell(elem, x: number, y: number, sign: string): void {
     this.playingGround[x][y] = sign;
-    elem.rows[x].cells[y].innerHTML = sign;
+    elem.rows[x].cells[y].firstChild.innerHTML = sign;
   }
 
   isWinner() {
@@ -104,6 +115,8 @@ export class TicTacToeComponent implements OnInit {
 
       if (curretnCell !== '') return curretnCell;
     }
+
+
 
     return false;
   }
@@ -189,4 +202,28 @@ export class TicTacToeComponent implements OnInit {
     }
   }
 
+  checkDrow(): boolean {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (this.playingGround[i][j] === '') return false
+      }
+    }
+
+    return true;
+  }
+
+  refreshTable(): void {
+    // let cells = this.elementRef.nativeElement.querySelectorAll("div");
+    // debugger;
+    // console.log(cells);
+  //   cells.forEach(cell => {
+  //     cell.innerHtml = '';
+  //   });
+
+  //   for (let i = 0; i < 3; i++) {
+  //     for (let j = 0; j < 3; j++) {
+  //       this.playingGround[i][j] === '';
+  //     }
+  //   }
+  }
 }
