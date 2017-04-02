@@ -18,10 +18,10 @@
                       <i class="small material-icons grey-text lighten-2">search</i>
                     </label>
                   </li>
-                  <li *ngIf="locationLength < 5" (click)="shown = 'filter'">
+                  <li *ngIf="locationLength < 6" (click)="shown = 'filter'">
                     <i class="material-icons grey-text lighten-2">swap_vert</i>
                   </li>
-                  <li *ngIf="locationLength < 5" class="nav-icon" title="add category/item" class="nav-icon"
+                  <li *ngIf="locationLength < 6" class="nav-icon" title="add category/item" class="nav-icon"
                   (click)="openModal(); show='';
                   categoryError=''; categorySuccess=''">
                     <i class="material-icons">playlist_add</i>
@@ -38,7 +38,7 @@
                   <input id="search" type="search" placeholder="Type here to search" #input (input)="update.emit(input.value)">
                 </div>
                 <!-- show if items are displayed -->
-                <div *ngIf="locationLength === 4">
+                <div *ngIf="locationLength === 5">
                   <div *ngIf="shown === 'filter'" class="filter">
                     <select class="nav-select" #selected (change)="onChangeItems(selected.value)">
                       <option disabled selected>Click here to sort items</option>
@@ -92,7 +92,7 @@
       </form>
     </div>
     <!-- item form -->
-    <div *ngIf="locationLength === 4" class="row">
+    <div *ngIf="locationLength === 5" class="row">
       <form class="col s12">
         <h4 class="modal-heading">Add item</h4>
         <div class="error">{{itemError}}{{itemSuccess}}</div>
