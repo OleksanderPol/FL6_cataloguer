@@ -6,6 +6,8 @@ import { Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
 import { CategoryService } from '../services/category.service';
+import { SearchPipe } from '../search/search.pipe';
+import { FilterService } from '../services/filter.service';
 
 @Component({
   selector: 'app-all-users-categories',
@@ -21,6 +23,7 @@ export class AllUsersCategoriesComponent implements OnInit {
   private showPrev: boolean;
   private ifCategories: boolean = false;
   private club: string;
+  private searchPipe = new SearchPipe();
 
   constructor(
     private router: Router,
@@ -28,6 +31,7 @@ export class AllUsersCategoriesComponent implements OnInit {
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
+    private filterService: FilterService,
     private categoryService: CategoryService
   ) {
         this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
@@ -36,6 +40,11 @@ export class AllUsersCategoriesComponent implements OnInit {
 
         this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
             this.showPrev = value;
+        });
+
+        filterService.searchFilter$.subscribe(searchInput => {
+                let filteredCategories = this.searchPipe.transform(this.allUsersCategories, searchInput);
+                this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
         });
     }
 

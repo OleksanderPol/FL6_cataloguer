@@ -9,3 +9,13 @@ export class SearchPipe implements PipeTransform {
     })
   }
 }
+
+@Pipe({name: 'searchUserPipe'})
+
+export class SearchUserPipe implements PipeTransform {
+  transform(value: any, exponent: string) {
+    return value.filter(item => {
+        return item.username.toUpperCase().indexOf(exponent.toUpperCase()) !== -1; 
+    })
+  }
+}

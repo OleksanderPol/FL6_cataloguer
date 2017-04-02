@@ -24,7 +24,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
 import { CategoryItemsComponent } from './category-items/category-items.component';
-import { SearchPipe } from './search/search.pipe';
+import { SearchPipe, SearchUserPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
@@ -43,6 +43,7 @@ import { ClubUsersComponent } from './club-users/club-users.component';
     ProfileComponent,
     CategoriesComponent,
     SearchPipe,
+    SearchUserPipe,
     NavigationComponent,
 
     CategoryItemsComponent,
