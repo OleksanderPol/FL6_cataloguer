@@ -1,0 +1,17 @@
+#gameTable {
+  background-color: white;
+}
+
+table, tr, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+
+
