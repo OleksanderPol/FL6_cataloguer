@@ -20,7 +20,6 @@ export class ClubUsersComponent implements OnInit {
 
   ngOnInit() {
     this.users = this.dataService.getClubUsers();
-    console.log(this.users);
   }
   showUser(user){
     this.dataService.storeUser(JSON.stringify(user));

@@ -48,7 +48,7 @@ import { ClubUsersComponent } from './club-users/club-users.component';
     CategoryItemsComponent,
     GlobalSearchComponent,
     GlobalSearchItemsComponent,
-    AllUsersCategoriesComponent
+    AllUsersCategoriesComponent,
     ClubUsersComponent
   ],
   imports: [

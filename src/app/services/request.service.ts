@@ -94,14 +94,12 @@ export class RequestService {
                 this.responseStatus = response.status;
             }, error => {
                 this.responseStatus = error.status;
-                console.log(this.responseStatus);
             })
     }
     searchItems(searchInput, responseFunc) {
         this.http
           .get(`items/search/${searchInput}`)
           .subscribe(response => {
-              console.log(response.text());
               responseFunc(response.text());
           },
           error => {
@@ -114,7 +112,6 @@ export class RequestService {
           .get(`items/${id}`)
           .subscribe(response => {
               responseFunc(response.text());
-              console.log(response.text())
           })
     }
 
@@ -153,9 +150,9 @@ export class RequestService {
                 responseFunc(this.responseStatus, this.responseText, id);
             })
     }
-    getUsers(responseFunc){
+    getUsers(category, responseFunc){
         this.http
-          .get("users/BOOKS")
+          .get(`users/${category}`)
           .subscribe(response => {
               responseFunc(response.text());
           })
