@@ -154,13 +154,13 @@ export class NavigationComponent implements OnInit {
   addItem(name, info = '', fotoUrl = ''): void {
     let uppercaseName = name.toUpperCase();
 
-    if (this.router.url.split('/')[3] === 'allcategories') {
+    if (this.router.url.split('/')[4] === 'allcategories') {
       this.itemError = 'Select the category first, please!';
       return;
     }
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[3])
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[4])
         .then(res => {
           if (res !== 'Server Error') {
             this.itemError = '';
