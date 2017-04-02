@@ -5,6 +5,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryItemsComponent } from './category-items/category-items.component';
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 import { ClubUsersComponent } from './club-users/club-users.component';
+import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
 
 const appRoutes: Routes = [
     { path: '', component: StartingPageComponent },
@@ -15,7 +16,11 @@ const appRoutes: Routes = [
               component: CategoriesComponent
           },
           {
-              path: ':category',
+              path: 'usersCategories',
+              component: AllUsersCategoriesComponent
+          },
+          {
+              path: 'category/:category',
               component: CategoryItemsComponent
           },
           {

@@ -97,8 +97,8 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/home', this.dataService.getUser().username]);
   }
 
-  showItems() {
-    this.router.navigate(['/home', this.dataService.getUser().username, 'allcategories']);
+  showAllUsersCategories() {
+    this.router.navigate([`home/${this.dataService.getUser().username}`, 'usersCategories']);
   }
 
   receiveResponseChange(status, response, username) {

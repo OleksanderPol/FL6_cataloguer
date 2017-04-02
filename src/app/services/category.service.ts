@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CategoryService {
   public categories: Category[];
+  public allUsersCategories: Object[];
   private subject = new Subject<string>();
   private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -28,6 +29,15 @@ export class CategoryService {
   get events$() {
     return this.subject.asObservable();
   }
+
+  getAllUsersCategories(): Promise<Object>{
+      return this.http.get('/allcategories')
+        .toPromise()
+        .then(response => {
+            return this.allUsersCategories = JSON.parse(response.text());
+        })
+        .catch(this.handleError);
+}     
 
   getHttpCategories(categoriesUrl): Promise<Category[]> {
     return this.http.get(categoriesUrl)

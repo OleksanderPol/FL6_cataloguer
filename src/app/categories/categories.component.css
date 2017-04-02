@@ -41,6 +41,8 @@
     font-size: 16px;
     font-weight: 600;
     padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .catalogue .item-ammount {
     display: block;

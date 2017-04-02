@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { User } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
@@ -88,7 +88,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   onClick(category) {
-    this.router.navigate([`home/${this.user.username}`, category]);
+    this.router.navigate([`home/${this.user.username}/category`, category]);
   }
   openWarning(category, func) {
       this.modalWarning.emit({action:"modal",params:['open']});

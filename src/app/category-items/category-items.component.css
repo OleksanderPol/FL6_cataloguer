@@ -39,6 +39,7 @@
     padding: 5px;
     position: relative;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
