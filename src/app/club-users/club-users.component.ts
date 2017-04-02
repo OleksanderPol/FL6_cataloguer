@@ -22,7 +22,8 @@ export class ClubUsersComponent implements OnInit {
     this.users = this.dataService.getClubUsers();
     console.log(this.users);
   }
-  showUser(username){
-    this.router.navigate(["home", username]);
+  showUser(user){
+    this.dataService.storeUser(JSON.stringify(user));
+    this.router.navigate(["home", user.username]);
   }
 }
