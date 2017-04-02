@@ -1,19 +1,19 @@
 <div class="container ">
   <table id="gameTable" class="centered" (click)="nextStep($event)">
     <tr>
-      <td><div>{{playingGround[0][0]}}</div></td>
-      <td><div>{{playingGround[0][1]}}</div></td>
-      <td><div>{{playingGround[0][2]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[0][0] !== 'O'}">{{playingGround[0][0]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[0][1] !== 'O'}">{{playingGround[0][1]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[0][2] !== 'O'}">{{playingGround[0][2]}}</div></td>
     </tr>
     <tr>
-      <td><div>{{playingGround[1][0]}}</div></td>
-      <td><div>{{playingGround[1][1]}}</div></td>
-      <td><div>{{playingGround[1][2]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[1][0] !== 'O'}">{{playingGround[1][0]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[1][1] !== 'O'}">{{playingGround[1][1]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[1][2] !== 'O'}">{{playingGround[1][2]}}</div></td>
     </tr>
     <tr>
-      <td><div>{{playingGround[2][0]}}</div></td>
-      <td><div>{{playingGround[2][1]}}</div></td>
-      <td><div>{{playingGround[2][2]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[2][0] !== 'O'}">{{playingGround[2][0]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[2][1] !== 'O'}">{{playingGround[2][1]}}</div></td>
+      <td><div [ngClass]="{'cell': playingGround[2][2] !== 'O'}">{{playingGround[2][2]}}</div></td>
     </tr>
   </table>
 </div>

@@ -31,15 +31,7 @@ export class TicTacToeComponent implements OnInit {
       let x = target.parentNode.parentNode.rowIndex,
           y = target.parentNode.cellIndex;
 
-
-      // if (this.isWinner()) {
-      //   alert("You lost");
-      //   this.refreshTable();
-      //   return;
-      // }
-      // else {
-        this.setCell(x, y, 'X');
-      // }
+      this.setCell(x, y, 'X');
 
       if (this.isWinner()) {
         alert("You win!");
@@ -52,7 +44,7 @@ export class TicTacToeComponent implements OnInit {
             alert('You lost');
             this.refreshTable();
           }, 1000);
-
+          return;
         }
       }
 
