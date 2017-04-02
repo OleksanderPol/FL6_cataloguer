@@ -6,6 +6,9 @@ import { Subscription} from 'rxjs/Subscription';
 import { DataService } from '../services/data.service';
 import { RequestService } from '../services/request.service';
 import { CategoryService } from '../services/category.service';
+import { FilterService } from '../services/filter.service';
+import { SearchPipe } from '../search/search.pipe';
+import { AllUsersCategoriesService } from '../services/all-users-categories.service';
 
 @Component({
   selector: 'app-all-users-categories',
@@ -20,6 +23,7 @@ export class AllUsersCategoriesComponent implements OnInit {
   private showNext: boolean;
   private showPrev: boolean;
   private ifCategories: boolean = false;
+  private searchPipe = new SearchPipe();
 
   constructor(
     private router: Router,
@@ -27,7 +31,9 @@ export class AllUsersCategoriesComponent implements OnInit {
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
-    private categoryService: CategoryService
+    private filterService: FilterService,
+    private categoryService: CategoryService,
+    private allUsersCategoriesService: AllUsersCategoriesService
   ) {
         this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
             this.showNext = value;
@@ -36,17 +42,27 @@ export class AllUsersCategoriesComponent implements OnInit {
         this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
             this.showPrev = value;
         });
+      
+        filterService.searchFilter$.subscribe(searchInput => {
+            let filteredCategories = this.searchPipe.transform(this.allUsersCategoriesService.allUsersCategories, searchInput);
+            this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
+              })
     }
 
   ngOnInit() {
       this.user = this.dataService.getUser();
       this.onInit();
+      this.allUsersCategoriesService.events$.forEach(event => {
+      if (event === 'refreshUsersCategories') {
+        this.pageTable = this.tableNavigationService.getPage(this.allUsersCategories, 'first')
+      }
+    });
   }
     
   onInit() {
-    this.categoryService.getAllUsersCategories()
+    this.allUsersCategoriesService.getAllUsersCategories()
       .then(res => {
-        this.allUsersCategories = this.categoryService.allUsersCategories;
+        this.allUsersCategories = this.allUsersCategoriesService.allUsersCategories;
         this.pageTable = this.tableNavigationService.getPage(this.allUsersCategories, 'first')
         });
   }

@@ -14,6 +14,7 @@ import { RequestService } from './services/request.service';
 import { ItemsService } from './services/items.service';
 import { FilterService } from './services/filter.service';
 import { CategoryService } from './services/category.service';
+import { AllUsersCategoriesService } from './services/all-users-categories.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -67,7 +68,8 @@ import { AllUsersCategoriesComponent } from './all-users-categories/all-users-ca
     ItemsService,
     TableNavigationService,
     FilterService,
-    CategoryService
+    CategoryService,
+    AllUsersCategoriesService
   ],
 
   bootstrap: [AppComponent]

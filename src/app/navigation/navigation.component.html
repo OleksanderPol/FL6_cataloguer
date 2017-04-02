@@ -49,6 +49,20 @@
                     </select>
                   </div>
                 </div>
+                <!-- show if items are displayed -->
+                <div *ngIf="locationLength === 4">
+                  <div *ngIf="shown === 'filter'" class="filter">
+                    <select class="nav-select" #selected (change)="onChangeUsersCategories(selected.value)">
+                      <option disabled selected>Click here to sort items</option>
+                      <option value="usersAmount">Users amount</option>
+                      <option value="alphabet">Alphabet</option>
+<!--
+                      <option value="date+">Date: from new to old</option>
+                      <option value="date-">Date: from old to new</option>
+-->
+                    </select>
+                  </div>
+                </div>
                 <!-- show if categories are displayed -->
                 <div *ngIf="locationLength === 3">
                   <div *ngIf="shown === 'filter'" class="filter">
