@@ -25,12 +25,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
 import { CategoryItemsComponent } from './category-items/category-items.component';
-import { SearchPipe } from './search/search.pipe';
+import { SearchPipe, SearchUserPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
+import { ClubUsersComponent } from './club-users/club-users.component';
 
 @NgModule({
   declarations: [
@@ -43,12 +44,14 @@ import { AllUsersCategoriesComponent } from './all-users-categories/all-users-ca
     ProfileComponent,
     CategoriesComponent,
     SearchPipe,
+    SearchUserPipe,
     NavigationComponent,
 
     CategoryItemsComponent,
     GlobalSearchComponent,
     GlobalSearchItemsComponent,
-    AllUsersCategoriesComponent
+    AllUsersCategoriesComponent,
+    ClubUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -23,6 +23,7 @@ export class AllUsersCategoriesComponent implements OnInit {
   private showNext: boolean;
   private showPrev: boolean;
   private ifCategories: boolean = false;
+  private club: string;
   private searchPipe = new SearchPipe();
 
   constructor(
@@ -77,8 +78,12 @@ export class AllUsersCategoriesComponent implements OnInit {
     return this.pageTable;
   }
     
-  pickCategory(category):void {
-      console.log(category)
+  pickCategory(category: string):void {
+    this.club = category;
+    this.requestService.getUsers(category, this.clubUsersResponse.bind(this))
   }
-
+  clubUsersResponse(users){
+    this.dataService.storeClubUsers(users);
+    this.router.navigate([`home/${this.dataService.getUser().username}/${this.club}/users`])
+  }
 }
