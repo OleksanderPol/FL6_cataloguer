@@ -82,6 +82,7 @@ export class AllUsersCategoriesComponent implements OnInit {
     this.club = category;
     this.requestService.getUsers(category, this.clubUsersResponse.bind(this))
   }
+    
   clubUsersResponse(users){
     this.dataService.storeClubUsers(users);
     this.router.navigate([`home/${this.dataService.getUser().username}/${this.club}/users`])

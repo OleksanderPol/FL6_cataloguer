@@ -26,22 +26,36 @@ export class NavigationComponent implements OnInit {
   private itemError: string;
   private itemSuccess: string;
   private currentCategory: string;
+  private editing: boolean;
 
   constructor(
     private requestService: RequestService,
     private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService,
-    private dataSerice: DataService,
-    private allUsersCategoriesService: AllUsersCategoriesService) {
+    private dataService: DataService,
+    private allUsersCategoriesService: AllUsersCategoriesService) {}
 
-    router.events.subscribe((val) => {
-      this.locationLength = val.url.split('/').length;
-    });
-  }
 
   ngOnInit() {
     this.update.emit('');
+
+    this.router.events.subscribe((val) => {
+      this.locationLength = val.url.split('/').length;
+      if (val.url === '/') return;
+      this.checkLogedUser();
+    });
+  }
+
+  checkLogedUser(): void {
+    let currentUser = this.dataService.getUser().username,
+        logedUser = this.dataService.getLogedInUser().username;
+    console.log(currentUser, logedUser);
+    if (currentUser === logedUser) {
+      this.editing = true;
+    } else {
+      this.editing = false;
+    }
   }
 
   openModal() {
@@ -84,7 +98,7 @@ export class NavigationComponent implements OnInit {
 
   signOutUser():void {
     this.requestService.signOut();
-    this.dataSerice.removeUser();
+    this.dataService.removeUser();
     this.router.navigate(['/']);
   }
 

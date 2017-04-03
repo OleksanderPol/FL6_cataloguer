@@ -52,6 +52,8 @@
     padding-top: 3px;
     margin: 0;
 }
+
+/* NAVIGATION */
 div.bottom-nav div {
     padding: 5px;
     text-align: center;
@@ -59,8 +61,9 @@ div.bottom-nav div {
 }
 div.bottom-nav div > a {
     display: inline-block;
+    font-weight: 600;
     width: 100%;
-    padding: 3px;
+    padding: 4px;
     color: black;
     cursor: pointer;
     background: #ffff8d;
@@ -76,16 +79,22 @@ div.bottom-nav div > a.disabled {
     cursor: default;
     background: #424242;
 }
-.bottom-nav a.toggle-btn {
+div.bottom-nav div > a i.material-icons {
+    line-height: 0px;
+    position: relative;
+    top: 9px;
+    margin-left: -1px;
+}
+
+.bottom-nav div a.current-btn {
     font-weight: 600;
     background-color: #ffea00;
-    -webkit-transition: background-color 300ms ease;
-    -ms-transition: background-color 300ms ease;
-    transition: background-color 300ms ease;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-.bottom-nav a.toggle-btn:hover {
-    background-color: #ffd600;
-}
+
+
+/* MODAL */
 .catalogue .modal {
     min-width: 280px;
 }
@@ -130,6 +139,7 @@ float: none;
 text-align: center;
 }
 
+/* WARNING MODAL */
 #warning-modal {
     width: 280px !important ;
     height: 220px !important ;
