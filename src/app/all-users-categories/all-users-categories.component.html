@@ -1,21 +1,27 @@
-<div class="row bottom-nav">
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
+</div>
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
     <div class="col s12 m4 push-m4">
-        <a class="toggle-btn">Toggle</a>
+      <a class="toggle-btn">Toggle</a>
     </div>
     <div class="col s6 m4 pull-m4">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
     </div>
     <div class="col s6 m4">
-        <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
     </div>
-</div>
+  </div>
 
-<div class="row catalogue">
+  <div class="row catalogue">
     <div class="col s6 m4" *ngFor="let category of pageTable" (click)="pickCategory(category.name)">
-        <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
-            <div>
-                <span class="card-title">{{category.name | uppercase}}</span>
-                <span class="users-ammount">Users: {{category.users.length}}</span>
-            </div>
+      <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
+        <div>
+          <span class="card-title">{{category.name | uppercase}}</span>
+          <span class="users-ammount">Users: {{category.users.length}}</span>
         </div>
+      </div>
     </div>
+  </div>

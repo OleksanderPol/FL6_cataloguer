@@ -30,3 +30,41 @@ text-area.input-yellow:focus:not([readonly]) + label {
 .input-yellow[type="email"]:focus:not([readonly]) + label {
   color: #ffea00;
 }
+.loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid black;
+  border-radius: 50%;
+  border-top: 16px solid #ffea00;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader + .blur {
+  z-index: 99;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(40, 40, 40, 0.8);
+  left:0;
+  right:0;
+  bottom: 0;
+}
+

@@ -1,29 +1,35 @@
-<div class="row bottom-nav">
-  <div class="col s6 m4">
-    <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
-  </div>
-  <div class="col s12 m4">
-    <a class="toggle-btn">Toggle</a>
-  </div>
-  <div class="col s6 m4">
-    <a class="next-btn grey-text text-darken-3" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
-  </div>
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
 </div>
-
-<div class="row catalogue">
-
-  <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
-    <div class="ct-item z-depth-0">
-      <div class="ct-item-img grey darken-3" [style.background]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
-        <div class="ct-item-title yellow accent-3">
-          <span>{{user.username | uppercase}}</span>
-        </div>
-        <div class="ct-item-title-detailed">
-            <p>{{user.email}}</p>
-            <p>{{user.city}}</p>
-          </div>
-      </div>
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
+    <div class="col s6 m4">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
+    </div>
+    <div class="col s12 m4">
+      <a class="toggle-btn">Toggle</a>
+    </div>
+    <div class="col s6 m4">
+      <a class="next-btn grey-text text-darken-3" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
     </div>
   </div>
 
+  <div class="row catalogue">
+
+    <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
+      <div class="ct-item z-depth-0">
+        <div class="ct-item-img grey darken-3" [style.background]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
+          <div class="ct-item-title yellow accent-3">
+            <span>{{user.username | uppercase}}</span>
+          </div>
+          <div class="ct-item-title-detailed">
+            <p>{{user.email}}</p>
+            <p>{{user.city}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

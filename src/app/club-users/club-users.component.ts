@@ -21,6 +21,7 @@ export class ClubUsersComponent implements OnInit {
   private showNext: boolean;
   private showPrev: boolean;
   private searchPipe = new SearchUserPipe();
+  private loading: boolean = true;
 
   constructor(private requestService: RequestService,
     private dataService: DataService,
@@ -44,6 +45,7 @@ export class ClubUsersComponent implements OnInit {
 
   ngOnInit() {
     this.users = this.dataService.getClubUsers();
+    this.loading = false;
     this.pageTable = this.tableNavigationService.getPage(this.users, 'first');
   }
   getPrev(): Object[] {

@@ -12,6 +12,7 @@ import { User } from '../app.model';
 export class GlobalSearchComponent implements OnInit {
   private searchValue: string = '';
   private user: User;
+  private loading: boolean = false;
 
   constructor(private requestService: RequestService,
               private dataService: DataService,
@@ -22,6 +23,7 @@ export class GlobalSearchComponent implements OnInit {
   }
 
   search(searchInput){
+    this.loading = true;
     this.searchValue = searchInput;
     this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
   }
@@ -29,5 +31,6 @@ export class GlobalSearchComponent implements OnInit {
     this.dataService.storeSearch(response);
     this.router.navigate([`home/${this.user.username}/items/search`, this.searchValue]);
     this.searchValue = '';
+    this.loading = false;
   }
 }

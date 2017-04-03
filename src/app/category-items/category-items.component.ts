@@ -35,6 +35,7 @@ export class CategoryItemsComponent implements OnInit {
   private modalEdit: boolean;
   private user: NotLogedInUser;
   public warningAction: Object;
+  private loading: boolean = true;
 
   constructor(
     private router: Router,
@@ -78,6 +79,7 @@ export class CategoryItemsComponent implements OnInit {
         .then(result => {
           console.log(result);
           this.getItemsData()
+          this.loading = false;
         });
 
     this.itemsService.events$.forEach(event => {
