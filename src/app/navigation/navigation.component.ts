@@ -33,7 +33,7 @@ export class NavigationComponent implements OnInit {
     private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService,
-    private dataSerice: DataService,
+    private dataService: DataService,
     private allUsersCategoriesService: AllUsersCategoriesService) {}
 
   ngOnInit() {
@@ -41,13 +41,14 @@ export class NavigationComponent implements OnInit {
 
     this.router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
+      if (val.url === '/') return;
       this.checkLogedUser();
     });
   }
 
   checkLogedUser(): void {
-    let currentUser = this.dataSerice.getUser().username,
-        logedUser = this.dataSerice.getLogedInUser().username;
+    let currentUser = this.dataService.getUser().username,
+        logedUser = this.dataService.getLogedInUser().username;
     console.log(currentUser, logedUser);
     if (currentUser === logedUser) {
       this.editing = true;
@@ -96,7 +97,7 @@ export class NavigationComponent implements OnInit {
 
   signOutUser():void {
     this.requestService.signOut();
-    this.dataSerice.removeUser();
+    this.dataService.removeUser();
     this.router.navigate(['/']);
   }
 
