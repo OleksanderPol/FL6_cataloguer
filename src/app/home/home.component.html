@@ -11,8 +11,10 @@
     <router-outlet>
     </router-outlet>
   </div>
-
 </div>
+
+<i class="fixed medium material-icons" (click)=play()>stars</i>
+
 <!-- Modal Structure-->
 <div id="nav-modal" class="modal" materialize="modal" [materializeActions]="modalAction">
   <div class="modal-content">
@@ -21,7 +23,6 @@
   </div>
 
   <div class="container">
-    <button class="waves-effect waves-light yellow accent-3 black-text btn"
-    (click)="closeModal()">Close modal</button>
+    <button class="waves-effect waves-light yellow accent-3 black-text btn" (click)="closeModal()">Close modal</button>
   </div>
 </div>

@@ -68,7 +68,7 @@ import { NgUploaderModule } from 'ngx-uploader';
     routing,
     LocalStorageModule.withConfig({
             prefix: 'my-app',
-            storageType: 'sessionStorage'}),
+            storageType: 'localStorage'}),
     NgUploaderModule
   ],
   providers: [

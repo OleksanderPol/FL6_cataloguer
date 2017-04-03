@@ -25,6 +25,7 @@ export class AllUsersCategoriesComponent implements OnInit {
   private ifCategories: boolean = false;
   private club: string;
   private searchPipe = new SearchPipe();
+  private loading: boolean = true;
 
   constructor(
     private router: Router,
@@ -64,6 +65,7 @@ export class AllUsersCategoriesComponent implements OnInit {
     this.allUsersCategoriesService.getAllUsersCategories()
       .then(res => {
         this.allUsersCategories = this.allUsersCategoriesService.allUsersCategories;
+        this.loading = false;
         this.pageTable = this.tableNavigationService.getPage(this.allUsersCategories, 'first')
         });
   }
@@ -79,6 +81,7 @@ export class AllUsersCategoriesComponent implements OnInit {
   }
     
   pickCategory(category: string):void {
+    this.loading = true;
     this.club = category;
     this.requestService.getUsers(category, this.clubUsersResponse.bind(this))
   }

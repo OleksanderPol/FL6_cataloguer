@@ -162,3 +162,8 @@ text-align: center;
     height: 85% !important ;
 }
 }
+
+h2.nothing-found {
+    color: #ffea00;
+    text-align: center;
+}
