@@ -62,7 +62,9 @@ textarea#message {
 .user-props {
     margin-bottom: 5px;
 }
-
+.btn-form:first-child {
+    margin-bottom: 5px;
+}
 /*
 * — Profile Navigation —
 */

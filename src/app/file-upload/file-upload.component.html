@@ -1,0 +1,18 @@
+<div class="drag-n-drop-container"
+      ngFileDrop
+      [options]="options"
+      (onUpload)="handleUpload($event)"
+      [ngClass]="{'file-over': hasBaseDropZoneOver}"
+      (onFileOver)="fileOverBase($event)">
+  Drag & Drop
+  <label class="upload-button">
+    <input type="file"
+           class="hidden"
+           ngFileSelect
+           [options]="options"
+           (onUpload)="handleUpload($event)">
+  </label>
+</div>
+<div>
+  {{response | json}}
+</div>

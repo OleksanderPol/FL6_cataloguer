@@ -201,3 +201,7 @@ var itemObj = {
 //     console.log("jopa");
 //   }
 // })
+
+User.findOne({username: 'Frodo'}, (err, user)=>{
+  console.log(user)
+})
