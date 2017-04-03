@@ -27,7 +27,8 @@ router.post('/register', function(req, res, next) {
       var user = new User ({
         username: username,
         password: password,
-        email: email
+        email: email,
+        photoUrl: '/assets/img/mock.jpg'
       });
 
       user.save(function(err) {
@@ -124,16 +125,16 @@ router.get('/users/:category', function(req, res, next) {
   })
 })
 
-router.get('/categories', function(req, res, next) {
+router.get('/:userId/categories', function(req, res, next) {
   if (!req.user) {
     return next(401);
   }
 
-  Category.find({users: req.user._id}, {name: 1, _id: 0}, function(err, categories) {
+  Category.find({users: req.params.userId}, {name: 1, _id: 0}, function(err, categories) {
     if (err) {
       return next(err);
     }
-    Item.find({owner: req.user._id}, function(err, itemCell) {
+    Item.find({owner: req.params.userId}, function(err, itemCell) {
       if (err) {
         return next(err);
       }
@@ -244,17 +245,17 @@ router.post('/:category/items', function(req, res, next) {
   });
 });
 
-router.get('/:category/items', function(req, res, next) {
+router.get('/:userId/:category/items', function(req, res) {
   var categoryName = req.params.category;
 
   if (!req.user) {
-    return next(401);
+   res.status(401).send();
   }
 
   if (categoryName == "allcategories") {
-    Item.find({owner: req.user._id}, function(err, items) {
+    Item.find({owner: req.params.userId}, function(err, items) {
       if (err) {
-        return next(err);
+        return res.status(500).send();
       } else if (items == []) {
         res.json([]);
       } else {
@@ -266,10 +267,10 @@ router.get('/:category/items', function(req, res, next) {
     })
   } else {
 
-    Item.findOne({category: categoryName, owner: req.user._id},
+    Item.findOne({category: categoryName, owner: req.params.userId},
                   function(err, itemCell) {
       if (err) {
-        return next(err);
+        return res.status(500).send();
       } else if (itemCell == null) {
         res.json([]);
       } else {
@@ -353,6 +354,7 @@ router.delete('/items/:id', function(req, res, next) {
 })
 
 router.get('*', function(req, res) {
+  console.log('default');
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 

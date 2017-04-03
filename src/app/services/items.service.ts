@@ -26,7 +26,7 @@ export class ItemsService {
     return this.http.get(itemsUrl)
                .toPromise()
                .then(response => {
-                 return this.items = JSON.parse(response.text());
+                  return this.items = JSON.parse(response.text());
                })
                .catch(this.handleError);
   }

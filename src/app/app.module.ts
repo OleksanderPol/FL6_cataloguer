@@ -33,6 +33,9 @@ import { GlobalSearchItemsComponent } from './global-search-items/global-search-
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
 import { ClubUsersComponent } from './club-users/club-users.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+
+import { NgUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,8 @@ import { ClubUsersComponent } from './club-users/club-users.component';
     GlobalSearchItemsComponent,
     TicTacToeComponent,
     AllUsersCategoriesComponent,
-    ClubUsersComponent
+    ClubUsersComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,8 @@ import { ClubUsersComponent } from './club-users/club-users.component';
     routing,
     LocalStorageModule.withConfig({
             prefix: 'my-app',
-            storageType: 'localStorage'})
+            storageType: 'localStorage'}),
+    NgUploaderModule
   ],
   providers: [
     ValidationService,
