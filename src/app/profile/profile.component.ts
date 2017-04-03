@@ -24,12 +24,12 @@ export class ProfileComponent implements OnInit {
   private categoriesAmount: number;
 
   constructor(
-   private formBuilder: FormBuilder,
-   private requestService: RequestService,
-   private router: Router,
-   private dataService: DataService,
-   private itemsService: ItemsService,
-   private categoryService: CategoryService) {
+    private formBuilder: FormBuilder,
+    private requestService: RequestService,
+    private router: Router,
+    private dataService: DataService,
+    private itemsService: ItemsService,
+    private categoryService: CategoryService) {
 
 
   	this.infoForm = this.formBuilder.group({

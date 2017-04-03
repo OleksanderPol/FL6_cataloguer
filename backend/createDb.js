@@ -202,6 +202,6 @@ var itemObj = {
 //   }
 // })
 
-User.findOne({username: 'Frodo'}, (err, user)=>{
+Category.find({name: 'BOOKS'}, (err, user)=>{
   console.log(user)
 })

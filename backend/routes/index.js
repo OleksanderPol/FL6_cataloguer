@@ -27,7 +27,8 @@ router.post('/register', function(req, res, next) {
       var user = new User ({
         username: username,
         password: password,
-        email: email
+        email: email,
+        photoUrl: '/assets/img/mock.jpg'
       });
 
       user.save(function(err) {
