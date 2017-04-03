@@ -11,24 +11,24 @@ export class DataService {
   constructor(private localStorageService: LocalStorageService){}
 
   storeUser(user: string) {
-    sessionStorage.setItem("user", user)
+    localStorage.setItem("user", user)
   }
 
   getUser() {
-    return JSON.parse(sessionStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem("user"));
   }
 
   removeUser(): void {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("logedInUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("logedInUser");
   }
 
   storeCategories(categories: string) {
-    sessionStorage.setItem("categories", categories)
+    localStorage.setItem("categories", categories)
   }
 
   getCategories() {
-    return JSON.parse(sessionStorage.getItem("categories"));
+    return JSON.parse(localStorage.getItem("categories"));
   }
 
   storeSearch(searchedItems) {
@@ -45,9 +45,9 @@ export class DataService {
     return JSON.parse(this.clubUsers);
   }
   storeLogedInUser(user: string){
-    sessionStorage.setItem("logedInUser", user);
+    localStorage.setItem("logedInUser", user);
   }
   getLogedInUser(){
-    return JSON.parse(sessionStorage.getItem("logedInUser"));
+    return JSON.parse(localStorage.getItem("logedInUser"));
   }
 }

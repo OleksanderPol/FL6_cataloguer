@@ -64,7 +64,7 @@ import { ClubUsersComponent } from './club-users/club-users.component';
     routing,
     LocalStorageModule.withConfig({
             prefix: 'my-app',
-            storageType: 'sessionStorage'})
+            storageType: 'localStorage'})
   ],
   providers: [
     ValidationService,
