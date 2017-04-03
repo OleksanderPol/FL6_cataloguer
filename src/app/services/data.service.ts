@@ -44,10 +44,10 @@ export class DataService {
   getClubUsers(){
     return JSON.parse(this.clubUsers);
   }
-  storeLogedInUserId(id: string){
-    sessionStorage.setItem("logedInUser", id);
+  storeLogedInUser(user: string){
+    sessionStorage.setItem("logedInUser", user);
   }
-  getLogedInUserId(){
-    return sessionStorage.getItem("logedInUser");
+  getLogedInUser(){
+    return JSON.parse(sessionStorage.getItem("logedInUser"));
   }
 }

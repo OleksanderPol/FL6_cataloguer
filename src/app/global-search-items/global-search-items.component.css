@@ -121,6 +121,7 @@ div.bottom-nav div > a i.material-icons {
     padding: 20px;
     text-align: left;
     display: flex;
+    margin-bottom: 60px;
 }
 .catalogue .item-modal-info.full-width{
     width: 100%;

@@ -17,7 +17,7 @@ import { FilterService } from '../services/filter.service';
 export class HomeComponent implements OnInit {
   public user: Object;
   public searchFilter: string;
-  logedInUser: string;
+  private logedInUser: Object;
   private modalAction = new EventEmitter<string | MaterializeAction>();
 
   constructor(private dataService: DataService,
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.dataService.getUser();
-    this.logedInUser = this.dataService.getLogedInUserId();
+    this.logedInUser = this.dataService.getLogedInUser();
     console.log(this.logedInUser);
   }
 
