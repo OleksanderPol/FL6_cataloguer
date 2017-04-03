@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { MaterializeAction } from 'angular2-materialize';
 
 @Component({
   selector: 'tic-tac-toe',
@@ -7,11 +8,22 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 })
 export class TicTacToeComponent implements OnInit {
   private playingGround: string[][];
+  private gameResult: string;
+  private modalAction = new EventEmitter<string | MaterializeAction>();
 
-  constructor(private elementRef: ElementRef) { }
+  constructor() { }
 
   ngOnInit() {
     this.createPlaground();
+  }
+
+  openModal() {
+    this.modalAction.emit({ action: 'modal', params: ['open'] });
+  }
+
+  closeModal(location: string) {
+    this.refreshTable();
+    this.modalAction.emit({ action: 'modal', params: ['close'] });
   }
 
   createPlaground(): void {
@@ -34,23 +46,29 @@ export class TicTacToeComponent implements OnInit {
       this.setCell(x, y, 'X');
 
       if (this.isWinner()) {
-        alert("You win!");
-        this.refreshTable();
+        setTimeout(() => {
+          this.gameResult = 'You win!';
+          this.openModal();
+        }, 500);
+
         return;
       } else {
         this.PCstep();
         if (this.isWinner()) {
           setTimeout(() => {
-            alert('You lost');
-            this.refreshTable();
-          }, 1000);
+            this.gameResult = 'You lost';
+            this.openModal();
+          }, 500);
+
           return;
         }
       }
 
       if (this.checkDrow()) {
-        alert('Drow');
-        this.refreshTable();
+        setTimeout(() => {
+          this.gameResult = 'Drow';
+          this.openModal();
+        }, 500);
       }
     }
 
