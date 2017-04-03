@@ -1,9 +1,11 @@
 <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
-        <a class="home-btn"><i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i></a>
+        <a class="home-btn" routerLink="/">
+            <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+        </a>
     </div>
     <div class="col s10 m7 push-m2">
-        <a class="current-btn">{{user.username | uppercase}}</a>
+        <a class="current-btn">{{user.username | uppercase}} {{category}}</a>
     </div>
     <div class="col s6 m2 pull-m8">
         <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
@@ -28,7 +30,8 @@
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
                     <span>{{item.name | uppercase}}</span>
-                    <span class="el-delete" *ngIf="item.showDelete" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
+                    <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" 
+                    (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
                 </div>
                 <div class="rating yellow accent-1">
                     <span *ngFor="let number of ratingNum">
@@ -87,7 +90,7 @@
                             </a>
             </div>
             <div class="col s12 m6">
-                <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
+                <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                 <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
                 <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
             </div>

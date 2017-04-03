@@ -32,7 +32,7 @@ export class NavigationComponent implements OnInit {
     private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService,
-    private dataSerice: DataService,
+    private dataService: DataService,
     private allUsersCategoriesService: AllUsersCategoriesService) {
 
     router.events.subscribe((val) => {
@@ -84,7 +84,7 @@ export class NavigationComponent implements OnInit {
 
   signOutUser():void {
     this.requestService.signOut();
-    this.dataSerice.removeUser();
+    this.dataService.removeUser();
     this.router.navigate(['/']);
   }
 
