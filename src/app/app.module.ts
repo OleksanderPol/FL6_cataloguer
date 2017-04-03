@@ -14,6 +14,7 @@ import { RequestService } from './services/request.service';
 import { ItemsService } from './services/items.service';
 import { FilterService } from './services/filter.service';
 import { CategoryService } from './services/category.service';
+import { AllUsersCategoriesService } from './services/all-users-categories.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -24,12 +25,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
 import { CategoryItemsComponent } from './category-items/category-items.component';
-import { SearchPipe } from './search/search.pipe';
+import { SearchPipe, SearchUserPipe } from './search/search.pipe';
 
 import { NavigationComponent } from './navigation/navigation.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
+import { ClubUsersComponent } from './club-users/club-users.component';
 
 @NgModule({
   declarations: [
@@ -42,12 +45,15 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
     ProfileComponent,
     CategoriesComponent,
     SearchPipe,
+    SearchUserPipe,
     NavigationComponent,
 
     CategoryItemsComponent,
     GlobalSearchComponent,
     GlobalSearchItemsComponent,
-    TicTacToeComponent
+    TicTacToeComponent,
+    AllUsersCategoriesComponent,
+    ClubUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,8 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
     ItemsService,
     TableNavigationService,
     FilterService,
-    CategoryService
+    CategoryService,
+    AllUsersCategoriesService
   ],
 
   bootstrap: [AppComponent]

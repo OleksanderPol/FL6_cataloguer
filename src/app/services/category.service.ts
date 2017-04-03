@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CategoryService {
   public categories: Category[];
+  public allUsersCategories: any;
   private subject = new Subject<string>();
   private headers = new Headers({'Content-Type': 'application/json'});
 

@@ -6,6 +6,7 @@ import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
 import { DataService } from '../services/data.service';
+import { AllUsersCategoriesService } from '../services/all-users-categories.service';
 
 
 
@@ -31,7 +32,8 @@ export class NavigationComponent implements OnInit {
     private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService,
-    private dataSerice: DataService) {
+    private dataSerice: DataService,
+    private allUsersCategoriesService: AllUsersCategoriesService) {
 
     router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
@@ -75,6 +77,10 @@ export class NavigationComponent implements OnInit {
   onItemClick() {
     this.itemsService.newEvent('refreshItems');
   }
+   
+  onUsersCategoriesClick() {
+    this.allUsersCategoriesService.newEvent('refreshUsersCategories');
+  }  
 
   signOutUser():void {
     this.requestService.signOut();
@@ -117,13 +123,27 @@ export class NavigationComponent implements OnInit {
       this.onCategoryClick();
     }
   }
+   
+  onChangeUsersCategories(value: String): void {
+    switch (value) {
+      case 'alphabet':
+        this.allUsersCategoriesService.sortByAlphabet();
+        this.onUsersCategoriesClick();
+        break;
+
+      case 'usersAmount':
+        this.allUsersCategoriesService.sortByAmountOfUsers();
+        this.onUsersCategoriesClick();
+        break;
+    }
+  }  
 
   addCategory(categoryName): void {
     categoryName = categoryName.toUpperCase();
 
     if (this.categoryService.checkCategory(categoryName)){
       this.categoryService.addCategory(categoryName);
-      this.categorySuccess = 'Cutegory successfully added';
+      this.categorySuccess = 'Category successfully added';
       this.categoryError = '';
     } else {
       this.categorySuccess = '';
@@ -134,13 +154,13 @@ export class NavigationComponent implements OnInit {
   addItem(name, info = '', fotoUrl = ''): void {
     let uppercaseName = name.toUpperCase();
 
-    if (this.router.url.split('/')[3] === 'allcategories') {
+    if (this.router.url.split('/')[4] === 'allcategories') {
       this.itemError = 'Select the category first, please!';
       return;
     }
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[3])
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[4])
         .then(res => {
           if (res !== 'Server Error') {
             this.itemError = '';

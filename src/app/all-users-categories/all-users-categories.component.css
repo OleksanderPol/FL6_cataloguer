@@ -28,13 +28,6 @@
     flex-flow: column wrap;
     justify-content: center;
 }
-
-.catalogue div.card div .el-delete {
-    position: absolute;
-    top: -6px;
-    right: 2px;
-}
-
 .catalogue .card-title {
     display: block;
     text-align: center;
@@ -44,12 +37,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.catalogue .item-ammount {
+.catalogue .users-ammount {
     display: block;
     text-align: center;
-    font-size: 80px;
-    line-height: 80px;
-    font-weight: 100;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
 }
 div.bottom-nav div {
     padding: 5px;
@@ -84,17 +77,4 @@ div.bottom-nav div > a.disabled {
 }
 .bottom-nav a.toggle-btn:hover {
     background-color: #ffd600;
-}
-.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-float: none;
-text-align: center;
-}
-#warning-modal {
-    width: 280px !important ;
-    height: 220px !important ;
-    text-align: center;
-}
-#warning-modal .modal-content {
-    padding: 20px;
-    overflow: hidden;
 }

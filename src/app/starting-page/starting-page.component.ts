@@ -51,6 +51,7 @@ export class StartingPageComponent {
   receiveResponseLogin(status, response, username) {
     if (status === 200) {
       this.dataService.storeUser(response);
+      this.dataService.storeLogedInUser(response);
       this.router.navigate(['/home', username]);
       this.closeModalLogin();
     } else {
@@ -74,6 +75,7 @@ export class StartingPageComponent {
   receiveResponseRegister(status, response, username) {
     if (status === 200) {
       this.dataService.storeUser(response);
+      this.dataService.storeLogedInUser(response);
       this.router.navigate(['/home', username]);
       this.closeModalRegister();
       this.user = response;
