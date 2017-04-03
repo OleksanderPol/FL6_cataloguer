@@ -20,11 +20,13 @@ export class CategoriesComponent implements OnInit {
   private user : NotLogedInUser;
   private pageTable: Object[] = [];
   private subscription: Subscription;
+  private logedInUser: User;
 
   private showNext: boolean;
   private showPrev: boolean;
   public modalWarning = new EventEmitter<string|MaterializeAction>();
   public warningAction: Object;
+  private isCategoryEditable: boolean;
 
   private search: string = '';
   private ifCategories: boolean = false;
@@ -55,6 +57,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.dataService.getUser();
+    this.logedInUser = this.dataService.getLogedInUser();
     this.categoryService.onInit(`/${this.user._id}/categories`);
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' ||
@@ -65,6 +68,8 @@ export class CategoriesComponent implements OnInit {
         this.getCategoriesData();
       }
     });
+      
+    this.isCategoryEditable = this.user.username === this.logedInUser.username ? true : false  
   }
 
   getCategoriesData() {
@@ -95,7 +100,6 @@ export class CategoriesComponent implements OnInit {
       this.modalWarning.emit({action:"modal",params:['open']});
       this.warningAction = function(){func(category)};
   }
-
   closeWarning(){
        this.modalWarning.emit({action:"modal",params:['close']});
   }

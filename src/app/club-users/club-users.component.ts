@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
 import { User } from '../app.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SearchUserPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
@@ -22,6 +22,9 @@ export class ClubUsersComponent implements OnInit {
   private showPrev: boolean;
   private searchPipe = new SearchUserPipe();
   private loading: boolean = true;
+  public category: string;
+  private logedInUser: User;
+
 
   constructor(private requestService: RequestService,
     private dataService: DataService,
@@ -46,7 +49,11 @@ export class ClubUsersComponent implements OnInit {
   ngOnInit() {
     this.users = this.dataService.getClubUsers();
     this.loading = false;
+    this.logedInUser = this.dataService.getLogedInUser();
     this.pageTable = this.tableNavigationService.getPage(this.users, 'first');
+    this.activatedRoute.params.subscribe((params: Params) => {
+    this.category = params['category'];
+    });
   }
   getPrev(): Object[] {
     this.pageTable = this.tableNavigationService.getPage(this.users, 'prev');  
@@ -61,4 +68,9 @@ export class ClubUsersComponent implements OnInit {
     this.dataService.storeUser(JSON.stringify(user));
     this.router.navigate(["home", user.username]);
   }
+  showAllUsersCategories() {
+    this.router.navigate([`home/${this.dataService.getUser().username}`, 'usersCategories']);
+  }
+    
+
 }

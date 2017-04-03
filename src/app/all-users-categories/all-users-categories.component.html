@@ -4,14 +4,23 @@
 </div>
 <div *ngIf="!loading">
   <div class="row bottom-nav">
-    <div class="col s12 m4 push-m4">
-      <a class="toggle-btn">Toggle</a>
+    <div class="col s2 m1 push-m2">
+      <a class="home-btn" routerLink="/">
+        <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+      </a>
     </div>
-    <div class="col s6 m4 pull-m4">
-      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
+    <div class="col s10 m7 push-m2">
+      <a class="current-btn">CLUBS</a>
     </div>
-    <div class="col s6 m4">
-      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
+    <div class="col s6 m2 pull-m8">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
+        <i class="small material-icons grey-text text-darken-3">chevron_left</i>
+      </a>
+    </div>
+    <div class="col s6 m2">
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" (click)="getNext()">
+        <i class="small material-icons grey-text text-darken-3">chevron_right</i>
+      </a>
     </div>
   </div>
 
@@ -25,3 +34,4 @@
       </div>
     </div>
   </div>
+</div>

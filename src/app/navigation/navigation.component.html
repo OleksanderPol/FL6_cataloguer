@@ -2,7 +2,9 @@
     <div class="row container">
         <div class="col s12 l4 logo">
           <div class="col s10">
-            <a id="logo-container" href="#" class="brand-logo"><img src="/assets/img/logo.svg"></a>
+            <a id="logo-container" routerLink="/" class="brand-logo">
+                <img src="/assets/img/logo.svg">
+            </a>
           </div>
           <div class="profile-icon valign-wrapper s2 hide-on-large-only" (click)="onUserClick()">
             <img src="/assets/icons/user-icon.svg" class="valign">
@@ -114,7 +116,7 @@
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
               maxlength="50">
-              <label for="itemName">Item Name</label>
+              <label for="itemName" class="black-text">Item Name</label>
             </div>
             <div class="input-field col s12">
               <input id="info" type="text" #info (input)="null" class="input-yellow">

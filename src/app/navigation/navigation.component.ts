@@ -36,6 +36,7 @@ export class NavigationComponent implements OnInit {
     private dataService: DataService,
     private allUsersCategoriesService: AllUsersCategoriesService) {}
 
+
   ngOnInit() {
     this.update.emit('');
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
+import { DataService } from '../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tic-tac-toe',
@@ -11,19 +13,27 @@ export class TicTacToeComponent implements OnInit {
   private gameResult: string;
   private modalAction = new EventEmitter<string | MaterializeAction>();
 
-  constructor() { }
+  constructor(
+    private dataService: DataService,
+    private router: Router) { }
 
   ngOnInit() {
     this.createPlaground();
   }
 
-  openModal() {
+  openModal(): void {
     this.modalAction.emit({ action: 'modal', params: ['open'] });
   }
 
-  closeModal(location: string) {
+  closeModal(): void {
     this.refreshTable();
     this.modalAction.emit({ action: 'modal', params: ['close'] });
+  }
+
+  goHome(): void {
+    let user = this.dataService.getUser().username;
+    this.router.navigate([`home/${user}`]);
+    this.closeModal();
   }
 
   createPlaground(): void {
@@ -56,7 +66,7 @@ export class TicTacToeComponent implements OnInit {
         this.PCstep();
         if (this.isWinner()) {
           setTimeout(() => {
-            this.gameResult = 'You lost';
+            this.gameResult = 'You lost(';
             this.openModal();
           }, 500);
 
@@ -66,7 +76,7 @@ export class TicTacToeComponent implements OnInit {
 
       if (this.checkDrow()) {
         setTimeout(() => {
-          this.gameResult = 'Drow';
+          this.gameResult = 'Drow...';
           this.openModal();
         }, 500);
       }

@@ -1,29 +1,33 @@
-<div class="container ">
-  <table id="gameTable" (click)="nextStep($event)">
-    <tr class="center-align">
-      <td><div [ngClass]="{'cell': playingGround[0][0] !== 'O'}">{{playingGround[0][0]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[0][1] !== 'O'}">{{playingGround[0][1]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[0][2] !== 'O'}">{{playingGround[0][2]}}</div></td>
-    </tr>
-    <tr class="center-align">
-      <td><div [ngClass]="{'cell': playingGround[1][0] !== 'O'}">{{playingGround[1][0]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[1][1] !== 'O'}">{{playingGround[1][1]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[1][2] !== 'O'}">{{playingGround[1][2]}}</div></td>
-    </tr>
-    <tr class="center-align">
-      <td><div [ngClass]="{'cell': playingGround[2][0] !== 'O'}">{{playingGround[2][0]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[2][1] !== 'O'}">{{playingGround[2][1]}}</div></td>
-      <td><div [ngClass]="{'cell': playingGround[2][2] !== 'O'}">{{playingGround[2][2]}}</div></td>
-    </tr>
-  </table>
-</div>
+<table id="gameTable" (click)="nextStep($event)">
+  <tr class="center-align">
+    <td><div [ngClass]="{'cell': playingGround[0][0] !== 'O'}">{{playingGround[0][0]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[0][1] !== 'O'}">{{playingGround[0][1]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[0][2] !== 'O'}">{{playingGround[0][2]}}</div></td>
+  </tr>
+  <tr class="center-align">
+    <td><div [ngClass]="{'cell': playingGround[1][0] !== 'O'}">{{playingGround[1][0]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[1][1] !== 'O'}">{{playingGround[1][1]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[1][2] !== 'O'}">{{playingGround[1][2]}}</div></td>
+  </tr>
+  <tr class="center-align">
+    <td><div [ngClass]="{'cell': playingGround[2][0] !== 'O'}">{{playingGround[2][0]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[2][1] !== 'O'}">{{playingGround[2][1]}}</div></td>
+    <td><div [ngClass]="{'cell': playingGround[2][2] !== 'O'}">{{playingGround[2][2]}}</div></td>
+  </tr>
+</table>
 <!-- Modal Structure-->
-<div id="nav-modal" class="modal grey lighten-1" materialize="modal" [materializeActions]="modalAction">
+<div id="nav-modal" class="modal grey lighten-1" materialize="modal" [materializeActions]="modalAction"
+[materializeParams]="[{dismissible: false}]">
   <div class="modal-content">
     <div class="row">
       <h4 class="modal-heading center-align">{{gameResult}}</h4>
-      <button class="waves-effect waves-light yellow accent-3 black-text btn center-align"
-      (click)="closeModal();"
-      >Play again</button>
+      <div class="center-align">
+        <button class="waves-effect waves-light yellow accent-3 black-text btn"
+        (click)="closeModal();"
+        >Play again</button>
+        <button class="waves-effect waves-light yellow accent-3 black-text btn"
+        (click)="goHome();"
+        >Go to home page</button>
+      </div>
   </div>
 </div>
