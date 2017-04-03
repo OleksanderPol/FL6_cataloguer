@@ -77,10 +77,10 @@ export class NavigationComponent implements OnInit {
   onItemClick() {
     this.itemsService.newEvent('refreshItems');
   }
-   
+
   onUsersCategoriesClick() {
     this.allUsersCategoriesService.newEvent('refreshUsersCategories');
-  }  
+  }
 
   signOutUser():void {
     this.requestService.signOut();
@@ -123,7 +123,7 @@ export class NavigationComponent implements OnInit {
       this.onCategoryClick();
     }
   }
-   
+
   onChangeUsersCategories(value: String): void {
     switch (value) {
       case 'alphabet':
@@ -136,7 +136,7 @@ export class NavigationComponent implements OnInit {
         this.onUsersCategoriesClick();
         break;
     }
-  }  
+  }
 
   addCategory(categoryName): void {
     categoryName = categoryName.toUpperCase();

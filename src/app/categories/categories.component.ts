@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { User } from '../app.model';
+import { User, NotLogedInUser } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { MaterializeAction } from 'angular2-materialize';
@@ -17,7 +17,7 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  private user : User;
+  private user : NotLogedInUser;
   private pageTable: Object[] = [];
   private subscription: Subscription;
 
@@ -55,7 +55,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.dataService.getUser();
-    this.categoryService.onInit();
+    this.categoryService.onInit(`/${this.user._id}/categories`);
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' ||
           event === 'getCategories' ||
@@ -78,7 +78,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');  
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');
     return this.pageTable;
   }
 
@@ -94,7 +94,7 @@ export class CategoriesComponent implements OnInit {
       this.modalWarning.emit({action:"modal",params:['open']});
       this.warningAction = function(){func(category)};
   }
-  
+
   closeWarning(){
        this.modalWarning.emit({action:"modal",params:['close']});
   }
