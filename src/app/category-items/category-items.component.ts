@@ -19,6 +19,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./category-items.component.css']
 })
 export class CategoryItemsComponent implements OnInit {
+  private user : User;
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -66,6 +67,7 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
     this.activatedRoute.params.subscribe((params: Params) => {
     this.category = params['category'];
     });

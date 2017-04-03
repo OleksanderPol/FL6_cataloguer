@@ -60,15 +60,6 @@ div.filter {
 }
 
 /*modals*/
-.input-yellow[type="text"]:focus:not([readonly]) {
-  border-bottom: 1px solid #ffea00;
-  box-shadow: 0 1px 0 0 #ffea00;
-}
-
-.input-yellow[type="text"]:focus:not([readonly]) + label {
-  color: #ffea00;
-}
-
 @media (max-width: 992px) {
   #search {
     position: static;
