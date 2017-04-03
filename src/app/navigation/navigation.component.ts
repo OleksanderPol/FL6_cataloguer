@@ -42,6 +42,7 @@ export class NavigationComponent implements OnInit {
 
     this.router.events.subscribe((val) => {
       this.locationLength = val.url.split('/').length;
+      if (val.url === '/') return;
       this.checkLogedUser();
     });
   }
