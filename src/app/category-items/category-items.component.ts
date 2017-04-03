@@ -5,7 +5,7 @@ import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -52,6 +52,7 @@ export class CategoryItemsComponent implements OnInit {
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
       'itemFotoUrl': [''],
+      'itemBorrowedTo': ['']    
     });
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {

@@ -29,9 +29,13 @@
         <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
             <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                 <div class="ct-item-title yellow accent-3">
+                    <div *ngIf="item.borrowedTo" class="item-tooltip tooltipped"  materialize="tooltip"
+                   data-position="top" data-delay="10" attr.data-tooltip="Borrowed to {{item.borrowedTo}}"></div>
                     <span>{{item.name | uppercase}}</span>
+                    <span class="el-borrowed" *ngIf="item.borrowedTo">*</span>
                     <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" 
                     (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
+                   
                 </div>
                 <div class="rating yellow accent-1">
                     <span *ngFor="let number of ratingNum">
@@ -52,6 +56,7 @@
             <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
                 <div *ngIf="!modalEdit">
                     <h4>{{modalItem.name | uppercase}}</h4>
+                    <p *ngIf="modalItem.borrowedTo"><small><i>Borrowed to: {{modalItem.borrowedTo}}</i></small></p>
                     <p class="item-details">{{modalItem.info}}</p>
 
                 </div>
@@ -61,6 +66,8 @@
                         <div>
                             <label for="item-heading" class="black-text">Item name:</label>
                             <input id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
+                            <label for="item-borrowed-to" class="black-text">Borrowed to:</label>
+                            <input id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
                             <label for="item-url" class="black-text">Item Url:</label>
                             <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                             <div class="input-field col s12">
