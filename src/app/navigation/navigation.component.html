@@ -21,7 +21,7 @@
                   <li *ngIf="locationLength < 6" (click)="shown = 'filter'">
                     <i class="material-icons grey-text lighten-2">swap_vert</i>
                   </li>
-                  <li *ngIf="locationLength < 6" class="nav-icon" title="add category/item" class="nav-icon"
+                  <li *ngIf="locationLength < 6 && editing" class="nav-icon" title="add category/item" class="nav-icon"
                   (click)="openModal(); show='';
                   categoryError=''; categorySuccess=''">
                     <i class="material-icons">playlist_add</i>

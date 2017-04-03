@@ -26,6 +26,7 @@ export class NavigationComponent implements OnInit {
   private itemError: string;
   private itemSuccess: string;
   private currentCategory: string;
+  private editing: boolean;
 
   constructor(
     private requestService: RequestService,
@@ -33,15 +34,26 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private itemsService: ItemsService,
     private dataSerice: DataService,
-    private allUsersCategoriesService: AllUsersCategoriesService) {
-
-    router.events.subscribe((val) => {
-      this.locationLength = val.url.split('/').length;
-    });
-  }
+    private allUsersCategoriesService: AllUsersCategoriesService) {}
 
   ngOnInit() {
     this.update.emit('');
+
+    this.router.events.subscribe((val) => {
+      this.locationLength = val.url.split('/').length;
+      this.checkLogedUser();
+    });
+  }
+
+  checkLogedUser(): void {
+    let currentUser = this.dataSerice.getUser().username,
+        logedUser = this.dataSerice.getLogedInUser().username;
+    console.log(currentUser, logedUser);
+    if (currentUser === logedUser) {
+      this.editing = true;
+    } else {
+      this.editing = false;
+    }
   }
 
   openModal() {
