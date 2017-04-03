@@ -15,8 +15,8 @@ export class CategoryService {
     private http: Http
   ) {}
 
-  onInit() {
-    this.getHttpCategories('categories')
+  onInit(url) {
+    this.getHttpCategories(url)
       .then(res => {
         this.newEvent('getCategories');
       });

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { User } from '../app.model';
+import { User, NotLogedInUser } from '../app.model';
 import { Routes, Router, ActivatedRoute, Params } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -33,6 +33,7 @@ export class CategoryItemsComponent implements OnInit {
   private modalItem: Object[] = [];
   private ratingChanged: boolean;
   private modalEdit: boolean;
+  private user: NotLogedInUser;
   public warningAction: Object;
 
   constructor(
@@ -67,12 +68,17 @@ export class CategoryItemsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-    this.category = params['category'];
+      this.category = params['category'];
     });
 
+    this.user = this.dataService.getUser();
+
     this.itemsService
-        .getItems(`${this.category}/items`)
-        .then(result => this.getItemsData());
+        .getItems(`/${this.user._id}/${this.category}/items`)
+        .then(result => {
+          console.log(result);
+          this.getItemsData()
+        });
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
@@ -119,11 +125,11 @@ export class CategoryItemsComponent implements OnInit {
       this.modalWarning.emit({action:"modal",params:['open']});
       this.warningAction = function(){func(item)};
   }
-  
+
   closeWarning(){
        this.modalWarning.emit({action:"modal",params:['close']});
   }
-  
+
   deleteItem(item) {
    this.itemsService.removeItem(item._id, item.name);
    this.refresh();
@@ -136,7 +142,7 @@ export class CategoryItemsComponent implements OnInit {
     }
     this.modalEdit = false;
   }
-    
+
   changeItemRating(id, ratingNum) {
       this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
   }
