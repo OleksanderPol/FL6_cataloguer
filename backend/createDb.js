@@ -201,3 +201,7 @@ var itemObj = {
 //     console.log("jopa");
 //   }
 // })
+
+Category.find({name: 'BOOKS'}, (err, user)=>{
+  console.log(user)
+})

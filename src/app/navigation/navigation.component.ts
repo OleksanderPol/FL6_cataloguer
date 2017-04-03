@@ -26,6 +26,7 @@ export class NavigationComponent implements OnInit {
   private itemError: string;
   private itemSuccess: string;
   private currentCategory: string;
+  private editing: boolean;
 
   constructor(
     private requestService: RequestService,
@@ -33,15 +34,27 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private itemsService: ItemsService,
     private dataService: DataService,
-    private allUsersCategoriesService: AllUsersCategoriesService) {
+    private allUsersCategoriesService: AllUsersCategoriesService) {}
 
-    router.events.subscribe((val) => {
-      this.locationLength = val.url.split('/').length;
-    });
-  }
 
   ngOnInit() {
     this.update.emit('');
+
+    this.router.events.subscribe((val) => {
+      this.locationLength = val.url.split('/').length;
+      this.checkLogedUser();
+    });
+  }
+
+  checkLogedUser(): void {
+    let currentUser = this.dataService.getUser().username,
+        logedUser = this.dataService.getLogedInUser().username;
+    console.log(currentUser, logedUser);
+    if (currentUser === logedUser) {
+      this.editing = true;
+    } else {
+      this.editing = false;
+    }
   }
 
   openModal() {
@@ -77,10 +90,10 @@ export class NavigationComponent implements OnInit {
   onItemClick() {
     this.itemsService.newEvent('refreshItems');
   }
-   
+
   onUsersCategoriesClick() {
     this.allUsersCategoriesService.newEvent('refreshUsersCategories');
-  }  
+  }
 
   signOutUser():void {
     this.requestService.signOut();
@@ -123,7 +136,7 @@ export class NavigationComponent implements OnInit {
       this.onCategoryClick();
     }
   }
-   
+
   onChangeUsersCategories(value: String): void {
     switch (value) {
       case 'alphabet':
@@ -136,7 +149,7 @@ export class NavigationComponent implements OnInit {
         this.onUsersCategoriesClick();
         break;
     }
-  }  
+  }
 
   addCategory(categoryName): void {
     categoryName = categoryName.toUpperCase();

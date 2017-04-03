@@ -4,7 +4,7 @@ export interface User{
     city: string;
     telephone: string;
     info: string;
-    photoUrl: string;  
+    photoUrl: string;
 }
 
 export interface Item {
@@ -19,4 +19,14 @@ export interface Item {
 export interface Category {
   name: string;
   amountOfItems: number;
+}
+
+export interface NotLogedInUser {
+  username: string;
+  email: string;
+  city: string;
+  telephone: string;
+  info: string;
+  photoUrl: string;
+  _id: string;
 }
