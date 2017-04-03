@@ -78,16 +78,15 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService
         .getItems(`/${this.user._id}/${this.category}/items`)
         .then(result => {
-          console.log(result);
           this.getItemsData()
         });
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
-      
-    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false  
-      
+
+    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false
+
   }
   createModal(data) {
       this.modalItem = data;
