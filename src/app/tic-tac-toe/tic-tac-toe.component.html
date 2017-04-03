@@ -1,16 +1,16 @@
 <div class="container ">
-  <table id="gameTable" class="centered" (click)="nextStep($event)">
-    <tr>
+  <table id="gameTable" (click)="nextStep($event)">
+    <tr class="center-align">
       <td><div [ngClass]="{'cell': playingGround[0][0] !== 'O'}">{{playingGround[0][0]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[0][1] !== 'O'}">{{playingGround[0][1]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[0][2] !== 'O'}">{{playingGround[0][2]}}</div></td>
     </tr>
-    <tr>
+    <tr class="center-align">
       <td><div [ngClass]="{'cell': playingGround[1][0] !== 'O'}">{{playingGround[1][0]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[1][1] !== 'O'}">{{playingGround[1][1]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[1][2] !== 'O'}">{{playingGround[1][2]}}</div></td>
     </tr>
-    <tr>
+    <tr class="center-align">
       <td><div [ngClass]="{'cell': playingGround[2][0] !== 'O'}">{{playingGround[2][0]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[2][1] !== 'O'}">{{playingGround[2][1]}}</div></td>
       <td><div [ngClass]="{'cell': playingGround[2][2] !== 'O'}">{{playingGround[2][2]}}</div></td>
@@ -21,8 +21,8 @@
 <div id="nav-modal" class="modal grey lighten-1" materialize="modal" [materializeActions]="modalAction">
   <div class="modal-content">
     <div class="row">
-      <h4 class="modal-heading">{{gameResult}}</h4>
-      <button class="waves-effect waves-light yellow accent-3 black-text btn"
+      <h4 class="modal-heading center-align">{{gameResult}}</h4>
+      <button class="waves-effect waves-light yellow accent-3 black-text btn center-align"
       (click)="closeModal();"
       >Play again</button>
   </div>

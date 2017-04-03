@@ -85,9 +85,9 @@ export class TicTacToeComponent implements OnInit {
     //check the main diagonal
     curretnCell = this.playingGround[x][y];
 
-    if (curretnCell !== "") {
+    if (curretnCell !== '') {
       for (let i = 1; i < 3; i++) {
-        if (this.playingGround[x + i][y + i] !== curretnCell) curretnCell = "";
+        if (this.playingGround[x + i][y + i] !== curretnCell) curretnCell = '';
       }
     }
 
@@ -96,9 +96,9 @@ export class TicTacToeComponent implements OnInit {
     //check the reverse diagonal
     curretnCell = this.playingGround[x][y + 2];
 
-    if (curretnCell !== "") {
+    if (curretnCell !== '') {
       for (let i = 1; i < 3; i++) {
-        if (this.playingGround[x + i][y + 2 - i] !== curretnCell) curretnCell = "";
+        if (this.playingGround[x + i][y + 2 - i] !== curretnCell) curretnCell = '';
       }
     }
 
@@ -108,9 +108,9 @@ export class TicTacToeComponent implements OnInit {
     for (let i = 0; i < 3; i++) {
       curretnCell = this.playingGround[x + i][y];
 
-      if (curretnCell !== "") {
+      if (curretnCell !== '') {
         for (let j = 1; j < 3; j++)
-          if (this.playingGround[x + i][y + j] !== curretnCell) curretnCell = "";
+          if (this.playingGround[x + i][y + j] !== curretnCell) curretnCell = '';
       }
       if (curretnCell !== '') return curretnCell;
     }
@@ -119,9 +119,9 @@ export class TicTacToeComponent implements OnInit {
     for (let i = 0; i < 3; i++) {
       curretnCell = this.playingGround[x][y + i];
 
-      if (curretnCell !== "") {
+      if (curretnCell !== '') {
         for (let j = 1; j < 3; j++)
-          if (this.playingGround[x + j][y + i] !== curretnCell) curretnCell = "";
+          if (this.playingGround[x + j][y + i] !== curretnCell) curretnCell = '';
       }
 
       if (curretnCell !== '') return curretnCell;
@@ -168,7 +168,7 @@ export class TicTacToeComponent implements OnInit {
     outer: for (let x = 0; x < this.playingGround.length; x++) {
       for (let y = 0; y < this.playingGround[x].length; y++) {
         let currentCell = this.playingGround[x][y];
-        //check if the sell is empty
+        //check if the cell is empty
         if (currentCell !== PCsign && currentCell !== userSign) {
           this.playingGround[x][y] = PCsign;
           //check if the PC can win, the highest priority
@@ -188,7 +188,7 @@ export class TicTacToeComponent implements OnInit {
               PCy = y;
               priority = 2;
             }
-            else this.playingGround[x][y] = "";
+            else this.playingGround[x][y] = '';
           }
           //find the nearest cell with PCsign and put one more in it
           if (priority < 2) {
@@ -210,7 +210,6 @@ export class TicTacToeComponent implements OnInit {
 
     if (PCx !== null && PCy !== null) {
       this.setCell(PCx, PCy, PCsign);
-      debugger;
     }
   }
 
