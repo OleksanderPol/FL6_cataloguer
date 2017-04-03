@@ -1,4 +1,4 @@
-<<div *ngIf="loading">
+<div *ngIf="loading">
   <div class="loader"></div>
   <div class="blur"></div>
 </div>
@@ -27,6 +27,10 @@
 
   <div class="row catalogue">
 
+    <div *ngIf='pageTable.length===0'>
+      <h2 class="nothing-found">Please add your first item!</h2>
+    </div>
+
     <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
 
       <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
@@ -43,10 +47,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
-    <!-- Modal Structure -->
     <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
       <div class="modal-content row">
         <div class="modal-img grey lighten-2 col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
@@ -96,20 +97,20 @@
           </div>
         </div>
       </div>
-      <!-- //Modal Structure -->
-      <!-- Warning Modal -->
-      <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]"
-        [materializeActions]="modalWarning">
-        <div class="modal-content">
-          <h4>You shall not delete this!</h4>
-          <p>Shall you?</p>
-        </div>
-        <div class="modal-footer grey lighten-1">
-          <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
-          <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
-        </div>
-      </div>
-
     </div>
+    <!-- //Modal Structure -->
+    <!-- Warning Modal -->
+    <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]"
+      [materializeActions]="modalWarning">
+      <div class="modal-content">
+        <h4>You shall not delete this!</h4>
+        <p>Shall you?</p>
+      </div>
+      <div class="modal-footer grey lighten-1">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
+        <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+      </div>
+    </div>
+    <!-- Modal Structure -->
   </div>
 </div>
