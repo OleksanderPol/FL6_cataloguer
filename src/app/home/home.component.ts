@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
+import { User } from '../app.model';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import { FilterService } from '../services/filter.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public user: Object;
+  public user: User;
   public searchFilter: string;
   private logedInUser: Object;
   private modalAction = new EventEmitter<string | MaterializeAction>();
@@ -36,6 +37,10 @@ export class HomeComponent implements OnInit {
     this.user = this.dataService.getUser();
     this.logedInUser = this.dataService.getLogedInUser();
     console.log(this.logedInUser);
+  }
+
+  play(): void {
+    this.router.navigate([`home/${this.user.username}/tictactoe`]);
   }
 
   openModal() {
