@@ -23,7 +23,9 @@ export class GlobalSearchComponent implements OnInit {
   }
 
   search(searchInput){
-    this.loading = true;
+    if (searchInput !== ''){
+      this.loading = true;
+    }
     this.searchValue = searchInput;
     this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
   }
