@@ -19,6 +19,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./category-items.component.css']
 })
 export class CategoryItemsComponent implements OnInit {
+  private logedInUser: User;
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -35,6 +36,7 @@ export class CategoryItemsComponent implements OnInit {
   private modalEdit: boolean;
   private user: NotLogedInUser;
   public warningAction: Object;
+  private isItemEditable: boolean;
 
   constructor(
     private router: Router,
@@ -67,11 +69,11 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
+    this.logedInUser = this.dataService.getLogedInUser();
     this.activatedRoute.params.subscribe((params: Params) => {
       this.category = params['category'];
     });
-
-    this.user = this.dataService.getUser();
 
     this.itemsService
         .getItems(`/${this.user._id}/${this.category}/items`)
@@ -83,7 +85,9 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
-
+      
+    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false  
+      
   }
   createModal(data) {
       this.modalItem = data;
