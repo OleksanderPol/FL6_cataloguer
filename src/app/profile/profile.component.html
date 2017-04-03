@@ -60,27 +60,30 @@
 <div *ngIf="changeTrigger" class="change-user-data grey darken-3">
   <form [formGroup]="infoForm" (ngSubmit)="changeInfo()" class="profile-form">
     <div class="input-field">
-      <input id="email" type="email" formControlName="email" [(ngModel)]="user.email">
+      <input class="input-yellow" id="email" type="email" formControlName="email" [(ngModel)]="user.email">
       <label for="email" class="active">Email</label>
     </div>
 
     <div class="input-field">
-      <input id="telephone" type="text" formControlName="telephone" [(ngModel)]="user.telephone">
+      <input class="input-yellow"id="telephone" type="text" formControlName="telephone" [(ngModel)]="user.telephone">
       <label for="telephone" class="active">Phone</label>
     </div>
 
     <div class="input-field">
-      <input id="city" type="text" formControlName="city" [(ngModel)]="user.city">
+      <input class="input-yellow"id="city" type="text" formControlName="city" [(ngModel)]="user.city">
       <label for="city" class="active">City</label>
     </div>
 
     <div class="input-field">
-      <input id="photo" type="text" formControlName="photoUrl" [(ngModel)]="user.photoUrl">
+      <input class="input-yellow"id="photo" type="text" formControlName="photoUrl" [(ngModel)]="userPhoto">
       <label for="photo" class="active">Photo URL</label>
+    </div>
+    <div>
+      <app-file-upload [(userPhoto)]="userPhoto"></app-file-upload>
     </div>
 
     <div class="input-field">
-      <textarea id="message" class="materialize-textarea" formControlName="info" [(ngModel)]="user.info"></textarea>
+      <textarea id="message" class="materialize-textarea input-yellow" formControlName="info" [(ngModel)]="user.info"></textarea>
       <label for="message" class="active">Info</label>
     </div>
     <div class="center-align">
@@ -92,9 +95,6 @@
     </div>
 
   </form>
-  <div>
-    <app-file-upload></app-file-upload>
-  </div>
 </div>
 
 <div class="profile-nav">

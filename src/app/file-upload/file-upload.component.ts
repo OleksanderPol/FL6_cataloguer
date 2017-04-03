@@ -1,4 +1,4 @@
-import { Component, NgZone, Inject } from '@angular/core';
+import { Component, NgZone, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({
@@ -7,13 +7,16 @@ import { NgUploaderOptions } from 'ngx-uploader';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent {
+  @Input() userPhoto: string;
+  @Output() changePhoto = new EventEmitter<string>();
   options: NgUploaderOptions;
   response: any;
   hasBaseDropZoneOver: boolean;
 
   constructor(@Inject(NgZone) private zone: NgZone) {
     this.options = new NgUploaderOptions({
-      url: '/upload'
+      url: '/upload',
+      autoUpload: false
     });
   }
 
@@ -22,7 +25,9 @@ export class FileUploadComponent {
       this.zone.run(() => {
         this.response = data;
         if (data && data.response) {
-          this.response = JSON.parse(data.response);
+          this.userPhoto = JSON.parse(data.response).path;
+          this.changePhoto.emit(this.userPhoto);
+          console.log(data.response);
         }
       });
     });

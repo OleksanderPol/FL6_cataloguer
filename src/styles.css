@@ -15,14 +15,13 @@
   box-shadow: 0 1px 0 0 #ffea00;
 }
 
-text-area.input-yellow:focus:not([readonly]) {
+#message:focus {
   border-bottom: 1px solid #ffea00;
   box-shadow: 0 1px 0 0 #ffea00;
 }
-text-area.input-yellow:focus:not([readonly]) + label {
+#message:focus + label {
   color: #ffea00;
 }
-
 
 .input-yellow[type="search"]:focus:not([readonly]) + label,
 .input-yellow[type="text"]:focus:not([readonly]) + label,

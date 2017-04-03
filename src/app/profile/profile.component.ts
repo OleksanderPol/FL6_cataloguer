@@ -7,6 +7,7 @@ import { DataService } from '../services/data.service';
 import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
+import { User, NotLogedInUser } from '../app.model';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -15,13 +16,14 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-	@Input() user: Object;
+	@Input() user: User;
 	public changeTrigger: boolean = false;
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
   private itemsAmount: number;
   private categoriesAmount: number;
+  public userPhoto: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +50,7 @@ export class ProfileComponent implements OnInit {
      this.itemsService.events$.forEach(event => {
       this.refreshItems(event);
     });
+     this.userPhoto = this.user.photoUrl;
   }
 
   refreshItems(indicator: string): void {
@@ -94,6 +97,7 @@ export class ProfileComponent implements OnInit {
   }
 
   showCategories() {
+    // this.dataService.storeUser(this.dataService.getLogedInUser());
     this.router.navigate(['/home', this.dataService.getUser().username]);
   }
 
@@ -103,9 +107,9 @@ export class ProfileComponent implements OnInit {
 
   receiveResponseChange(status, response, username) {
     if (status === 200) {
-      this.router.navigate(['/home', username]);
       this.dataService.storeUser(response);
       this.user = this.dataService.getUser();
+      this.router.navigate(['/home', username]);
     } else {
       this.changeError = response;
     }

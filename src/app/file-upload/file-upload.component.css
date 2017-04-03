@@ -1,4 +1,23 @@
+.upload-button {
+    /*width: 200px;*/
+    display: block;
+    outline: none;
+    border-radius: 5px;
+    background: #ffea00;
+    color: #343434;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px 50px;
+    border: 1px solid #DD0A31;
+    margin: 5px auto 0;
+}
+.upload-button input {
+    display: none;
+}
 .drag-n-drop-container {
+  text-align: center;
   padding: 5px;
   border-style: dashed;
   border-color: #ffea00;
