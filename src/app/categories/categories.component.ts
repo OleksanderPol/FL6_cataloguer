@@ -29,7 +29,7 @@ export class CategoriesComponent implements OnInit {
   private search: string = '';
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
-
+  private loading: boolean = true;
 
   constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
@@ -70,6 +70,7 @@ export class CategoriesComponent implements OnInit {
   getCategoriesData() {
     this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'first');
     this.ifCategories = true;
+    this.loading = false;
     return this.pageTable;
   }
 

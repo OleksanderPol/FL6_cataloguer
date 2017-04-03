@@ -9,6 +9,13 @@ import 'rxjs/Rx';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 
+import {
+    Event as RouterEvent,
+    NavigationEnd,
+    NavigationCancel,
+    NavigationError
+} from '@angular/router'
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -28,8 +35,7 @@ export class HomeComponent implements OnInit {
       if (event instanceof NavigationStart) {
         this.user = this.dataService.getUser();
       }
-    })
-
+    });
   }
 
   ngOnInit() {
