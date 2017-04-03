@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="col s10 m7 push-m2">
-        <a class="current-btn">{{user.username | uppercase}} {{category}}</a>
+        <a class="current-btn">{{user.username | uppercase}} {{category | uppercase}}</a>
     </div>
     <div class="col s6 m2 pull-m8">
         <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
@@ -77,7 +77,7 @@
 
         </div>
         <div class="modal-edits modal-footer row">
-            <div class="center-align rating col s12 m6">
+            <div class="center-align rating col s12 m6" *ngIf="isItemEditable === true">
                 <span *ngIf="modalItem.rating == 0">Please set rating</span>
                 <br>
                 <a *ngFor="let number of ratingNum">
@@ -89,10 +89,12 @@
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
                             </a>
             </div>
-            <div class="col s12 m6">
+            <div class="col s12 m6" [class.m12]="isItemEditable === false">
                 <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                 <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-                <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
+                <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">
+                    Close
+                </button>
             </div>
         </div>
     </div>
