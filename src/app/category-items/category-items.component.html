@@ -83,30 +83,13 @@
                         </form>
 
                     </div>
-                    <div class="modal-edit-active col s12 m5" *ngIf="modalEdit">
-
-                        <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)">
-                            <div>
-                                <label for="item-heading" class="black-text">Item name:</label>
-                                <input id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
-                                <label for="item-url" class="black-text">Item Url:</label>
-                                <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
-                                <div class="input-field col s12">
-                                    <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
-                                    <label class="active black-text" for="textarea1">Type description</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid">Send</button>
-                        </form>
-
-
-                    </div>
                 </div>
-                <div class="modal-edits modal-footer row">
-                    <div class="center-align rating col s12 m6" *ngIf="isItemEditable === true">
-                        <span *ngIf="modalItem.rating == 0">Please set rating</span>
-                        <br>
-                        <a *ngFor="let number of ratingNum">
+            </div>
+            <div class="modal-edits modal-footer row">
+                <div class="center-align rating col s12 m6" *ngIf="isItemEditable === true">
+                    <span *ngIf="modalItem.rating == 0">Please set rating</span>
+                    <br>
+                    <a *ngFor="let number of ratingNum">
                             <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
                              (click)="modalItem.rating = number"
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
@@ -114,12 +97,11 @@
                              (click)="modalItem.rating = number"
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
                             </a>
-                    </div>
-                    <div class="col s12 m6">
-                        <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
-                        <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-                        <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
-                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
+                    <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
+                    <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
                 </div>
             </div>
         </div>
