@@ -1,17 +1,17 @@
-import { Component, EventEmitter} from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from '../services/validation.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationExtras, NavigationStart } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 @Component({
   templateUrl: './starting-page.component.html',
   styleUrls: ['./starting-page.component.css']
 })
-export class StartingPageComponent {
+export class StartingPageComponent implements OnInit {
   public modalActionsLogin = new EventEmitter<string | MaterializeAction>();
   public modalActionsRegister = new EventEmitter<string | MaterializeAction>();
   public registerForm: FormGroup;
@@ -32,7 +32,13 @@ export class StartingPageComponent {
       'name': ['', [Validators.required]],
       'password': ['', [Validators.required, ValidationService.passwordValidator]]
     });
+  }
 
+  ngOnInit() {
+    if (this.dataService.getLogedInUser()) {
+      this.dataService.storeUser(JSON.stringify(this.dataService.getLogedInUser()));
+      this.router.navigate(['/home', this.dataService.getLogedInUser().username])
+    }
   }
 
   openModalLogin() {

@@ -50,7 +50,7 @@ export class NavigationComponent implements OnInit {
   checkLogedUser(): void {
     let currentUser = this.dataService.getUser().username,
         logedUser = this.dataService.getLogedInUser().username;
-    console.log(currentUser, logedUser);
+
     if (currentUser === logedUser) {
       this.editing = true;
     } else {
@@ -69,14 +69,14 @@ export class NavigationComponent implements OnInit {
       setTimeout(() => {
         this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.categorySuccess = '';
-      }, 1000);
+      }, 500);
     }
 
     if (this.itemSuccess && location === 'items') {
       setTimeout(() => {
         this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.itemSuccess = '';
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -166,7 +166,8 @@ export class NavigationComponent implements OnInit {
   }
 
   addItem(name, info = '', fotoUrl = ''): void {
-    let uppercaseName = name.toUpperCase();
+    let uppercaseName = name.toUpperCase(),
+        userId = this.dataService.getUser()._id;
 
     if (this.router.url.split('/')[4] === 'allcategories') {
       this.itemError = 'Select the category first, please!';
@@ -174,7 +175,7 @@ export class NavigationComponent implements OnInit {
     }
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[4])
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[4], userId)
         .then(res => {
           if (res !== 'Server Error') {
             this.itemError = '';

@@ -5,7 +5,7 @@ import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -36,6 +36,7 @@ export class CategoryItemsComponent implements OnInit {
   private modalEdit: boolean;
   private user: NotLogedInUser;
   public warningAction: Object;
+  private loading: boolean = true;
   private isItemEditable: boolean;
 
   constructor(
@@ -52,6 +53,7 @@ export class CategoryItemsComponent implements OnInit {
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
       'itemFotoUrl': [''],
+      'itemBorrowedTo': ['']
     });
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
@@ -78,16 +80,16 @@ export class CategoryItemsComponent implements OnInit {
     this.itemsService
         .getItems(`/${this.user._id}/${this.category}/items`)
         .then(result => {
-          console.log(result);
           this.getItemsData()
+          this.loading = false;
         });
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
-      
-    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false  
-      
+
+    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false
+
   }
   createModal(data) {
       this.modalItem = data;

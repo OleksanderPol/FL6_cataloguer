@@ -41,6 +41,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.catalogue div.ct-item .ct-item-title .item-tooltip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
     top: -6px;
@@ -91,6 +98,7 @@ div.bottom-nav div > a i.material-icons {
     background-color: #ffea00;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 
@@ -154,4 +162,9 @@ text-align: center;
     width: 75% !important ;
     height: 85% !important ;
 }
+}
+
+h2.nothing-found {
+    color: #ffea00;
+    text-align: center;
 }

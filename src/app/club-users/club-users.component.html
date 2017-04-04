@@ -1,43 +1,46 @@
-<div class="row bottom-nav">
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
+</div>
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
-        <a class="home-btn" routerLink="/">
-            <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
-        </a>
+      <a class="home-btn" routerLink="/">
+        <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+      </a>
     </div>
     <div class="col s5 m3 push-m2">
-        <a (click)="showAllUsersCategories()">CLUBS</a>
+      <a (click)="showAllUsersCategories()">CLUBS</a>
     </div>
     <div class="col s5 m4 push-m2">
-        <a class="current-btn">{{category}}</a>
+      <a class="current-btn">{{category}}</a>
     </div>
     <div class="col s6 m2 pull-m8">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
         <i class="small material-icons grey-text text-darken-3">chevron_left</i>
-        </a>
+      </a>
     </div>
     <div class="col s6 m2">
-        <a class="next-btn grey-text text-darken-3 pull-s12"
-            [class.disabled]="!showNext"
-            (click)="getNext()">
-            <i class="small material-icons grey-text text-darken-3">chevron_right</i>
-        </a>
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" (click)="getNext()">
+        <i class="small material-icons grey-text text-darken-3">chevron_right</i>
+      </a>
     </div>
-</div>
+  </div>
+  <div class="row catalogue">
 
-<div class="row catalogue">
-
-  <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
-    <div class="ct-item z-depth-0">
-      <div class="ct-item-img grey darken-3" [style.background]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
-        <div class="ct-item-title yellow accent-3">
-          <span>{{user.username | uppercase}}</span>
-        </div>
-        <div class="ct-item-title-detailed">
+    <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
+      <div class="ct-item z-depth-0">
+        <div class="ct-item-img grey darken-3" [style.background-image]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
+          <div class="ct-item-title yellow accent-3">
+            <span>{{user.username | uppercase}}</span>
+          </div>
+          <div class="ct-item-title-detailed">
             <p>{{user.email}}</p>
             <p>{{user.city}}</p>
           </div>
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>

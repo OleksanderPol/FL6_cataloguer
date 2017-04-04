@@ -1,32 +1,37 @@
-<div class="row bottom-nav">
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
+</div>
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
-        <a class="home-btn" routerLink="/">
-            <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
-        </a>
+      <a class="home-btn" routerLink="/">
+        <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+      </a>
     </div>
     <div class="col s10 m7 push-m2">
-        <a class="current-btn">CLUBS</a>
+      <a class="current-btn">CLUBS</a>
     </div>
     <div class="col s6 m2 pull-m8">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
         <i class="small material-icons grey-text text-darken-3">chevron_left</i>
-        </a>
+      </a>
     </div>
     <div class="col s6 m2">
-        <a class="next-btn grey-text text-darken-3 pull-s12"
-            [class.disabled]="!showNext"
-            (click)="getNext()">
-            <i class="small material-icons grey-text text-darken-3">chevron_right</i>
-        </a>
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" (click)="getNext()">
+        <i class="small material-icons grey-text text-darken-3">chevron_right</i>
+      </a>
     </div>
-</div>
+  </div>
 
-<div class="row catalogue">
+  <div class="row catalogue">
     <div class="col s6 m4" *ngFor="let category of pageTable" (click)="pickCategory(category.name)">
-        <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
-            <div>
-                <span class="card-title">{{category.name | uppercase}}</span>
-                <span class="users-ammount">Users: {{category.users.length}}</span>
-            </div>
+      <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
+        <div>
+          <span class="card-title">{{category.name | uppercase}}</span>
+          <span class="users-ammount">Users: {{category.users.length}}</span>
         </div>
+      </div>
     </div>
+  </div>
+</div>

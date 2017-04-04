@@ -119,7 +119,7 @@ export class RequestService {
     }
 
     changeItemInfo(id: string, itemData, responseFunc) {
-        var body = `name=${itemData.value.itemName}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
+        var body = `name=${itemData.value.itemName}&borrowedTo=${itemData.value.itemBorrowedTo}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 

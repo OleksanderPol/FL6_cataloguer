@@ -106,3 +106,8 @@ text-align: center;
     padding: 20px;
     overflow: hidden;
 }
+
+h2.nothing-found {
+    color: #ffea00;
+    text-align: center;
+}

@@ -35,7 +35,8 @@ export class ItemsService {
     name: string,
     info: string,
     fotoUrl: string,
-    category: string): Promise<string> {
+    category: string,
+    userId: string): Promise<string> {
 
     let itemObj: Item = {
       name: name,
@@ -51,7 +52,7 @@ export class ItemsService {
       .toPromise()
       .then(res => {
         if (res.status === 200) {
-          this.getItems(`${category}/items`)
+          this.getItems(`${userId}/${category}/items`)
             .then(res => {
               this.newEvent('add');
             });

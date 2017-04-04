@@ -6,6 +6,7 @@ import { CategoryItemsComponent } from './category-items/category-items.componen
 import { GlobalSearchItemsComponent } from './global-search-items/global-search-items.component';
 import { ClubUsersComponent } from './club-users/club-users.component';
 import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
+import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 
 const appRoutes: Routes = [
     { path: '', component: StartingPageComponent },
@@ -30,6 +31,10 @@ const appRoutes: Routes = [
           {
               path: ':category/users',
               component: ClubUsersComponent
+          },
+          {
+              path: 'tictactoe',
+              component: TicTacToeComponent
           }
       ]
     },
