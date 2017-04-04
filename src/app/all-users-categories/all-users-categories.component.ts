@@ -83,4 +83,8 @@ export class AllUsersCategoriesComponent implements OnInit {
   pickCategory(category: string):void {
     this.router.navigate([`home/${this.dataService.getUser().username}/${category}/users`])
   }
+    
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.user.username}`]);
+  }
 }

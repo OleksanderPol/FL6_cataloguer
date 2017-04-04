@@ -10,7 +10,7 @@
             </a>
         </div>
         <div class="col s10 m7 push-m2">
-            <a class="current-btn">{{user.username | uppercase}} {{category | uppercase}}</a>
+            <a class="current-btn" (click)="onNavCurrClick()">{{user.username | uppercase}} {{category | uppercase}}</a>
         </div>
         <div class="col s6 m2 pull-m8">
             <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
@@ -35,8 +35,8 @@
 
             <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
                 <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
-                    <div class="ct-item-title yellow accent-3">
-<!--                        <div *ngIf="item.borrowedTo" class="item-tooltip tooltipped" materialize="tooltip" data-position="top" data-delay="10" [attr.data-tooltip]="item.borrowedTo"></div>-->
+                    <div class="ct-item-title yellow accent-3" [class.item-tooltip]="item.borrowedTo">
+                        <span *ngIf="item.borrowedTo" class="tooltiptext">Borrowed to {{item.borrowedTo}}</span>
                         <span>{{item.name | uppercase}}</span>
                         <span class="el-borrowed" *ngIf="item.borrowedTo">*</span>
                         <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>

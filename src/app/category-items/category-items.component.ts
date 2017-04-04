@@ -142,12 +142,12 @@ export class CategoryItemsComponent implements OnInit {
    this.refresh();
    console.log('deleted')
   }
-
+  
   changeItemInfo(id) {
     if (this.itemForm.dirty && this.itemForm.valid) {
       this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
+      this.modalEdit = false;
     }
-    this.modalEdit = false;
   }
 
   changeItemRating(id, ratingNum) {
@@ -161,4 +161,8 @@ export class CategoryItemsComponent implements OnInit {
       this.changeError = response;
     }
   }
+    
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.user.username}`]);
+  }    
 }

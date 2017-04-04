@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="col s10 m7 push-m2">
-      <a class="current-btn">CLUBS</a>
+      <a class="current-btn" (click)="onNavCurrClick()">CLUBS</a>
     </div>
     <div class="col s6 m2 pull-m8">
       <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">

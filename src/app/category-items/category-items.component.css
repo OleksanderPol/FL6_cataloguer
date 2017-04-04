@@ -37,22 +37,33 @@
     font-size: 16px;
     font-weight: 600;
     padding: 5px;
-    position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.catalogue div.ct-item .ct-item-title .item-tooltip {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+
+.catalogue div.ct-item .ct-item-title.item-tooltip:hover .tooltiptext {
+    display: block;
 }
+.catalogue div.ct-item .ct-item-title .tooltiptext {
+    display: none;
+    margin-left: 0px;
+    margin-top: -30px;
+    position: absolute;
+    z-index: 1000;
+    background: #626262;
+    font-size: 12px;
+    font-style: italic;
+    padding: 0px 5px;
+    color: white;
+}
+
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
-    top: -8px;
-    right: 2px;
+    top: 1px;
+    right: 1px;
     font-size: 20px;
+    background: #ffea00;
+    line-height: 14px;
 }
 .catalogue div.ct-item div.rating {
     display: block;
@@ -173,8 +184,6 @@ div.bottom-nav div > a i.material-icons {
     float: none;
     text-align: center;
 }
-
-
 #warning-modal .modal-content {
     padding: 20px;
     overflow: hidden;

@@ -84,6 +84,9 @@ export class ClubUsersComponent implements OnInit {
   showAllUsersCategories() {
     this.router.navigate([`home/${this.dataService.getUser().username}`, 'usersCategories']);
   }
-
+    
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.dataService.getUser().username}`]);
+  }
 
 }
