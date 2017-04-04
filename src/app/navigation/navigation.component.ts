@@ -41,9 +41,16 @@ export class NavigationComponent implements OnInit {
     this.update.emit('');
 
     this.router.events.subscribe((val) => {
+      let urlArr: string[] = val.url.split('/');
       this.locationLength = val.url.split('/').length;
+
       if (val.url === '/') return;
       this.checkLogedUser();
+
+      if (urlArr.indexOf('usersCategories') + 1 ||
+           urlArr.indexOf('users') + 1) {
+        this.editing = false;
+      }
     });
   }
 
