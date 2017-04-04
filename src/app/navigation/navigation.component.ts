@@ -58,7 +58,8 @@ export class NavigationComponent implements OnInit {
       this.checkLogedUser();
 
       if (urlArr.indexOf('usersCategories') + 1 ||
-           urlArr.indexOf('users') + 1) {
+          urlArr.indexOf('users') + 1 ||
+          urlArr.indexOf('tictactoe') + 1) {
         this.editing = false;
       }
     });
