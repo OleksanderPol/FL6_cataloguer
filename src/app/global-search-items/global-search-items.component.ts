@@ -10,6 +10,7 @@ import { GlobalSearchService } from '../services/global-search.service';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 import { User, Item } from '../app.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class GlobalSearchItemsComponent implements OnInit {
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
     private filterService: FilterService,
-    private globalSearchService: GlobalSearchService) {
+    private globalSearchService: GlobalSearchService,
+    private sanitizer: DomSanitizer) {
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;

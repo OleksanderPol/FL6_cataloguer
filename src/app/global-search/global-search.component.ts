@@ -22,7 +22,6 @@ export class GlobalSearchComponent implements OnInit {
   }
 
   search(searchInput){
-    console.log(this.searchValue);
     if (searchInput !== ''){
       this.router.navigate([`home/${this.user.username}/items/search`, searchInput]);
       this.searchValue = '';
