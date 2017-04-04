@@ -4,7 +4,7 @@ import { ValidationService } from '../services/validation.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationExtras, NavigationStart } from '@angular/router';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
 import { User, NotLogedInUser } from '../app.model';
@@ -43,6 +43,11 @@ export class ProfileComponent implements OnInit {
       'city': [''],
       'telephone': [''],
       'photoUrl': ['']
+    });
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.user = this.dataService.getUser();
+      }
     });
   }
 
@@ -86,7 +91,6 @@ export class ProfileComponent implements OnInit {
   }
 
   showUser() {
-    this.router.navigate(['/home', this.user.username]);
     this.infoTrigger = false;
     this.changeTrigger = false;
   }
