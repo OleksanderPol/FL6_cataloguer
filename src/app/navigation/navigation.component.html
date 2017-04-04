@@ -94,7 +94,7 @@
         <div class="row">
            <div class="input-field col s12">
               <input id="cateoryName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="35">
+              maxlength="35" required>
               <label for="cateoryName">Category Name</label>
             </div>
         </div>
@@ -102,7 +102,7 @@
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
           (click)="addCategory(name.value); name.value='';
           closeModal('categories');"
-          [disabled]="!name.value.length"
+          [disabled]="!name.value.length || name.value.trim().length === 0"
           >Add</button>
         </div>
       </form>
@@ -115,7 +115,7 @@
         <div class="row">
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="50">
+              maxlength="50" required>
               <label for="itemName" class="black-text">Item Name</label>
             </div>
             <div class="input-field col s12">
@@ -131,7 +131,7 @@
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
           (click)="addItem(name.value, info.value, url.value);
           name.value=''; info.value=''; url.value='';"
-          [disabled]="!name.value.length"
+          [disabled]="!name.value.length || name.value.trim().length === 0"
           >Add</button>
         </div>
       </form>

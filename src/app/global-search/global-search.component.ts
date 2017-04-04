@@ -12,7 +12,6 @@ import { User } from '../app.model';
 export class GlobalSearchComponent implements OnInit {
   private searchValue: string = '';
   private user: User;
-  private loading: boolean = false;
 
   constructor(private requestService: RequestService,
               private dataService: DataService,
@@ -24,15 +23,15 @@ export class GlobalSearchComponent implements OnInit {
 
   search(searchInput){
     if (searchInput !== ''){
-      this.loading = true;
+      this.router.navigate([`home/${this.user.username}/items/search`, searchInput]);
     }
-    this.searchValue = searchInput;
-    this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
+    // this.searchValue = searchInput;
+    // this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
   }
-  getItems(response){
-    this.dataService.storeSearch(response);
-    this.router.navigate([`home/${this.user.username}/items/search`, this.searchValue]);
-    this.searchValue = '';
-    this.loading = false;
-  }
+  // getItems(response){
+  //   this.dataService.storeSearch(response);
+  //   this.router.navigate([`home/${this.user.username}/items/search`, this.searchValue]);
+  //   this.searchValue = '';
+  //   this.loading = false;
+  // }
 }

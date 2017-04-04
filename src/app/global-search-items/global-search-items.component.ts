@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
-
+import { GlobalSearchService } from '../services/global-search.service';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 import { User, Item } from '../app.model';
@@ -44,13 +44,16 @@ export class GlobalSearchItemsComponent implements OnInit {
   private searchPipe = new SearchPipe();
   public ratingNum: number[] = [1,2,3,4,5];
   private modalItem: Item;
+  private searchInput: string;
+  private loading: boolean = true;
 
   constructor(private dataService: DataService,
     private router: Router,
     private tableNavigationService: TableNavigationService,
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
-    private filterService: FilterService) {
+    private filterService: FilterService,
+    private globalSearchService: GlobalSearchService) {
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;
@@ -65,21 +68,23 @@ export class GlobalSearchItemsComponent implements OnInit {
       this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
     });
-
-    router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.items = JSON.parse(this.dataService.getSearch());
-        this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
-        return this.pageTable;
-      }
-    })
-
   }
 
   ngOnInit() {
-    this.items = JSON.parse(this.dataService.getSearch());
-    this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
-    return this.pageTable;
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.searchInput = params['search'];
+    });
+    this.globalSearchService.findItems(`items/search/${this.searchInput}`)
+      .then(response => {
+        this.items = this.globalSearchService.foundItems;
+        this.loading = false;
+        this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
+      });
+    this.globalSearchService.events$.forEach(event => {
+      if (event === 'refreshUsersCategories') {
+        this.pageTable = this.tableNavigationService.getPage(this.items, 'first')
+      }
+    });
   }
 
   getPrev(): Object[] {

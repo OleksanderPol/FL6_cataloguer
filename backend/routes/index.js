@@ -354,7 +354,6 @@ router.delete('/items/:id', function(req, res, next) {
 })
 
 router.get('*', function(req, res) {
-  console.log('default');
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
