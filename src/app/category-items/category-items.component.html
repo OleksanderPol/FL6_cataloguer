@@ -36,7 +36,7 @@
             <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
                 <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
                     <div class="ct-item-title yellow accent-3">
-                        <div *ngIf="item.borrowedTo" class="item-tooltip tooltipped" materialize="tooltip" data-position="top" data-delay="10" attr.data-tooltip="Borrowed to {{item.borrowedTo}}"></div>
+<!--                        <div *ngIf="item.borrowedTo" class="item-tooltip tooltipped" materialize="tooltip" data-position="top" data-delay="10" [attr.data-tooltip]="item.borrowedTo"></div>-->
                         <span>{{item.name | uppercase}}</span>
                         <span class="el-borrowed" *ngIf="item.borrowedTo">*</span>
                         <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
@@ -52,31 +52,50 @@
                 </div>
             </div>
         </div>
-        <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+        <div class="modal modal-fixed-footer grey darken-4" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
 
-            <div class="modal-content row">
-                <div class="modal-img grey lighten-2 col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
+            <div class="modal-content row white-text">
+                <div class="modal-img grey col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
                 </div>
                 <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
                     <div *ngIf="!modalEdit">
                         <h4>{{modalItem.name | uppercase}}</h4>
+                            <div class="rating" *ngIf="isItemEditable === true">
+                                <span *ngIf="modalItem.rating == 0">Please set rating</span>
+                                <a *ngFor="let number of ratingNum">
+                                   <i class="material-icons yellow-text text-accent-3"
+                                      *ngIf="modalItem.rating >= number"
+                                     (click)="modalItem.rating = number"
+                                     (click)="changeItemRating(modalItem._id, modalItem.rating)">star</i>
+                                   <i class="material-icons yellow-text text-accent-3"
+                                      *ngIf="modalItem.rating < number"
+                                     (click)="modalItem.rating = number"
+                                     (click)="changeItemRating(modalItem._id, modalItem.rating)">star_border</i>
+                                </a>
+                            </div>
                         <p *ngIf="modalItem.borrowedTo"><small><i>Borrowed to: {{modalItem.borrowedTo}}</i></small></p>
                         <p class="item-details">{{modalItem.info}}</p>
 
                     </div>
-                    <div class="modal-edit-active col s12 m5" *ngIf="modalEdit">
+                    <div class="modal-edit-active col s12 m5 center" *ngIf="modalEdit" [class.m10]="!modalItem.fotoUrl">
 
                         <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)" id="ngForm">
                             <div>
-                                <label for="item-heading" class="black-text">Item name:</label>
-                                <input id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
-                                <label for="item-borrowed-to" class="black-text">Borrowed to:</label>
-                                <input id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
-                                <label for="item-url" class="black-text">Item Url:</label>
-                                <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
-                                <div class="input-field col s12">
-                                    <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
-                                    <label class="active black-text" for="textarea1">Type description</label>
+                               <div class="input-field">
+                                    <input class="input-yellow" id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
+                                    <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
+                               </div>
+                               <div class="input-field">
+                                    <input class="input-yellow" id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
+                                    <label for="item-borrowed-to" [class.active]="modalItem.borrowedTo">Borrowed to:</label>
+                               </div>
+                                <div class="input-field"> 
+                                    <input class="input-yellow" id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
+                                    <label for="item-url" [class.active]="modalItem.fotoUrl">Item Url:</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea id="textarea1" class="input-yellow" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
+                                    <label for="textarea1" [class.active]="modalItem.info">Type description:</label>
                                 </div>
                             </div>
                         </form>
@@ -84,24 +103,12 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-edits modal-footer row">
-                <div class="center-align rating col s12 m6" *ngIf="isItemEditable === true">
-                    <span *ngIf="modalItem.rating == 0">Please set rating</span>
-                    <br>
-                    <a *ngFor="let number of ratingNum">
-                            <img src="/assets/icons/full-star-rate.svg" *ngIf="modalItem.rating >= number"
-                             (click)="modalItem.rating = number"
-                             (click)="changeItemRating(modalItem._id, modalItem.rating)">
-                            <img src="/assets/icons/empty-star-rate.svg" *ngIf="modalItem.rating < number"
-                             (click)="modalItem.rating = number"
-                             (click)="changeItemRating(modalItem._id, modalItem.rating)">
-                            </a>
-                </div>
-                <div class="col s12 m6" [class.m12]="isItemEditable === false">
-                   <button type="submit" *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid" form="ngForm">Send</button>
+            <div class="modal-edits modal-footer row grey darken-4">
+                <div class="col s12 m12">
+                   <button type="submit" *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid" form="ngForm">SAVE</button>
                     <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                     <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-                    <button class="waves-effect waves-grey btn-flat center"
+                    <button class="waves-effect waves-light btn-flat grey-text text-lighten-3"
                     (click)="closeModal(); modalEdit = false">Close</button>
                 </div>
             </div>

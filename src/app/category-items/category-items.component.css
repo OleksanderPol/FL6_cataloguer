@@ -50,13 +50,14 @@
 }
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
-    top: -6px;
+    top: -2px;
     right: 2px;
+    font-size: 20px;
 }
 .catalogue div.ct-item div.rating {
     display: block;
     text-align: center;
-    padding-top: 3px;
+    padding: 3px;
     margin: 0;
 }
 
@@ -126,12 +127,25 @@ div.bottom-nav div > a i.material-icons {
     text-align: left;
     margin-bottom: 60px;
 }
+.catalogue .item-modal-info h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    clear: both;
+}
 .catalogue .item-modal-info.full-width{
     width: 100%;
 }
+.catalogue .item-modal-info .rating .material-icons {
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+}
+
 .catalogue .modal-edit-active form {
     display: inline-block;
     margin-bottom: 60px;
+    width: 100%;
 }
 .catalogue .modal-edits {
     background: #bdbdbd;
@@ -143,8 +157,7 @@ div.bottom-nav div > a i.material-icons {
     color: black;
 }
 .modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-float: none;
-text-align: center;
+    margin: 0px 5px;
 }
 
 /* WARNING MODAL */
@@ -161,7 +174,13 @@ text-align: center;
     .catalogue .modal {
     width: 75% !important ;
     height: 85% !important ;
+    }
 }
+
+@media screen and (min-width: 601px) {
+    .catalogue .item-modal-info h4 {
+    clear: none;
+    }
 }
 
 h2.nothing-found {
