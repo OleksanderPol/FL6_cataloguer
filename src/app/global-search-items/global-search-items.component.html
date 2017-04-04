@@ -1,80 +1,75 @@
-<div class="row bottom-nav">
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
+</div>
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
-        <a class="home-btn" routerLink="/">
-            <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
-        </a>
+      <a class="home-btn" routerLink="/">
+        <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+      </a>
     </div>
     <div class="col s10 m7 push-m2">
-        <a class="current-btn">ALL ITEMS</a>
+      <a class="current-btn">ALL ITEMS</a>
     </div>
     <div class="col s6 m2 pull-m8">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
         <i class="small material-icons grey-text text-darken-3">chevron_left</i>
-        </a>
+      </a>
     </div>
     <div class="col s6 m2">
-        <a class="next-btn grey-text text-darken-3 pull-s12"
-            [class.disabled]="!showNext"
-            (click)="getNext()">
-            <i class="small material-icons grey-text text-darken-3">chevron_right</i>
-        </a>
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" (click)="getNext()">
+        <i class="small material-icons grey-text text-darken-3">chevron_right</i>
+      </a>
     </div>
-</div>
-
-<div class="row catalogue">
-
-  <div *ngIf='pageTable.length===0'>
-    <h2 class="nothing-found">Nothing Found =(</h2>
   </div>
 
-  <div class="col s12 m4" *ngFor="let item of pageTable" (click)="openModalRequest(item)">
-    <div class="ct-item z-depth-0">
-      <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
-        <div class="ct-item-title yellow accent-3">
-          <span>{{item.name | uppercase}}</span>
-        </div>
-        <div class="rating yellow accent-1">
-          <span *ngFor="let number of ratingNum">
+  <div class="row catalogue">
+
+    <div *ngIf='pageTable.length===0'>
+      <h2 class="nothing-found">Nothing Found =(</h2>
+    </div>
+
+    <div class="col s12 m4" *ngFor="let item of pageTable" (click)="openModalRequest(item)">
+      <div class="ct-item z-depth-0">
+        <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
+          <div class="ct-item-title yellow accent-3">
+            <span>{{item.name | uppercase}}</span>
+          </div>
+          <div class="rating yellow accent-1">
+            <span *ngFor="let number of ratingNum">
                     <img src="/assets/icons/full-star-rate.svg" *ngIf="item.rating >= number">
                     <img src="/assets/icons/empty-star-rate.svg" *ngIf="item.rating < number">
                     </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Modal Structure -->
-  <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
-    <div class="modal-content row">
-      <div class="modal-img grey lighten-2 col s12 m6" *ngIf="activeItem.fotoUrl" [style.background-image]="'url('+ activeItem.fotoUrl +')'">
-      </div>
-      <div class="item-modal-info" [class.full-width]="!activeItem.fotoUrl">
-        <div>
-          <h4>{{activeItem.name | uppercase}}</h4>
-          <hr/>
-          <div class="owner-modal-info">
-            <h5>Owner</h5>
-            <p><b>Name:</b> {{searchedUser.username}}</p>
-            <p><b>Email:</b> {{searchedUser.email}}</p>
-            <p><b>City:</b> {{searchedUser.city}}</p>
-          </div>
-          <hr/>
-          <p class="item-details">{{activeItem.info}}</p>
+</div>
+<!-- Modal Structure -->
+<div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+  <div class="modal-content row">
+    <div class="modal-img grey lighten-2 col s12 m6" *ngIf="activeItem.fotoUrl" [style.background-image]="'url('+ activeItem.fotoUrl +')'">
+    </div>
+    <div class="item-modal-info" [class.full-width]="!activeItem.fotoUrl">
+      <div>
+        <h4>{{activeItem.name | uppercase}}</h4>
+        <hr/>
+        <div class="owner-modal-info">
+          <h5>Owner</h5>
+          <p><b>Name:</b> {{searchedUser.username}}</p>
+          <p><b>Email:</b> {{searchedUser.email}}</p>
+          <p><b>City:</b> {{searchedUser.city}}</p>
         </div>
+        <hr/>
+        <p class="item-details">{{activeItem.info}}</p>
       </div>
     </div>
-    <div class="modal-edits modal-footer row">
-      <div class="center-align rating col s12 m6">
-        <span *ngIf="activeItem.rating == 0">Please set rating</span>
-        <br>
-        <a *ngFor="let number of ratingNum">
-          <img src="/assets/icons/full-star-rate.svg" *ngIf="activeItem.rating >= number">
-          <img src="/assets/icons/empty-star-rate.svg" *ngIf="activeItem.rating < number">
-        </a>
-      </div>
-      <div class="col s12 m6">
-        <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
-      </div>
+  </div>
+  <div class="modal-edits modal-footer row">
+    <div class="col s12 m6">
+      <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
     </div>
   </div>
 </div>

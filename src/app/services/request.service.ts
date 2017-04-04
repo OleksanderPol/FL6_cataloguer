@@ -150,11 +150,4 @@ export class RequestService {
                 responseFunc(this.responseStatus, this.responseText, id);
             })
     }
-    getUsers(category, responseFunc){
-        this.http
-          .get(`users/${category}`)
-          .subscribe(response => {
-              responseFunc(response.text());
-          })
-    }
 }

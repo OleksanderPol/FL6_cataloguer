@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
 import { User } from '../app.model';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SearchUserPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ClubUsersService } from '../services/club-users.service';
 
 @Component({
   selector: 'app-club-users',
@@ -25,38 +26,50 @@ export class ClubUsersComponent implements OnInit {
   public category: string;
   private logedInUser: User;
 
-
   constructor(private requestService: RequestService,
     private dataService: DataService,
     private router: Router,
     private sanitizer: DomSanitizer,
     private filterService: FilterService,
     private tableNavigationService: TableNavigationService,
-    private activatedRoute: ActivatedRoute) {
-      this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
-        this.showNext = value;
-      });
+    private activatedRoute: ActivatedRoute,
+    private clubUserService: ClubUsersService) {
+    this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
+      this.showNext = value;
+    });
 
-      this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
-        this.showPrev = value;
-      });
-      filterService.searchFilter$.subscribe(searchInput => {
-        let filteredUsers = this.searchPipe.transform(this.users, searchInput);
-        this.pageTable = this.tableNavigationService.getPage(filteredUsers, 'first');
+    this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
+      this.showPrev = value;
+    });
+    filterService.searchFilter$.subscribe(searchInput => {
+      let filteredUsers = this.searchPipe.transform(this.users, searchInput);
+      this.pageTable = this.tableNavigationService.getPage(filteredUsers, 'first');
     });
   }
 
   ngOnInit() {
-    this.users = this.dataService.getClubUsers();
-    this.loading = false;
     this.logedInUser = this.dataService.getLogedInUser();
-    this.pageTable = this.tableNavigationService.getPage(this.users, 'first');
     this.activatedRoute.params.subscribe((params: Params) => {
-    this.category = params['category'];
+      this.category = params['category'];
+    });
+
+    this.clubUserService.getClubUsers(`users/${this.category}`)
+      .then(response => {
+        this.users = this.clubUserService.clubUsers;
+        this.loading = false;
+        this.pageTable = this.tableNavigationService.getPage(this.users, 'first')
+      });
+
+
+    this.clubUserService.events$.forEach(event => {
+      if (event === 'refreshUsersCategories') {
+        this.pageTable = this.tableNavigationService.getPage(this.users, 'first')
+      }
     });
   }
+
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPage(this.users, 'prev');  
+    this.pageTable = this.tableNavigationService.getPage(this.users, 'prev');
     return this.pageTable;
   }
 
@@ -71,6 +84,6 @@ export class ClubUsersComponent implements OnInit {
   showAllUsersCategories() {
     this.router.navigate([`home/${this.dataService.getUser().username}`, 'usersCategories']);
   }
-    
+
 
 }

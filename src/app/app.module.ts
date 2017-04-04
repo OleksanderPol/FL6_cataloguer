@@ -15,6 +15,8 @@ import { ItemsService } from './services/items.service';
 import { FilterService } from './services/filter.service';
 import { CategoryService } from './services/category.service';
 import { AllUsersCategoriesService } from './services/all-users-categories.service';
+import { ClubUsersService } from './services/club-users.service';
+import { GlobalSearchService } from './services/global-search.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -79,7 +81,9 @@ import { NgUploaderModule } from 'ngx-uploader';
     TableNavigationService,
     FilterService,
     CategoryService,
-    AllUsersCategoriesService
+    AllUsersCategoriesService,
+    ClubUsersService,
+    GlobalSearchService
   ],
 
   bootstrap: [AppComponent]
