@@ -9,6 +9,8 @@ import 'rxjs/Rx';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 import { User } from '../app.model';
+import { CategoryService } from '../services/category.service';
+
 
 import {
     Event as RouterEvent,
@@ -31,7 +33,8 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService,
     private requestService: RequestService,
     private filterService: FilterService,
-    private router: Router) {
+    private router: Router,
+    private categoryService: CategoryService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.user = this.dataService.getUser();
@@ -42,7 +45,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.dataService.getUser();
     this.logedInUser = this.dataService.getLogedInUser();
-    console.log(this.logedInUser);
+    this.categoryService.onInit();
   }
 
   play(): void {
