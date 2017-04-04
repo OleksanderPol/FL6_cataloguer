@@ -8,6 +8,7 @@ import { DataService } from '../services/data.service';
 import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ValidationService } from '../services/validation.service';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
@@ -52,7 +53,7 @@ export class CategoryItemsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
-      'itemFotoUrl': [''],
+      'itemFotoUrl': ['', ValidationService.urlValidator],
       'itemBorrowedTo': ['']
     });
 

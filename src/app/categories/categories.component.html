@@ -24,7 +24,7 @@
   <div class="row catalogue" *ngIf="ifCategories">
 
     <div *ngIf='pageTable.length===0'>
-      <h2 class="nothing-found">Please create your first category!</h2>
+      <h2 class="nothing-found">No categories!</h2>
     </div>
 
     <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false"
