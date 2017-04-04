@@ -7,7 +7,7 @@
   <div class="profile-details grey darken-3">
 
   <div class="profile-edit-btn hidden" *ngIf="editButton">
-    <a class="btn-floating btn-medium yellow accent-3" (click)="showInfo()">
+    <a class="btn-floating btn-medium yellow accent-3" (click)="checkUser()">
       <i class="large material-icons grey-text text-darken-3">info_outline</i>
     </a>
   </div>
@@ -46,7 +46,7 @@
         <span>About me: </span><span class="yellow-text text-accent-3">{{user.info}}</span>
       </div>
 
-      <a class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
+      <a *ngIf="allowChange" class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
         <i class="large material-icons grey-text text-darken-3">mode_edit</i>
       </a>
       <a class="btn-floating yellow accent-3 change-info-button" (click)="showUser()">
@@ -57,34 +57,37 @@
   </div>
 </div>
 
-<div *ngIf="changeTrigger" class="change-user-data grey darken-3">
+<div *ngIf="changeTrigger&&allowChange" class="change-user-data grey darken-3">
   <form [formGroup]="infoForm" (ngSubmit)="changeInfo()" class="profile-form">
     <div class="input-field">
-      <input id="email" type="email" formControlName="email" [(ngModel)]="user.email">
+      <input class="input-yellow" id="email" type="email" formControlName="email" [(ngModel)]="user.email">
       <label for="email" class="active">Email</label>
     </div>
 
     <div class="input-field">
-      <input id="telephone" type="text" formControlName="telephone" [(ngModel)]="user.telephone">
+      <input class="input-yellow"id="telephone" type="text" formControlName="telephone" [(ngModel)]="user.telephone">
       <label for="telephone" class="active">Phone</label>
     </div>
 
     <div class="input-field">
-      <input id="city" type="text" formControlName="city" [(ngModel)]="user.city">
+      <input class="input-yellow"id="city" type="text" formControlName="city" [(ngModel)]="user.city">
       <label for="city" class="active">City</label>
     </div>
 
     <div class="input-field">
-      <input id="photo" type="text" formControlName="photoUrl" [(ngModel)]="user.photoUrl">
+      <input class="input-yellow"id="photo" type="text" formControlName="photoUrl" [(ngModel)]="userPhoto">
       <label for="photo" class="active">Photo URL</label>
+    </div>
+    <div>
+      <app-file-upload></app-file-upload>
     </div>
 
     <div class="input-field">
-      <textarea id="message" class="materialize-textarea" formControlName="info" [(ngModel)]="user.info"></textarea>
+      <textarea id="message" class="materialize-textarea input-yellow" formControlName="info" [(ngModel)]="user.info"></textarea>
       <label for="message" class="active">Info</label>
     </div>
     <div class="center-align">
-      <button class="btn btn-form yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid">Change Data
+      <button class="btn btn-form yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid">Save changes
       </button>
       <br>
       <button class="btn btn-form yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showUser()">Close
@@ -92,9 +95,7 @@
     </div>
 
   </form>
-  <div>
-    <app-file-upload></app-file-upload>
-  </div>
+  <!-- <button (click)="userPhoto='clicked'">qweqwe</button> -->
 </div>
 
 <div class="profile-nav">

@@ -4,9 +4,10 @@ import { ValidationService } from '../services/validation.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationExtras, NavigationStart } from '@angular/router';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
+import { User, NotLogedInUser } from '../app.model';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -15,13 +16,17 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-	@Input() user: Object;
+	// @Input() user: User;
+  public user: NotLogedInUser;
+  private loggedUser: User;
 	public changeTrigger: boolean = false;
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
+  public userPhoto: string = "";
   private itemsAmount: number;
   private categoriesAmount: number;
+  private allowChange: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,15 +44,28 @@ export class ProfileComponent implements OnInit {
       'telephone': [''],
       'photoUrl': ['']
     });
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.user = this.dataService.getUser();
+      }
+    });
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
+    this.loggedUser = this.dataService.getLogedInUser();
     this.categoryService.events$.forEach(event => {
       this.refreshCategories();
     });
      this.itemsService.events$.forEach(event => {
       this.refreshItems(event);
     });
+  }
+
+  checkUser() {
+    this.allowChange = this.dataService.getUser().username === this.dataService.getLogedInUser().username ? true : false;
+    this.infoTrigger = true;
+    this.changeTrigger = false;
   }
 
   refreshItems(indicator: string): void {
@@ -62,7 +80,7 @@ export class ProfileComponent implements OnInit {
 
   refreshCategories(): void {
     this.categoriesAmount = this.categoryService.categories.length;
-    this.itemsAmount = this.categoryService.categories.reduce((sum,category) => {
+    this.itemsAmount = this.categoryService.categories.reduce((sum, category) => {
       return sum += category.amountOfItems;
     }, 0);
   }
@@ -72,20 +90,14 @@ export class ProfileComponent implements OnInit {
     this.changeTrigger = true;
   }
 
-  showInfo() {
-    this.infoTrigger = true;
-    this.changeTrigger = false;
-  }
-
   showUser() {
     this.infoTrigger = false;
     this.changeTrigger = false;
   }
 
   changeInfo() {
-    this.showUser();
-    if (this.infoForm.dirty && this.infoForm.valid) {
-      this.requestService.changeUserRequest(this.dataService.getUser().username,
+    if (this.infoForm.valid) {
+      this.requestService.changeUserRequest(this.dataService.getLogedInUser().username,
                                             this.infoForm.value.email, this.infoForm.value.info,
                                             this.infoForm.value.telephone, this.infoForm.value.city,
                                             this.infoForm.value.photoUrl,
@@ -94,6 +106,7 @@ export class ProfileComponent implements OnInit {
   }
 
   showCategories() {
+    // this.dataService.storeUser(this.dataService.getLogedInUser());
     this.router.navigate(['/home', this.dataService.getUser().username]);
   }
 
@@ -103,11 +116,14 @@ export class ProfileComponent implements OnInit {
 
   receiveResponseChange(status, response, username) {
     if (status === 200) {
-      this.router.navigate(['/home', username]);
       this.dataService.storeUser(response);
+      this.dataService.storeLogedInUser(response);
       this.user = this.dataService.getUser();
+      this.loggedUser = this.dataService.getLogedInUser();
+      this.showUser();
     } else {
       this.changeError = response;
+      alert(this.changeError);
     }
   }
 }

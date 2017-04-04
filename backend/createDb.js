@@ -202,6 +202,7 @@ var itemObj = {
 //   }
 // })
 
-Category.find({name: 'BOOKS'}, (err, user)=>{
-  console.log(user)
+User.find({username: 'asdasd'}, (err, users)=>{
+  console.log(users)
+  
 })
