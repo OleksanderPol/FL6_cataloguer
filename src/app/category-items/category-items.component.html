@@ -28,7 +28,7 @@
     <div class="row catalogue">
 
         <div *ngIf='pageTable.length===0'>
-            <h2 class="nothing-found">Please add your first item!</h2>
+            <h2 class="nothing-found">No items!</h2>
         </div>
 
         <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
@@ -74,6 +74,7 @@
                                 <input id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
                                 <label for="item-url" class="black-text">Item Url:</label>
                                 <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
+                                <control-messages [control]="itemForm.controls.itemFotoUrl"></control-messages>
                                 <div class="input-field col s12">
                                     <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
                                     <label class="active black-text" for="textarea1">Type description</label>
