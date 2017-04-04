@@ -104,9 +104,9 @@ export class NavigationComponent implements OnInit {
   }
 
   signOutUser():void {
+    this.router.navigate(['']);
     this.requestService.signOut();
     this.dataService.removeUser();
-    this.router.navigate(['/']);
   }
 
   onChangeItems(value: String): void {
