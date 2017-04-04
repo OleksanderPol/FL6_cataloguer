@@ -50,7 +50,7 @@
 }
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
-    top: -2px;
+    top: -8px;
     right: 2px;
     font-size: 20px;
 }
@@ -66,6 +66,7 @@ div.bottom-nav div {
     padding: 5px;
     text-align: center;
     font-size: 16px;
+    padding-bottom: 0px;
 }
 div.bottom-nav div > a {
     display: inline-block;
@@ -163,9 +164,17 @@ div.bottom-nav div > a i.material-icons {
 /* WARNING MODAL */
 #warning-modal {
     width: 280px !important ;
-    height: 220px !important ;
+    height: 220px !important;
     text-align: center;
 }
+#warning-modal.modal .modal-footer .btn,
+#warning-modal.modal .modal-footer .btn-large,
+#warning-modal.modal .modal-footer .btn-flat {
+    float: none;
+    text-align: center;
+}
+
+
 #warning-modal .modal-content {
     padding: 20px;
     overflow: hidden;
@@ -186,4 +195,8 @@ div.bottom-nav div > a i.material-icons {
 h2.nothing-found {
     color: #ffea00;
     text-align: center;
+}
+
+control-messages {
+    color: red;
 }

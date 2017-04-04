@@ -115,6 +115,12 @@ export class ItemsService {
     });
   }
 
+  sortBorrowed(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
+      return item.borrowedTo ? -1 : 1;
+    });
+  }
+
   private handleError(error: Error): Promise<Error> {
     return Promise.reject(error.message || error);
   }

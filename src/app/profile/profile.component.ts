@@ -19,14 +19,15 @@ export class ProfileComponent implements OnInit {
 	// @Input() user: User;
   public user: NotLogedInUser;
   private loggedUser: User;
-	public changeTrigger: boolean = false;
-  public infoTrigger: boolean = false;
+	public changeTrigger: boolean;
+  public infoTrigger: boolean;
 	public infoForm: FormGroup;
 	public changeError: string;
-  public userPhoto: string = "";
+  public userPhoto: string;
   private itemsAmount: number;
   private categoriesAmount: number;
   private allowChange: boolean;
+  private userPosition: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,12 +49,18 @@ export class ProfileComponent implements OnInit {
       if (event instanceof NavigationStart) {
         this.user = this.dataService.getUser();
       }
+      this.allowChange = this.user.username === this.loggedUser.username ? true : false;
     });
   }
 
   ngOnInit() {
+    this.changeTrigger = false;
+    this.infoTrigger = false;
+    this.userPhoto = "";
     this.user = this.dataService.getUser();
     this.loggedUser = this.dataService.getLogedInUser();
+    this.userPosition = true;
+
     this.categoryService.events$.forEach(event => {
       this.refreshCategories();
     });
@@ -62,8 +69,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  checkUser() {
-    this.allowChange = this.dataService.getUser().username === this.dataService.getLogedInUser().username ? true : false;
+  showInfo() {
     this.infoTrigger = true;
     this.changeTrigger = false;
   }
@@ -107,10 +113,12 @@ export class ProfileComponent implements OnInit {
 
   showCategories() {
     // this.dataService.storeUser(this.dataService.getLogedInUser());
+    this.userPosition = true;
     this.router.navigate(['/home', this.dataService.getUser().username]);
   }
 
   showAllUsersCategories() {
+    this.userPosition = false;
     this.router.navigate([`home/${this.dataService.getLogedInUser().username}`, 'usersCategories']);
   }
 

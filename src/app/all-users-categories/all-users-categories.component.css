@@ -50,6 +50,7 @@ div.bottom-nav div {
     padding: 5px;
     text-align: center;
     font-size: 16px;
+    padding-bottom: 0px;
 }
 div.bottom-nav div > a {
     display: inline-block;
@@ -82,5 +83,6 @@ div.bottom-nav div > a i.material-icons {
     font-weight: 600;
     background-color: #ffea00;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }

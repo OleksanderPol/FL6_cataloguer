@@ -5,7 +5,7 @@
 <div *ngIf="!loading">
   <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
-      <a class="home-btn" routerLink="/"><i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i></a>
+      <a class="home-btn" routerLink="/"><i class="small material-icons grey-text text-darken-3">home</i></a>
     </div>
     <div class="col s10 m7 push-m2">
       <a class="current-btn">{{user.username | uppercase}} CATEGORIES</a>
@@ -24,7 +24,7 @@
   <div class="row catalogue" *ngIf="ifCategories">
 
     <div *ngIf='pageTable.length===0'>
-      <h2 class="nothing-found">Please create your first category!</h2>
+      <h2 class="nothing-found">No categories!</h2>
     </div>
 
     <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false"
@@ -40,15 +40,15 @@
     </div>
   </div>
   <!-- //Warning Modal -->
-  <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]"
+  <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
     [materializeActions]="modalWarning">
     <div class="modal-content">
       <h4>You shall not delete this!</h4>
       <p>Shall you?</p>
     </div>
-    <div class="modal-footer grey lighten-1">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
-      <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+    <div class="modal-footer grey darken-4">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat white-text" (click)="warningAction()">Delete</a>
+      <a class="modal-action modal-close waves-effect waves-light btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
     </div>
   </div>
 </div>

@@ -7,7 +7,7 @@
   <div class="profile-details grey darken-3">
 
   <div class="profile-edit-btn hidden" *ngIf="editButton">
-    <a class="btn-floating btn-medium yellow accent-3" (click)="checkUser()">
+    <a class="btn-floating btn-medium yellow accent-3" (click)="showInfo()">
       <i class="large material-icons grey-text text-darken-3">info_outline</i>
     </a>
   </div>
@@ -99,16 +99,32 @@
 </div>
 
 <div class="profile-nav">
-  <div class="profile-nav-item" (click)="showCategories()">
-    <div class="yellow accent-3 active">
-      <img src="/assets/icons/category-icon-active.svg">
-      <span class="grey-text text-darken-3">CATEGORIES</span>
+  <div *ngIf="userPosition">
+    <div class="profile-nav-item" (click)="showCategories()">
+      <div class="yellow accent-3 active">
+        <i class="material-icons grey-text text-darken-3">view_module</i>
+        <span class="grey-text text-darken-3">CATEGORIES</span>
+      </div>
+    </div>
+    <div class="profile-nav-item" (click)="showAllUsersCategories()">
+      <div class="grey darken-3">
+        <i class="material-icons">people</i>
+        <span class="">CLUBS</span>
+      </div>
     </div>
   </div>
-  <div class="profile-nav-item" (click)="showAllUsersCategories()">
-    <div class="grey darken-3">
-      <img src="/assets/icons/item-icon.svg">
-      <span class="">CLUBS</span>
+  <div *ngIf="!userPosition">
+    <div class="profile-nav-item" (click)="showCategories()">
+      <div class="grey darken-3">
+        <i class="material-icons">view_module</i>
+        <span class="">CATEGORIES</span>
+      </div>
+    </div>
+    <div class="profile-nav-item" (click)="showAllUsersCategories()">
+      <div class="yellow accent-3 active">
+        <i class="material-icons grey-text text-darken-3">people</i>
+        <span class="grey-text text-darken-3">CLUBS</span>
+      </div>
     </div>
   </div>
 </div>

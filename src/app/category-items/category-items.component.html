@@ -6,7 +6,7 @@
     <div class="row bottom-nav">
         <div class="col s2 m1 push-m2">
             <a class="home-btn" routerLink="/">
-                <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+                <i class="small material-icons grey-text text-darken-3">home</i>
             </a>
         </div>
         <div class="col s10 m7 push-m2">
@@ -28,7 +28,7 @@
     <div class="row catalogue">
 
         <div *ngIf='pageTable.length===0'>
-            <h2 class="nothing-found">Please add your first item!</h2>
+            <h2 class="nothing-found">No items!</h2>
         </div>
 
         <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
@@ -81,6 +81,7 @@
 
                         <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id)" id="ngForm">
                             <div>
+
                                <div class="input-field">
                                     <input class="input-yellow" id="item-heading" maxlength="50" type="text" formControlName="itemName" [(ngModel)]="modalItem.name">
                                     <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
@@ -96,6 +97,7 @@
                                 <div class="input-field">
                                     <textarea id="textarea1" class="input-yellow" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
                                     <label for="textarea1" [class.active]="modalItem.info">Type description:</label>
+
                                 </div>
                             </div>
                         </form>
@@ -115,13 +117,13 @@
         </div>
         <!-- //Modal Structure -->
         <!-- Warning Modal -->
-        <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalWarning">
+        <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalWarning">
             <div class="modal-content">
                 <h4>You shall not delete this!</h4>
                 <p>Shall you?</p>
             </div>
-            <div class="modal-footer grey lighten-1">
-                <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
+            <div class="modal-footer grey darken-4">
+                <a class="modal-action modal-close waves-effect waves-green btn-flat white-text" (click)="warningAction()">Delete</a>
                 <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
             </div>
         </div>

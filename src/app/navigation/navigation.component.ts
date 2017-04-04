@@ -104,9 +104,9 @@ export class NavigationComponent implements OnInit {
   }
 
   signOutUser():void {
+    this.router.navigate(['']);
     this.requestService.signOut();
     this.dataService.removeUser();
-    this.router.navigate(['/']);
   }
 
   onChangeItems(value: String): void {
@@ -128,6 +128,11 @@ export class NavigationComponent implements OnInit {
 
       case 'rate':
         this.itemsService.sortByRating();
+        this.onItemClick();
+        break;
+
+      case 'borrowed':
+        this.itemsService.sortBorrowed();
         this.onItemClick();
         break;
     }

@@ -20,7 +20,12 @@ export class StartingPageComponent implements OnInit {
   public registerError: string;
   public user: Object;
 
-  constructor(private formBuilder: FormBuilder, private signInService: RequestService, private registerService: RequestService, private router: Router, private RequestService: RequestService, private dataService: DataService) {
+  constructor(private formBuilder: FormBuilder, 
+              private signInService: RequestService, 
+              private registerService: RequestService, 
+              private router: Router, 
+              private RequestService: RequestService, 
+              private dataService: DataService) {
 
     this.userForm = this.formBuilder.group({
       'name': ['', [Validators.required]],

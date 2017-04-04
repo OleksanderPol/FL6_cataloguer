@@ -17,9 +17,11 @@ div.col.profile {
 
 .fixed {
   position: fixed;
-  right: 0;
-  bottom: 0;
-  color: #ffea00;
+  right: 5px;
+  bottom: 3px;
+  padding: 0 5px;
+  color: lightgrey;
+  font-size: 27px;
 }
 
 .fixed:hover {

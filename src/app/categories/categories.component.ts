@@ -58,7 +58,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.user = this.dataService.getUser();
     this.logedInUser = this.dataService.getLogedInUser();
-    this.categoryService.onInit(`/${this.user._id}/categories`);
+    this.categoryService.onInit();
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' ||
           event === 'getCategories' ||
@@ -68,8 +68,8 @@ export class CategoriesComponent implements OnInit {
         this.getCategoriesData();
       }
     });
-      
-    this.isCategoryEditable = this.user.username === this.logedInUser.username ? true : false  
+
+    this.isCategoryEditable = this.user.username === this.logedInUser.username ? true : false
   }
 
   getCategoriesData() {
