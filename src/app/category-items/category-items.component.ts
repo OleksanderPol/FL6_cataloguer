@@ -53,7 +53,7 @@ export class CategoryItemsComponent implements OnInit {
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
       'itemFotoUrl': [''],
-      'itemBorrowedTo': ['']    
+      'itemBorrowedTo': ['']
     });
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {

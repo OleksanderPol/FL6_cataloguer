@@ -98,8 +98,8 @@
                              (click)="changeItemRating(modalItem._id, modalItem.rating)">
                             </a>
                 </div>
-                <div class="col s12 m6">
-                    <button *ngIf="!modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
+                <div class="col s12 m6" [class.m12]="isItemEditable === false">
+                    <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
                     <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
                     <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
                 </div>

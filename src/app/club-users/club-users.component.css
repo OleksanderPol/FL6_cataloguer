@@ -35,10 +35,7 @@ div.bottom-nav div > a i.material-icons {
     background-color: #ffea00;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow-x: hidden;
 }
-
-
 .catalogue .col {
     padding: 7px;
 }
