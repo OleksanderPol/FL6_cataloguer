@@ -130,6 +130,11 @@ export class NavigationComponent implements OnInit {
         this.itemsService.sortByRating();
         this.onItemClick();
         break;
+
+      case 'borrowed':
+        this.itemsService.sortBorrowed();
+        this.onItemClick();
+        break;
     }
   }
 
