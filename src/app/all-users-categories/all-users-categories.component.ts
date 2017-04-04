@@ -81,13 +81,6 @@ export class AllUsersCategoriesComponent implements OnInit {
   }
     
   pickCategory(category: string):void {
-    this.loading = true;
-    this.club = category;
-    this.requestService.getUsers(category, this.clubUsersResponse.bind(this))
-  }
-    
-  clubUsersResponse(users){
-    this.dataService.storeClubUsers(users);
-    this.router.navigate([`home/${this.dataService.getUser().username}/${this.club}/users`])
+    this.router.navigate([`home/${this.dataService.getUser().username}/${category}/users`])
   }
 }

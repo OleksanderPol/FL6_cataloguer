@@ -6,7 +6,7 @@
   <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
       <a class="home-btn" routerLink="/">
-        <i class="small material-icons grey-text text-darken-3">keyboard_arrow_up</i>
+        <i class="small material-icons grey-text text-darken-3">home</i>
       </a>
     </div>
     <div class="col s5 m3 push-m2">
@@ -26,7 +26,7 @@
       </a>
     </div>
   </div>
-  <div class="row catalogue">
+  <div class="row catalogue" *ngIf="users.length!==0">
 
     <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
       <div class="ct-item z-depth-0">

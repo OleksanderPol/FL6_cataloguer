@@ -5,8 +5,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
 @Injectable()
 export class DataService {
   private user: Object;
-  private searchResult: any;
-  private clubUsers: any;
 
   constructor(private localStorageService: LocalStorageService){}
 
@@ -29,20 +27,6 @@ export class DataService {
 
   getCategories() {
     return JSON.parse(localStorage.getItem("categories"));
-  }
-
-  storeSearch(searchedItems) {
-    this.searchResult = searchedItems;
-  }
-
-  getSearch() {
-    return this.searchResult;
-  }
-  storeClubUsers(users){
-    this.clubUsers = users;
-  }
-  getClubUsers(){
-    return JSON.parse(this.clubUsers);
   }
   storeLogedInUser(user: string){
     localStorage.setItem("logedInUser", user);

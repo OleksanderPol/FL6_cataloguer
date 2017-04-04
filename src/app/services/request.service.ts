@@ -48,7 +48,10 @@ export class RequestService {
     }
 
     changeUserRequest(username, email, info, telephone, city, photoUrl, responseFunc) {
-        var body = `email=${email}&info=${info}&telephone=${telephone}&city=${city}&photoUrl=${photoUrl}`;
+        var body = `email=${email}&info=${info}&telephone=${telephone}&city=${city}`;
+        if (photoUrl !== '') {
+          body += `&photoUrl=${photoUrl}`;
+        }
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -96,16 +99,6 @@ export class RequestService {
                 this.responseStatus = error.status;
             })
     }
-    searchItems(searchInput, responseFunc) {
-        this.http
-          .get(`items/search/${searchInput}`)
-          .subscribe(response => {
-              responseFunc(response.text());
-          },
-          error => {
-              console.log(error);
-          })
-    }
 
     itemsUser(id, responseFunc){
         this.http
@@ -149,12 +142,5 @@ export class RequestService {
                 this.responseText = JSON.parse(error.text()).message;
                 responseFunc(this.responseStatus, this.responseText, id);
             })
-    }
-    getUsers(category, responseFunc){
-        this.http
-          .get(`users/${category}`)
-          .subscribe(response => {
-              responseFunc(response.text());
-          })
     }
 }

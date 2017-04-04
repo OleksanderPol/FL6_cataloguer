@@ -15,14 +15,13 @@
   box-shadow: 0 1px 0 0 #ffea00;
 }
 
-text-area.input-yellow:focus:not([readonly]) {
+#message:focus {
   border-bottom: 1px solid #ffea00;
   box-shadow: 0 1px 0 0 #ffea00;
 }
-text-area.input-yellow:focus:not([readonly]) + label {
+#message:focus + label {
   color: #ffea00;
 }
-
 
 .input-yellow[type="search"]:focus:not([readonly]) + label,
 .input-yellow[type="text"]:focus:not([readonly]) + label,
@@ -35,14 +34,14 @@ text-area.input-yellow:focus:not([readonly]) + label {
   left: 50%;
   top: 50%;
   z-index: 100;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 16px solid black;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border: 6px solid black;
   border-radius: 50%;
-  border-top: 16px solid #ffea00;
-  width: 120px;
-  height: 120px;
+  border-top: 6px solid #ffea00;
+  width: 60px;
+  height: 60px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
