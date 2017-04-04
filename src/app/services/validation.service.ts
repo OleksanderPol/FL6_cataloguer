@@ -31,7 +31,7 @@ export class ValidationService {
         }
     }
     static urlValidator(control) {
-        if (control.value.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)){
+        if (control.value.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/) || control.value === ''){
             return null;
         } else {
             return { 'invalidUrl': true}

@@ -8,6 +8,8 @@ import { CategoryService } from '../services/category.service';
 import { DataService } from '../services/data.service';
 import { AllUsersCategoriesService } from '../services/all-users-categories.service';
 
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ValidationService } from '../services/validation.service';
 
 
 
@@ -27,6 +29,7 @@ export class NavigationComponent implements OnInit {
   private itemSuccess: string;
   private currentCategory: string;
   private editing: boolean;
+  private itemForm: FormGroup;
 
   constructor(
     private requestService: RequestService,
@@ -34,7 +37,14 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private itemsService: ItemsService,
     private dataService: DataService,
-    private allUsersCategoriesService: AllUsersCategoriesService) {}
+    private allUsersCategoriesService: AllUsersCategoriesService,
+    private formBuilder: FormBuilder) {
+      this.itemForm = this.formBuilder.group({
+        'itemName': ['', Validators.required],
+        'info': [''],
+        'itemFoto': ['', ValidationService.urlValidator]
+      })
+    }
 
 
   ngOnInit() {
@@ -85,6 +95,15 @@ export class NavigationComponent implements OnInit {
         this.itemSuccess = '';
       }, 500);
     }
+  }
+
+  showCategories(): void {
+
+    this.router.navigate(['/home', this.dataService.getUser().username]);
+  }
+
+  showClubs():void {
+    this.router.navigate([`home/${this.dataService.getLogedInUser().username}`, 'usersCategories']);
   }
 
   onUserClick() {
