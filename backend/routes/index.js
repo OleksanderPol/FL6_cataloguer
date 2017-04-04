@@ -89,7 +89,7 @@ router.put('/home/:user', function(req, res, next) {
         next(new HttpError(500, err));
       } else {
         // console.log(user);
-        res.send(user);
+        res.status(200).json(user);
       }
     })
   })

@@ -16,14 +16,17 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-	@Input() user: User;
+	// @Input() user: User;
+  public user: NotLogedInUser;
+  private loggedUser: User;
 	public changeTrigger: boolean = false;
   public infoTrigger: boolean = false;
 	public infoForm: FormGroup;
 	public changeError: string;
+  public userPhoto: string = "";
   private itemsAmount: number;
   private categoriesAmount: number;
-  public userPhoto: string;
+  private allowChange: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,13 +47,20 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
+    this.loggedUser = this.dataService.getLogedInUser();
     this.categoryService.events$.forEach(event => {
       this.refreshCategories();
     });
      this.itemsService.events$.forEach(event => {
       this.refreshItems(event);
     });
-     this.userPhoto = this.user.photoUrl;
+  }
+
+  checkUser() {
+    this.allowChange = this.dataService.getUser().username === this.dataService.getLogedInUser().username ? true : false;
+    this.infoTrigger = true;
+    this.changeTrigger = false;
   }
 
   refreshItems(indicator: string): void {
@@ -65,7 +75,7 @@ export class ProfileComponent implements OnInit {
 
   refreshCategories(): void {
     this.categoriesAmount = this.categoryService.categories.length;
-    this.itemsAmount = this.categoryService.categories.reduce((sum,category) => {
+    this.itemsAmount = this.categoryService.categories.reduce((sum, category) => {
       return sum += category.amountOfItems;
     }, 0);
   }
@@ -75,20 +85,15 @@ export class ProfileComponent implements OnInit {
     this.changeTrigger = true;
   }
 
-  showInfo() {
-    this.infoTrigger = true;
-    this.changeTrigger = false;
-  }
-
   showUser() {
+    this.router.navigate(['/home', this.user.username]);
     this.infoTrigger = false;
     this.changeTrigger = false;
   }
 
   changeInfo() {
-    this.showUser();
-    if (this.infoForm.dirty && this.infoForm.valid) {
-      this.requestService.changeUserRequest(this.dataService.getUser().username,
+    if (this.infoForm.valid) {
+      this.requestService.changeUserRequest(this.dataService.getLogedInUser().username,
                                             this.infoForm.value.email, this.infoForm.value.info,
                                             this.infoForm.value.telephone, this.infoForm.value.city,
                                             this.infoForm.value.photoUrl,
@@ -108,10 +113,13 @@ export class ProfileComponent implements OnInit {
   receiveResponseChange(status, response, username) {
     if (status === 200) {
       this.dataService.storeUser(response);
+      this.dataService.storeLogedInUser(response);
       this.user = this.dataService.getUser();
-      this.router.navigate(['/home', username]);
+      this.loggedUser = this.dataService.getLogedInUser();
+      this.showUser();
     } else {
       this.changeError = response;
+      alert(this.changeError);
     }
   }
 }

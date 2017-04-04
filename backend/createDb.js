@@ -202,7 +202,7 @@ var itemObj = {
 //   }
 // })
 
-User.find({}, (err, users)=>{
+User.find({username: 'asdasd'}, (err, users)=>{
   console.log(users)
   
 })
