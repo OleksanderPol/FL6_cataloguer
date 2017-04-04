@@ -45,31 +45,31 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- Modal Structure -->
-<div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
-  <div class="modal-content row">
-    <div class="modal-img grey lighten-2 col s12 m6" *ngIf="activeItem.fotoUrl" [style.background-image]="'url('+ activeItem.fotoUrl +')'">
-    </div>
-    <div class="item-modal-info" [class.full-width]="!activeItem.fotoUrl">
-      <div>
-        <h4>{{activeItem.name | uppercase}}</h4>
-        <hr/>
-        <div class="owner-modal-info">
-          <h5>Owner</h5>
-          <p><b>Name:</b> {{searchedUser.username}}</p>
-          <p><b>Email:</b> {{searchedUser.email}}</p>
-          <p><b>City:</b> {{searchedUser.city}}</p>
+    <!-- Modal Structure -->
+    <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+      <div class="modal-content row">
+        <div class="modal-img grey lighten-2 col s12 m6" *ngIf="activeItem.fotoUrl" [style.background-image]="'url('+ activeItem.fotoUrl +')'">
         </div>
-        <hr/>
-        <p class="item-details">{{activeItem.info}}</p>
+        <div class="item-modal-info" [class.full-width]="!activeItem.fotoUrl">
+          <div>
+            <h4>{{activeItem.name | uppercase}}</h4>
+            <hr/>
+            <div class="owner-modal-info">
+              <h5>Owner</h5>
+              <p><b>Name:</b> {{searchedUser.username}}</p>
+              <p><b>Email:</b> {{searchedUser.email}}</p>
+              <p><b>City:</b> {{searchedUser.city}}</p>
+            </div>
+            <hr/>
+            <p class="item-details">{{activeItem.info}}</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="modal-edits modal-footer row">
-    <div class="col s12 m6">
-      <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
+      <div class="modal-edits modal-footer row">
+        <div class="col s12 m6">
+          <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

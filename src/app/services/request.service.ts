@@ -96,16 +96,6 @@ export class RequestService {
                 this.responseStatus = error.status;
             })
     }
-    searchItems(searchInput, responseFunc) {
-        this.http
-          .get(`items/search/${searchInput}`)
-          .subscribe(response => {
-              responseFunc(response.text());
-          },
-          error => {
-              console.log(error);
-          })
-    }
 
     itemsUser(id, responseFunc){
         this.http

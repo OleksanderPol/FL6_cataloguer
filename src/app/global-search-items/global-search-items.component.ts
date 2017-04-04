@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { Routes, Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
+import { Routes, Router, ActivatedRoute, Params, NavigationStart, NavigationEnd } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
@@ -42,7 +42,7 @@ export class GlobalSearchItemsComponent implements OnInit {
   public category: string;
   modalActions = new EventEmitter<string | MaterializeAction>();
   private searchPipe = new SearchPipe();
-  public ratingNum: number[] = [1,2,3,4,5];
+  public ratingNum: number[] = [1, 2, 3, 4, 5];
   private modalItem: Item;
   private searchInput: string;
   private loading: boolean = true;
@@ -67,6 +67,11 @@ export class GlobalSearchItemsComponent implements OnInit {
       let filteredCategories = this.searchPipe.transform(this.items, searchInput);
       this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
+    });
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
     });
   }
 
