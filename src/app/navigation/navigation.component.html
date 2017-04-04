@@ -110,13 +110,13 @@
     </div>
     <!-- item form -->
     <div *ngIf="locationLength === 5" class="row">
-      <form class="col s12">
+      <form class="col s12" [formGroup]="itemForm">
         <h4 class="modal-heading">Add item</h4>
         <div class="error">{{itemError}}{{itemSuccess}}</div>
         <div class="row">
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="50" required>
+              maxlength="50" required formControlName="itemName">
               <label for="itemName" class="black-text">Item Name</label>
             </div>
             <div class="input-field col s12">
@@ -124,15 +124,16 @@
               <label for="info">Item Info</label>
             </div>
             <div class="input-field col s12">
-              <input id="itemFoto" type="text" #url (input)="null" class="input-yellow">
+              <input id="itemFoto" type="text" #url (input)="null" class="input-yellow" formControlName="itemFoto">
               <label for="itemFoto">Foto Url</label>
+              <control-messages [control]="itemForm.controls.itemFoto"></control-messages>
             </div>
         </div>
         <div class="row">
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
           (click)="addItem(name.value, info.value, url.value);
           name.value=''; info.value=''; url.value='';"
-          [disabled]="!name.value.length || name.value.trim().length === 0"
+          [disabled]="!name.value.length || name.value.trim().length === 0 || !itemForm.valid"
           >Add</button>
         </div>
       </form>
