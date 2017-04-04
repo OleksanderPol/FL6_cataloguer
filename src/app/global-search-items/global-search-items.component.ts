@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { Routes, Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
+import { Routes, Router, ActivatedRoute, Params, NavigationStart, NavigationEnd } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
@@ -10,6 +10,7 @@ import { GlobalSearchService } from '../services/global-search.service';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
 import { User, Item } from '../app.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class GlobalSearchItemsComponent implements OnInit {
   public category: string;
   modalActions = new EventEmitter<string | MaterializeAction>();
   private searchPipe = new SearchPipe();
-  public ratingNum: number[] = [1,2,3,4,5];
+  public ratingNum: number[] = [1, 2, 3, 4, 5];
   private modalItem: Item;
   private searchInput: string;
   private loading: boolean = true;
@@ -53,7 +54,8 @@ export class GlobalSearchItemsComponent implements OnInit {
     private requestService: RequestService,
     private activatedRoute: ActivatedRoute,
     private filterService: FilterService,
-    private globalSearchService: GlobalSearchService) {
+    private globalSearchService: GlobalSearchService,
+    private sanitizer: DomSanitizer) {
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;
@@ -67,6 +69,11 @@ export class GlobalSearchItemsComponent implements OnInit {
       let filteredCategories = this.searchPipe.transform(this.items, searchInput);
       this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
+    });
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
     });
   }
 
