@@ -50,6 +50,12 @@ export class ProfileComponent implements OnInit {
         this.user = this.dataService.getUser();
       }
       this.allowChange = this.user.username === this.loggedUser.username ? true : false;
+
+      if (event.url.split('/').length > 3) {
+        this.userPosition = false;
+      } else {
+        this.userPosition = true;
+      }
     });
   }
 
@@ -59,7 +65,7 @@ export class ProfileComponent implements OnInit {
     this.userPhoto = "";
     this.user = this.dataService.getUser();
     this.loggedUser = this.dataService.getLogedInUser();
-    this.userPosition = true;
+
 
     this.categoryService.events$.forEach(event => {
       this.refreshCategories();

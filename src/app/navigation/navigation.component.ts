@@ -97,6 +97,15 @@ export class NavigationComponent implements OnInit {
     }
   }
 
+  showCategories(): void {
+
+    this.router.navigate(['/home', this.dataService.getUser().username]);
+  }
+
+  showClubs():void {
+    this.router.navigate([`home/${this.dataService.getLogedInUser().username}`, 'usersCategories']);
+  }
+
   onUserClick() {
     this.showUser.emit('');
   }
