@@ -41,12 +41,11 @@
   <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
     [materializeActions]="modalWarning">
     <div class="modal-content">
-      <h4>You shall not delete this!</h4>
-      <p>Shall you?</p>
+      <h4>Are you sure</h4>
     </div>
     <div class="modal-footer grey darken-4">
-      <a class="modal-action modal-close waves-effect waves-light btn-flat white-text" (click)="warningAction()">Delete</a>
-      <a class="modal-action modal-close waves-effect waves-light btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+      <a class="modal-action modal-close waves-effect waves-light btn-flat white-text" (click)="warningAction()">Yes</a>
+      <a class="modal-action modal-close waves-effect waves-light btn yellow accent-3 black-text" (click)="closeWarning()">No</a>
     </div>
   </div>
 </div>
