@@ -60,6 +60,10 @@ div.filter {
   max-width: 550px;
 }
 
+.error {
+  color: red;
+}
+
 @media (max-width: 992px) {
   #search {
     position: static;
