@@ -118,23 +118,18 @@
         <div class="row">
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="50" required formControlName="itemName">
+              maxlength="50" formControlName="itemName">
               <label for="itemName">Item Name</label>
             </div>
             <div class="input-field col s12">
               <input id="info" type="text" #info (input)="null" class="input-yellow">
               <label for="info">Item Info</label>
             </div>
-            <div class="input-field col s12">
-              <input id="itemFoto" type="text" #url (input)="null" class="input-yellow" formControlName="itemFoto">
-              <label for="itemFoto">Foto Url</label>
-              <control-messages [control]="itemForm.controls.itemFoto"></control-messages>
-            </div>
         </div>
         <div class="row">
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
-          (click)="addItem(name.value, info.value, url.value);
-          name.value=''; info.value=''; url.value='';"
+          (click)="addItem(name.value, info.value);
+          name.value=''; info.value='';"
           [disabled]="!name.value.length || name.value.trim().length === 0 || !itemForm.valid"
           >Add</button>
         </div>

@@ -45,15 +45,17 @@ export class ProfileComponent implements OnInit {
       'telephone': ['']
     });
     router.events.subscribe(event => {
+      let urlArr: string[] = event.url.split('/');
+
       if (event instanceof NavigationStart) {
         this.user = this.dataService.getUser();
       }
       this.allowChange = this.user.username === this.loggedUser.username ? true : false;
 
-      if (event.url.split('/').length > 3) {
-        this.userPosition = false;
-      } else {
+      if (urlArr.length < 4 || urlArr.indexOf('category') + 1) {
         this.userPosition = true;
+      } else {
+        this.userPosition = false;
       }
     });
   }
