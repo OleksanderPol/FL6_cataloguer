@@ -53,7 +53,7 @@ export class CategoryItemsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
-      'itemFotoUrl': ['', ValidationService.urlValidator],
+      // 'itemFotoUrl': ['', ValidationService.urlValidator],
       'itemBorrowedTo': ['']
     });
 
@@ -93,8 +93,8 @@ export class CategoryItemsComponent implements OnInit {
 
   }
   createModal(data) {
-      this.modalItem = data;
-      this.openModal();
+    this.modalItem = data;
+    this.openModal();
   }
   refresh() {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
@@ -129,18 +129,18 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   openWarning(item, func) {
-      this.modalWarning.emit({action:"modal",params:['open']});
-      this.warningAction = function(){func(item)};
+    this.modalWarning.emit({action:"modal",params:['open']});
+    this.warningAction = function(){func(item)};
   }
 
   closeWarning(){
-       this.modalWarning.emit({action:"modal",params:['close']});
+    this.modalWarning.emit({action:"modal",params:['close']});
   }
 
   deleteItem(item) {
-   this.itemsService.removeItem(item._id, item.name);
-   this.refresh();
-   console.log('deleted')
+    this.itemsService.removeItem(item._id, item.name);
+    this.refresh();
+    console.log('deleted')
   }
   
   changeItemInfo(id) {
@@ -151,12 +151,27 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   changeItemRating(id, ratingNum) {
-      this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
+    this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
   }
 
   receiveResponseChange(status, response, id) {
     if (status === 200) {
-        this.refresh();
+        this.closeModal();
+        this.loading = true;
+        this.itemsService
+        .getItems(`/${this.user._id}/${this.category}/items`)
+        .then(result => {
+          this.getItemsData()
+          this.loading = false;
+        });
+
+    } else {
+      this.changeError = response;
+    }
+  }
+  receiveResponseChangeRate(status, response, id) {
+    if (status === 200) {
+      this.refresh();
     } else {
       this.changeError = response;
     }

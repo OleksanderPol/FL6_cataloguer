@@ -323,10 +323,10 @@ router.put('/items/:id', function(req, res, next) {
     }
     item.save(function(err) {
       if (err) {
-        next(err);
+        return next(err);
       } else {
         console.log('updated');
-        return next(200);
+        return res.status(200).send(item);
       }
     });
   });

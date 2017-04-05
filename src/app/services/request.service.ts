@@ -109,10 +109,26 @@ export class RequestService {
     }
 
     changeItemInfo(id: string, itemData, responseFunc) {
-        var body = `name=${itemData.value.itemName}&borrowedTo=${itemData.value.itemBorrowedTo}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
+        var body = `name=${itemData.value.itemName}&borrowedTo=${itemData.value.itemBorrowedTo}&info=${itemData.value.itemInfo}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
+        this.http
+            .put(`items/${id}`, body, { headers: headers })
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                this.responseText = response.text();
+                responseFunc(this.responseStatus, this.responseText, id);
+            }, error => {
+                this.responseStatus = error.status;
+                this.responseText = JSON.parse(error.text()).message;
+                responseFunc(this.responseStatus, this.responseText, id);
+            })
+    }
+    changeItemPhoto(id: string, photoPath: string, responseFunc) {
+        var body = `fotoUrl=${photoPath}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.http
             .put(`items/${id}`, body, { headers: headers })
             .subscribe(response => {

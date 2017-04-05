@@ -85,10 +85,11 @@
                   <input class="input-yellow" id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
                   <label for="item-borrowed-to" [class.active]="modalItem.borrowedTo">Borrowed to:</label>
                 </div>
-                <div class="input-field">
+<!--                 <div class="input-field">
                   <input class="input-yellow" id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                   <label for="item-url" [class.active]="modalItem.fotoUrl">Item Url:</label>
-                </div>
+                </div> -->
+                <app-file-upload id="photo" [itemId]="modalItem._id"></app-file-upload>
                 <div class="input-field">
                   <textarea id="textarea1" class="input-yellow" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
                   <label for="textarea1" [class.active]="modalItem.info">Type description:</label>
