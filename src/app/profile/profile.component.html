@@ -1,7 +1,7 @@
 <div (mouseover)="editButton = true" (mouseleave)="editButton = false" *ngIf="!changeTrigger&&!infoTrigger">
 
   <div class="prof-img grey darken-3">
-    <img class="responsive-img" [src]="user.photoUrl">
+    <img class="responsive-img" [src]="user.photoUrl" onError="this.src='/assets/img/mock.jpg'">
   </div>
 
   <div class="profile-details grey darken-3">

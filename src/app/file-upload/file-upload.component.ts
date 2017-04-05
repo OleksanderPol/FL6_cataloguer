@@ -13,7 +13,6 @@ import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/route
 export class FileUploadComponent implements OnInit {
   public user: NotLogedInUser;
   private loggedUser: User;
-  // @Output() changePhoto: EventEmitter<string> = new EventEmitter<string>();
   options: NgUploaderOptions;
   response: any;
   hasBaseDropZoneOver: boolean;
