@@ -45,7 +45,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.dataService.getUser();
     this.logedInUser = this.dataService.getLogedInUser();
-    this.categoryService.onInit();
+
+    if (this.router.url !== `/home/${this.user.username}`) {
+      this.categoryService.onInit();
+    }
   }
 
   play(): void {
