@@ -72,6 +72,10 @@
     margin: 0;
 }
 
+.warning {
+  color: red;
+}
+
 /* NAVIGATION */
 div.bottom-nav div {
     padding: 5px;

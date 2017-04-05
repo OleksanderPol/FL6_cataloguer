@@ -58,17 +58,13 @@
                     </select>
                   </div>
                 </div>
-                <!-- show if items are displayed -->
+                <!-- show if clubs are displayed -->
                 <div *ngIf="locationLength === 4">
                   <div *ngIf="shown === 'filter'" class="filter">
                     <select class="nav-select" #selected (change)="onChangeUsersCategories(selected.value)">
                       <option disabled selected>Click here to sort items</option>
                       <option value="usersAmount">Users amount</option>
                       <option value="alphabet">Alphabet</option>
-<!--
-                      <option value="date+">Date: from new to old</option>
-                      <option value="date-">Date: from old to new</option>
--->
                     </select>
                   </div>
                 </div>
@@ -90,7 +86,7 @@
 </nav>
 
 <!-- Modal Structure-->
-<div id="nav-modal" class="modal grey lighten-1" materialize="modal" [materializeActions]="modalAction">
+<div id="nav-modal" class="modal grey darken-4" materialize="modal" [materializeActions]="modalAction">
   <div class="modal-content">
 
     <!-- category form -->
@@ -123,7 +119,7 @@
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
               maxlength="50" required formControlName="itemName">
-              <label for="itemName" class="black-text">Item Name</label>
+              <label for="itemName">Item Name</label>
             </div>
             <div class="input-field col s12">
               <input id="info" type="text" #info (input)="null" class="input-yellow">

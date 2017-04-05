@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { User, NotLogedInUser } from '../app.model';
+import { User, NotLogedInUser, Item } from '../app.model';
 import { Routes, Router, ActivatedRoute, Params } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -39,6 +39,8 @@ export class CategoryItemsComponent implements OnInit {
   public warningAction: Object;
   private loading: boolean = true;
   private isItemEditable: boolean;
+  private validItemName: string = '';
+  private itemObj: Item;
 
   constructor(
     private router: Router,
@@ -92,10 +94,13 @@ export class CategoryItemsComponent implements OnInit {
     this.isItemEditable = this.user.username === this.logedInUser.username ? true : false
 
   }
+
   createModal(data) {
-    this.modalItem = data;
-    this.openModal();
+      this.itemObj = data;
+      this.modalItem = data;
+      this.openModal();
   }
+
   refresh() {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
     return this.pageTable;
@@ -138,14 +143,24 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   deleteItem(item) {
-    this.itemsService.removeItem(item._id, item.name);
-    this.refresh();
-    console.log('deleted')
+   this.itemsService.removeItem(item._id, item.name);
+   this.refresh();
   }
-  
-  changeItemInfo(id) {
-    if (this.itemForm.dirty && this.itemForm.valid) {
-      this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
+
+  changeItemInfo(id, name, borrowed) {
+    console.log(borrowed.value);
+    if (!this.itemsService.checkItem(name.value)) {
+      if (this.itemObj.name !== name.value) {
+        this.validItemName = 'Item with such name exists';
+        return;
+      }
+    }
+
+    if (this.itemForm.valid) {
+      this.requestService.changeItemInfo(id,
+      this.itemForm, name.value, borrowed.value,
+      this.receiveResponseChange.bind(this));
+
       this.modalEdit = false;
     }
   }
@@ -176,8 +191,8 @@ export class CategoryItemsComponent implements OnInit {
       this.changeError = response;
     }
   }
-    
+
   onNavCurrClick() {
     this.router.navigate([`home/${this.user.username}`]);
-  }    
+  }
 }

@@ -58,7 +58,8 @@ export class NavigationComponent implements OnInit {
       this.checkLogedUser();
 
       if (urlArr.indexOf('usersCategories') + 1 ||
-           urlArr.indexOf('users') + 1) {
+          urlArr.indexOf('users') + 1 ||
+          urlArr.indexOf('tictactoe') + 1) {
         this.editing = false;
       }
     });
@@ -192,7 +193,7 @@ export class NavigationComponent implements OnInit {
       this.categoryError = '';
     } else {
       this.categorySuccess = '';
-      this.categoryError = 'Such category exist';
+      this.categoryError = 'Such category exists';
     }
   }
 
@@ -217,7 +218,7 @@ export class NavigationComponent implements OnInit {
           }
         });
     } else {
-      this.itemError = 'Such Item already exist';
+      this.itemError = 'Such Item already exists';
     }
   }
 }

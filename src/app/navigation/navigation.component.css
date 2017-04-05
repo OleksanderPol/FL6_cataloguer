@@ -3,10 +3,6 @@ nav {
   height: 64px;
 }
 
-nav label {
-  color: #ffea00;
-}
-
 nav .container {
   height: 49px;
 }
@@ -59,7 +55,11 @@ div.filter {
   color: #ffea00;
 }
 
-/*modals*/
+.modal {
+  color: #ffea00;
+  max-width: 550px;
+}
+
 @media (max-width: 992px) {
   #search {
     position: static;
@@ -85,6 +85,6 @@ div.filter {
 }
 
 control-messages {
-    color: red;
+  color: red;
 }
 
