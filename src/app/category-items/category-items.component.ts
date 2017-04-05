@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { User, NotLogedInUser } from '../app.model';
+import { User, NotLogedInUser, Item } from '../app.model';
 import { Routes, Router, ActivatedRoute, Params } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -40,6 +40,7 @@ export class CategoryItemsComponent implements OnInit {
   private loading: boolean = true;
   private isItemEditable: boolean;
   private validItemName: string = '';
+  private itemObj: Item;
 
   constructor(
     private router: Router,
@@ -95,6 +96,7 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   createModal(data) {
+      this.itemObj = data;
       this.modalItem = data;
       this.openModal();
   }
@@ -147,8 +149,10 @@ export class CategoryItemsComponent implements OnInit {
 
   changeItemInfo(id, name) {
     if (!this.itemsService.checkItem(name.value)) {
-      this.validItemName = 'Item with such name exists';
-      return;
+      if (this.itemObj.name !== name.value) {
+        this.validItemName = 'Item with such name exists';
+        return;
+      }
     }
 
     if (this.itemForm.dirty && this.itemForm.valid) {
