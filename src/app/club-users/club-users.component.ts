@@ -15,6 +15,7 @@ import { ClubUsersService } from '../services/club-users.service';
   templateUrl: './club-users.component.html',
   styleUrls: ['./club-users.component.css']
 })
+
 export class ClubUsersComponent implements OnInit {
   private users: User[] = [];
   private subscription: Subscription;
@@ -34,6 +35,7 @@ export class ClubUsersComponent implements OnInit {
     private tableNavigationService: TableNavigationService,
     private activatedRoute: ActivatedRoute,
     private clubUserService: ClubUsersService) {
+
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
       this.showNext = value;
     });
@@ -41,6 +43,7 @@ export class ClubUsersComponent implements OnInit {
     this.subscription = this.tableNavigationService.showPrevChange.subscribe((value) => {
       this.showPrev = value;
     });
+
     filterService.searchFilter$.subscribe(searchInput => {
       let filteredUsers = this.searchPipe.transform(this.users, searchInput);
       this.pageTable = this.tableNavigationService.getPage(filteredUsers, 'first');
@@ -60,7 +63,6 @@ export class ClubUsersComponent implements OnInit {
         this.pageTable = this.tableNavigationService.getPage(this.users, 'first')
       });
 
-
     this.clubUserService.events$.forEach(event => {
       if (event === 'refreshUsersCategories') {
         this.pageTable = this.tableNavigationService.getPage(this.users, 'first')
@@ -77,16 +79,17 @@ export class ClubUsersComponent implements OnInit {
     this.pageTable = this.tableNavigationService.getPage(this.users, 'next');
     return this.pageTable;
   }
-  showUser(user) {
+
+  showUser(user: User):void {
     this.dataService.storeUser(JSON.stringify(user));
     this.router.navigate(["home", user.username]);
   }
-  showAllUsersCategories() {
+
+  showAllUsersCategories():void {
     this.router.navigate([`home/${this.dataService.getUser().username}`, 'usersCategories']);
   }
     
-  onNavCurrClick() {
+  onNavCurrClick():void {
     this.router.navigate([`home/${this.dataService.getUser().username}`]);
   }
-
 }

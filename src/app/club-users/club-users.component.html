@@ -3,6 +3,7 @@
   <div class="blur"></div>
 </div>
 <div *ngIf="!loading">
+  <!--Navigation-->
   <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
       <a class="home-btn" routerLink="/">
@@ -26,8 +27,8 @@
       </a>
     </div>
   </div>
+  <!--Users-->
   <div class="row catalogue" *ngIf="users.length!==0">
-
     <div class="col s12 m4" *ngFor="let user of pageTable" (click)="showUser(user)">
       <div class="ct-item z-depth-0">
         <div class="ct-item-img grey darken-3" [style.background-image]="sanitizer.bypassSecurityTrustStyle('url(' + user.photoUrl + ')')">
@@ -41,6 +42,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

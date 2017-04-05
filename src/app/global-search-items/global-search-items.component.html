@@ -3,6 +3,7 @@
   <div class="blur"></div>
 </div>
 <div *ngIf="!loading">
+  <!--Navigation-->
   <div class="row bottom-nav">
     <div class="col s2 m1 push-m2">
       <a class="home-btn" routerLink="/">
@@ -23,7 +24,7 @@
       </a>
     </div>
   </div>
-
+  <!--Found items-->
   <div class="row catalogue">
 
     <div *ngIf='pageTable.length===0'>
@@ -40,13 +41,13 @@
             <span *ngFor="let number of ratingNum">
                     <img src="/assets/icons/full-star-rate.svg" *ngIf="item.rating >= number">
                     <img src="/assets/icons/empty-star-rate.svg" *ngIf="item.rating < number">
-                    </span>
+            </span>
           </div>
         </div>
       </div>
     </div>
     <!-- Modal Structure -->
-    <div class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+    <div class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
       <div class="modal-content row">
         <div class="modal-img grey lighten-2 col s12 m6" *ngIf="activeItem.fotoUrl" [style.background-image]="sanitizer.bypassSecurityTrustStyle('url(' + activeItem.fotoUrl + ')')">
         </div>
@@ -65,9 +66,9 @@
           </div>
         </div>
       </div>
-      <div class="modal-edits modal-footer row">
+      <div class="modal-edits modal-footer row grey darken-4">
         <div class="col s12 m12">
-          <button class="waves-effect waves-grey btn-flat center" (click)="closeModal()">Close</button>
+          <button class="waves-effect waves-grey btn-flat right white-text" (click)="closeModal()">Close</button>
         </div>
       </div>
     </div>

@@ -24,12 +24,7 @@
         </div>
     </div>
 
-
     <div class="row catalogue">
-
-        <div *ngIf='pageTable.length===0'>
-            <h2 class="nothing-found">No items!</h2>
-        </div>
 
         <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
 
@@ -51,6 +46,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf='pageTable.length===0'>
+            <h2 class="nothing-found">No items!</h2>
         </div>
         <div class="modal modal-fixed-footer grey darken-4" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
 

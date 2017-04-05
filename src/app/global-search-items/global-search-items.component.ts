@@ -12,12 +12,12 @@ import { FilterService } from '../services/filter.service';
 import { User, Item } from '../app.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-global-search-items',
   templateUrl: './global-search-items.component.html',
   styleUrls: ['./global-search-items.component.css']
 })
+
 export class GlobalSearchItemsComponent implements OnInit {
   private searchedUser: User = {
     username: '',
@@ -35,7 +35,7 @@ export class GlobalSearchItemsComponent implements OnInit {
     rating: 0,
     borrowedTo: ''
   };
-  private items: any[];
+  private items: Item[];
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -70,6 +70,7 @@ export class GlobalSearchItemsComponent implements OnInit {
       this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
     });
+
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.ngOnInit();
@@ -104,16 +105,16 @@ export class GlobalSearchItemsComponent implements OnInit {
     return this.pageTable;
   }
 
-  openModalRequest(item) {
+  openModalRequest(item): void {
     this.requestService.itemsUser(item._id, this.getUserData.bind(this));
     this.activeItem = item;
   }
 
-  getUserData(foundUser) {
+  getUserData(foundUser: string): void {
     this.searchedUser = JSON.parse(foundUser);
     this.modalActions.emit({ action: "modal", params: ['open'] });
   }
-  closeModal() {
+  closeModal(): void {
     this.modalActions.emit({ action: "modal", params: ['close'] });
   }
 }
