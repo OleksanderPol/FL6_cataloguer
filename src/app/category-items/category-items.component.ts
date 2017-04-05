@@ -178,7 +178,8 @@ export class CategoryItemsComponent implements OnInit {
         this.itemsService
         .getItems(`/${this.user._id}/${this.category}/items`)
         .then(result => {
-          this.getItemsData()
+          this.getItemsData();
+          this.refresh();
           this.loading = false;
         });
 
