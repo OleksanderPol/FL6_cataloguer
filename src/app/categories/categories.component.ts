@@ -103,4 +103,7 @@ export class CategoriesComponent implements OnInit {
   closeWarning(){
        this.modalWarning.emit({action:"modal",params:['close']});
   }
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.user.username}`]);
+  }
 }

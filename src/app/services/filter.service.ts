@@ -7,7 +7,7 @@ export class FilterService {
 
     searchFilter$ = this.searchFilter.asObservable();
 
-    addSearchPhrase(searchInput: string){
+    addSearchPhrase(searchInput: string): void {
         this.searchFilter.next(searchInput);
     }
 }

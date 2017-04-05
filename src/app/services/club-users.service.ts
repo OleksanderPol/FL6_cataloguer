@@ -19,7 +19,7 @@ export class ClubUsersService {
         return this.subject.asObservable();
     }
 
-    getClubUsers(url): Promise<Object> {
+    getClubUsers(url: string): Promise<Object> {
         return this.http.get(url)
             .toPromise()
             .then(response => {

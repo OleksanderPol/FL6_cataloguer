@@ -8,7 +8,7 @@
       <a class="home-btn" routerLink="/"><i class="small material-icons grey-text text-darken-3">home</i></a>
     </div>
     <div class="col s10 m7 push-m2">
-      <a class="current-btn">{{user.username | uppercase}} CATEGORIES</a>
+      <a class="current-btn" (click)="onNavCurrClick()">{{user.username | uppercase}} CATEGORIES</a>
     </div>
     <div class="col s6 m2 pull-m8">
       <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
@@ -21,12 +21,10 @@
       </a>
     </div>
   </div>
+  <div *ngIf='pageTable.length===0'>
+    <h2 class="nothing-found">No categories!</h2>
+  </div>
   <div class="row catalogue" *ngIf="ifCategories">
-
-    <div *ngIf='pageTable.length===0'>
-      <h2 class="nothing-found">No categories!</h2>
-    </div>
-
     <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false"
       (click)="onClick(category.name)">
       <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
@@ -40,15 +38,15 @@
     </div>
   </div>
   <!-- //Warning Modal -->
-  <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]"
+  <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
     [materializeActions]="modalWarning">
     <div class="modal-content">
       <h4>You shall not delete this!</h4>
       <p>Shall you?</p>
     </div>
-    <div class="modal-footer grey lighten-1">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
-      <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+    <div class="modal-footer grey darken-4">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat white-text" (click)="warningAction()">Delete</a>
+      <a class="modal-action modal-close waves-effect waves-light btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
     </div>
   </div>
 </div>

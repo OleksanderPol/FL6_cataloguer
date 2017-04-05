@@ -11,7 +11,6 @@ import { FilterService } from '../services/filter.service';
 import { User } from '../app.model';
 import { CategoryService } from '../services/category.service';
 
-
 import {
     Event as RouterEvent,
     NavigationEnd,
@@ -55,15 +54,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`home/${this.user.username}/tictactoe`]);
   }
 
-  openModal() {
+  openModal():void {
     this.modalAction.emit({ action: 'modal', params: ['open'] });
   }
 
-  closeModal() {
+  closeModal():void {
     this.modalAction.emit({ action: 'modal', params: ['close'] });
   }
 
-  inputSearchValue(value) {
+  inputSearchValue(value: string):void {
     this.filterService.addSearchPhrase(value);
   }
 }

@@ -37,26 +37,38 @@
     font-size: 16px;
     font-weight: 600;
     padding: 5px;
-    position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.catalogue div.ct-item .ct-item-title .item-tooltip {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+
+.catalogue div.ct-item .ct-item-title.item-tooltip:hover .tooltiptext {
+    display: block;
 }
+.catalogue div.ct-item .ct-item-title .tooltiptext {
+    display: none;
+    margin-left: 0px;
+    margin-top: -30px;
+    position: absolute;
+    z-index: 1000;
+    background: #626262;
+    font-size: 12px;
+    font-style: italic;
+    padding: 0px 5px;
+    color: white;
+}
+
 .catalogue div.ct-item .ct-item-title .el-delete {
     position: absolute;
-    top: -6px;
-    right: 2px;
+    top: 1px;
+    right: 1px;
+    font-size: 20px;
+    background: #ffea00;
+    line-height: 14px;
 }
 .catalogue div.ct-item div.rating {
     display: block;
     text-align: center;
-    padding-top: 3px;
+    padding: 3px;
     margin: 0;
 }
 
@@ -69,6 +81,7 @@ div.bottom-nav div {
     padding: 5px;
     text-align: center;
     font-size: 16px;
+    padding-bottom: 0px;
 }
 div.bottom-nav div > a {
     display: inline-block;
@@ -130,12 +143,25 @@ div.bottom-nav div > a i.material-icons {
     text-align: left;
     margin-bottom: 60px;
 }
+.catalogue .item-modal-info h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    clear: both;
+}
 .catalogue .item-modal-info.full-width{
     width: 100%;
 }
+.catalogue .item-modal-info .rating .material-icons {
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+}
+
 .catalogue .modal-edit-active form {
     display: inline-block;
     margin-bottom: 60px;
+    width: 100%;
 }
 .catalogue .modal-edits {
     background: #bdbdbd;
@@ -147,14 +173,19 @@ div.bottom-nav div > a i.material-icons {
     color: black;
 }
 .modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-float: none;
-text-align: center;
+    margin: 0px 5px;
 }
 
 /* WARNING MODAL */
 #warning-modal {
     width: 280px !important ;
-    height: 220px !important ;
+    height: 220px !important;
+    text-align: center;
+}
+#warning-modal.modal .modal-footer .btn,
+#warning-modal.modal .modal-footer .btn-large,
+#warning-modal.modal .modal-footer .btn-flat {
+    float: none;
     text-align: center;
 }
 #warning-modal .modal-content {
@@ -165,7 +196,13 @@ text-align: center;
     .catalogue .modal {
     width: 75% !important ;
     height: 85% !important ;
+    }
 }
+
+@media screen and (min-width: 601px) {
+    .catalogue .item-modal-info h4 {
+    clear: none;
+    }
 }
 
 h2.nothing-found {
