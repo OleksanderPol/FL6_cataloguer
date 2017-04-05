@@ -29,12 +29,11 @@
   <div class="row catalogue">
     <div class="col s6 m4" *ngFor="let item of pageTable" (click)="createModal(item)">
       <div class="ct-item z-depth-0" (mouseenter)="item.showDelete = true" (mouseleave)="item.showDelete = false" (click)="item.showDelete = false">
-        <div class="ct-item-img grey darken-3" [style.background-image]="'url(' + item.fotoUrl + ')'">
+        <div class="ct-item-img grey darken-3" [style.background-image]="sanitizer.bypassSecurityTrustStyle('url(' + item.fotoUrl + ')')">
           <div class="ct-item-title yellow accent-3" [class.item-tooltip]="item.borrowedTo">
             <span *ngIf="item.borrowedTo" class="tooltiptext">Borrowed to {{item.borrowedTo}}</span>
             <span>{{item.name | uppercase}}</span>
             <span class="el-borrowed" *ngIf="item.borrowedTo">*</span>
-            <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
           </div>
           <div class="rating yellow accent-1">
             <span *ngFor="let number of ratingNum">
@@ -42,12 +41,13 @@
               <img src="/assets/icons/empty-star-rate.svg" *ngIf="item.rating < number">
             </span>
           </div>
+          <span class="el-delete" *ngIf="item.showDelete && isItemEditable === true" (click)="$event.stopPropagation(); openWarning(item, deleteItem.bind(this))">&times;</span>
         </div>
       </div>
     </div>
     <div class="modal modal-fixed-footer grey darken-4" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
       <div class="modal-content row white-text">
-        <div class="modal-img grey col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
+        <div class="modal-img grey col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="sanitizer.bypassSecurityTrustStyle('url('+ modalItem.fotoUrl +')')">
         </div>
 
         <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
@@ -71,14 +71,18 @@
             <p class="item-details">{{modalItem.info}}</p>
           </div>
 
-          <div class="modal-edit-active col s12 m5 center" *ngIf="modalEdit" [class.m10]="!modalItem.fotoUrl">
+          <div class="modal-edit-active col s12 m5" *ngIf="modalEdit" [class.m12]="!modalItem.fotoUrl">
             <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id, name, borrowed)" id="ngForm">
               <div>
                 <p class="warning">{{validItemName}}</p>
-                <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
-                <input class="input-yellow" #name id="item-heading" maxlength="50" type="text" formControlName="itemName" [ngModel]="modalItem.name" (keypress)="validItemName=''">
-                <label for="item-borrowed-to" [class.active]="modalItem.borrowedTo">Borrowed to:</label>
-                <input class="input-yellow" #borrowed id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [ngModel]="modalItem.borrowedTo">
+                <div class="input-field">
+                    <input class="input-yellow" #name id="item-heading" maxlength="50" type="text" formControlName="itemName" [ngModel]="modalItem.name" (keypress)="validItemName=''">
+                    <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
+                </div>
+                <div class="input-field">
+                    <input class="input-yellow" #borrowed id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [ngModel]="modalItem.borrowedTo">
+                    <label for="item-borrowed-to" [class.active]="modalItem.borrowedTo">Borrowed to:</label>
+                </div><br>
                 <app-file-upload id="photo" [itemId]="modalItem._id"></app-file-upload>
                 <div class="input-field col s12">
                   <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>

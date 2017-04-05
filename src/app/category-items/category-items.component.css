@@ -1,6 +1,7 @@
 .catalogue .col {
     padding: 5px;
 }
+
 .catalogue div.ct-item {
     margin: 0px;
     border-radius: 0px;
@@ -11,11 +12,13 @@
     text-align: center;
     position: relative;
 }
+
 .catalogue div.ct-item:hover {
     transform: scale(1.03);
     z-index: 1;
 }
-.catalogue div.ct-item > div {
+
+.catalogue div.ct-item>div {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -31,6 +34,7 @@
     background-size: cover;
     background-position: center;
 }
+
 .catalogue div.ct-item .ct-item-title {
     display: block;
     text-align: center;
@@ -42,22 +46,29 @@
 }
 
 .catalogue div.ct-item .ct-item-title.item-tooltip:hover .tooltiptext {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
+
 .catalogue div.ct-item .ct-item-title .tooltiptext {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.1s ease;
     margin-left: 0px;
     margin-top: -30px;
     position: absolute;
+    left: 5px;
     z-index: 1000;
     background: #626262;
     font-size: 12px;
     font-style: italic;
     padding: 0px 5px;
     color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.catalogue div.ct-item .ct-item-title .el-delete {
+.catalogue div.ct-item .el-delete {
     position: absolute;
     top: 1px;
     right: 1px;
@@ -65,6 +76,7 @@
     background: #ffea00;
     line-height: 14px;
 }
+
 .catalogue div.ct-item div.rating {
     display: block;
     text-align: center;
@@ -73,17 +85,20 @@
 }
 
 .warning {
-  color: red;
+    color: red;
 }
 
+
 /* NAVIGATION */
+
 div.bottom-nav div {
     padding: 5px;
     text-align: center;
     font-size: 16px;
     padding-bottom: 0px;
 }
-div.bottom-nav div > a {
+
+div.bottom-nav div>a {
     display: inline-block;
     font-weight: 600;
     width: 100%;
@@ -95,15 +110,18 @@ div.bottom-nav div > a {
     -ms-transition: background-color 300ms ease;
     transition: background-color 300ms ease;
 }
-div.bottom-nav div > a:hover {
+
+div.bottom-nav div>a:hover {
     background-color: #ffea00;
 }
-div.bottom-nav div > a.disabled {
+
+div.bottom-nav div>a.disabled {
     pointer-events: none;
     cursor: default;
     background: #424242;
 }
-div.bottom-nav div > a i.material-icons {
+
+div.bottom-nav div>a i.material-icons {
     line-height: 0px;
     position: relative;
     top: 9px;
@@ -120,13 +138,16 @@ div.bottom-nav div > a i.material-icons {
 
 
 /* MODAL */
+
 .catalogue .modal {
     min-width: 280px;
 }
+
 .catalogue div.modal-content {
     padding: 0px;
     margin: 0px;
 }
+
 .catalogue .modal-img {
     padding: 10px;
     display: flex;
@@ -138,19 +159,23 @@ div.bottom-nav div > a i.material-icons {
     float: left;
     margin-right: 10px;
 }
+
 .catalogue .item-modal-info {
     padding: 20px;
     text-align: left;
     margin-bottom: 60px;
 }
+
 .catalogue .item-modal-info h4 {
     overflow: hidden;
     text-overflow: ellipsis;
     clear: both;
 }
-.catalogue .item-modal-info.full-width{
+
+.catalogue .item-modal-info.full-width {
     width: 100%;
 }
+
 .catalogue .item-modal-info .rating .material-icons {
     font-size: 16px;
     margin: 0px;
@@ -163,45 +188,55 @@ div.bottom-nav div > a i.material-icons {
     margin-bottom: 60px;
     width: 100%;
 }
+
 .catalogue .modal-edits {
     background: #bdbdbd;
     height: auto;
     width: calc(100% - 7px);
     text-align: center;
 }
+
 .catalogue .modal-edit-active input::-webkit-input-placeholder {
     color: black;
 }
-.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
+
+.modal .modal-footer .btn,
+.modal .modal-footer .btn-large,
+.modal .modal-footer .btn-flat {
     margin: 0px 5px;
 }
 
+
 /* WARNING MODAL */
+
 #warning-modal {
-    width: 280px !important ;
+    width: 280px !important;
     height: 220px !important;
     text-align: center;
 }
+
 #warning-modal.modal .modal-footer .btn,
 #warning-modal.modal .modal-footer .btn-large,
 #warning-modal.modal .modal-footer .btn-flat {
     float: none;
     text-align: center;
 }
+
 #warning-modal .modal-content {
     padding: 20px;
     overflow: hidden;
 }
+
 @media screen and (min-width: 993px) {
     .catalogue .modal {
-    width: 75% !important ;
-    height: 85% !important ;
+        width: 75% !important;
+        height: 85% !important;
     }
 }
 
 @media screen and (min-width: 601px) {
     .catalogue .item-modal-info h4 {
-    clear: none;
+        clear: none;
     }
 }
 

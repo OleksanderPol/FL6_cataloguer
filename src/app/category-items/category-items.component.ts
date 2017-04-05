@@ -9,6 +9,7 @@ import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidationService } from '../services/validation.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
@@ -50,7 +51,8 @@ export class CategoryItemsComponent implements OnInit {
     private filterService: FilterService,
     private itemsService: ItemsService,
     private formBuilder: FormBuilder,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private sanitizer: DomSanitizer) {
 
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
@@ -166,7 +168,7 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   changeItemRating(id, ratingNum) {
-    this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
+    this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChangeRate.bind(this));
   }
 
   receiveResponseChange(status, response, id) {
