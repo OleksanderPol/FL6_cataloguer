@@ -75,13 +75,13 @@
 
         <div class="modal-edit-active col s12 m5 center" *ngIf="modalEdit" [class.m10]="!modalItem.fotoUrl">
           <form [formGroup]="itemForm"
-          (ngSubmit)="changeItemInfo(modalItem._id, name)" id="ngForm">
+          (ngSubmit)="changeItemInfo(modalItem._id, name, borrowed)" id="ngForm">
               <div>
                 <p class="warning">{{validItemName}}</p>
                 <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
                 <input #name id="item-heading" maxlength="50" type="text" formControlName="itemName" [ngModel]="modalItem.name" (keypress)="validItemName=''">
                 <label for="item-borrowed-to" [class.active]="modalItem.borrowedTo">Borrowed to:</label>
-                <input id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [(ngModel)]="modalItem.borrowedTo">
+                <input #borrowed id="item-borrowed-to" maxlength="30" type="text" formControlName="itemBorrowedTo" [ngModel]="modalItem.borrowedTo">
                 <label for="item-url" [class.active]="modalItem.fotoUrl">Item Url:</label>
                 <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                 <control-messages [control]="itemForm.controls.itemFotoUrl"></control-messages>
@@ -90,7 +90,6 @@
                     <label [class.active]="modalItem.info" for="textarea1">Type description</label>
                 </div>
               </div>
-         <!--      <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid&&!validItemName">Send</button> -->
           </form>
         </div>
       </div>

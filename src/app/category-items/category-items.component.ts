@@ -147,7 +147,8 @@ export class CategoryItemsComponent implements OnInit {
    this.refresh();
   }
 
-  changeItemInfo(id, name) {
+  changeItemInfo(id, name, borrowed) {
+    console.log(borrowed.value);
     if (!this.itemsService.checkItem(name.value)) {
       if (this.itemObj.name !== name.value) {
         this.validItemName = 'Item with such name exists';
@@ -156,7 +157,10 @@ export class CategoryItemsComponent implements OnInit {
     }
 
     if (this.itemForm.dirty && this.itemForm.valid) {
-      this.requestService.changeItemInfo(id, this.itemForm, name.value, this.receiveResponseChange.bind(this));
+      this.requestService.changeItemInfo(id,
+      this.itemForm, name.value, borrowed.value,
+      this.receiveResponseChange.bind(this));
+
       this.modalEdit = false;
     }
   }
