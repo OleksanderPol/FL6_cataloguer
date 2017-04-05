@@ -1,41 +1,51 @@
-#login, #register {
-    width: 400px;
+#login,
+#register {
+  width: 400px;
 }
+
 #login.open {
-    top: 15%;
+  top: 15%;
 }
+
 .input-field {
-    margin-top: 0;
+  margin-top: 0;
 }
+
 .modal .modal-content {
-    padding: 10px 24px;
+  padding: 10px 24px;
 }
+
 .row {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
+
 .modal-heading {
-    text-align: center;
-    font-size: 30px;
+  text-align: center;
+  font-size: 30px;
 }
-.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-    margin: 0 35px;
+
+.modal .modal-footer .btn,
+.modal .modal-footer .btn-large,
+.modal .modal-footer .btn-flat {
+  margin: 0 35px;
 }
 
 control-messages {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
 .error {
-    margin: 10px;
-    text-align: center;
-    color: red;
-    padding: 10px;
-    font-weight: bold;
+  margin: 10px;
+  text-align: center;
+  color: red;
+  padding: 10px;
+  font-weight: bold;
 }
 
+
 .background {
-    background-image: url('../../assets/img/background.png');
+    background-image: url('../../assets/img/pattern.png');
     background-size: cover;
     max-height: 100%;
     height: 100vh;
@@ -43,12 +53,23 @@ control-messages {
     background-position: center;
 }
 
+.logo-info {
+    color: #ffea00;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: black;
+    position: relative;
+    top: 50%;
+    transform: translateY(-70%);
+}
 .modal {
-    color: yellow;
+  color: yellow;
 }
 
 ul {
-    float: right;
+  float: right;
 }
 
 @media (max-width: 992px) {
@@ -58,16 +79,13 @@ ul {
     justify-content: center;
     align-items: center;
   }
-
   nav {
     overflow: auto;
     height: auto;
   }
-
   nav .brand-logo {
     top: 0;
   }
-
   ul {
     margin-top: 35px;
     display: flex;
