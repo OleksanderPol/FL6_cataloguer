@@ -128,8 +128,8 @@
         </div>
         <div class="row">
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
-          (click)="addItem(name.value, info.value, url.value);
-          name.value=''; info.value=''; url.value='';"
+          (click)="addItem(name.value, info.value);
+          name.value=''; info.value='';"
           [disabled]="!name.value.length || name.value.trim().length === 0 || !itemForm.valid"
           >Add</button>
         </div>
