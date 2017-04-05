@@ -82,6 +82,8 @@ export class ItemsService {
   }
 
   checkItem(itemName: string): boolean {
+    itemName = itemName.toUpperCase();
+
     if (this.items.map(item => item.name.toUpperCase()).indexOf(itemName) + 1) {
       return false;
     }

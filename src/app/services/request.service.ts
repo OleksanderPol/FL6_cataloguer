@@ -68,28 +68,6 @@ export class RequestService {
             })
     }
 
-    getCategories(responseFunc){
-        return this.http.get('categories')
-        .subscribe(response => {
-            this.dataService.storeCategories(response.text());
-            responseFunc();
-        },
-        error => {
-            console.log("Error");
-        })
-    }
-
-    getItems(category: string, responseFunc){
-        this.http.get(`${category}/items`)
-        .subscribe(response => {
-            responseFunc(response.text());
-        },
-        error => {
-            console.log("Error")
-        }
-        )
-    }
-
     signOut() {
         this.http
             .post('/signout','signout')
@@ -108,8 +86,8 @@ export class RequestService {
           })
     }
 
-    changeItemInfo(id: string, itemData, responseFunc) {
-        var body = `name=${itemData.value.itemName}&borrowedTo=${itemData.value.itemBorrowedTo}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
+    changeItemInfo(id: string, itemData, name: string, responseFunc) {
+        var body = `name=${name}&borrowedTo=${itemData.value.itemBorrowedTo}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 

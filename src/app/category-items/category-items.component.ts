@@ -39,6 +39,7 @@ export class CategoryItemsComponent implements OnInit {
   public warningAction: Object;
   private loading: boolean = true;
   private isItemEditable: boolean;
+  private validItemName: string = '';
 
   constructor(
     private router: Router,
@@ -92,10 +93,12 @@ export class CategoryItemsComponent implements OnInit {
     this.isItemEditable = this.user.username === this.logedInUser.username ? true : false
 
   }
+
   createModal(data) {
       this.modalItem = data;
       this.openModal();
   }
+
   refresh() {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
     return this.pageTable;
@@ -129,12 +132,12 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   openWarning(item, func) {
-      this.modalWarning.emit({action:"modal",params:['open']});
-      this.warningAction = function(){func(item)};
+    this.modalWarning.emit({action:"modal",params:['open']});
+    this.warningAction = function(){func(item)};
   }
 
   closeWarning(){
-       this.modalWarning.emit({action:"modal",params:['close']});
+    this.modalWarning.emit({action:"modal",params:['close']});
   }
 
   deleteItem(item) {
@@ -143,20 +146,30 @@ export class CategoryItemsComponent implements OnInit {
    console.log('deleted')
   }
 
-  changeItemInfo(id) {
+  changeItemInfo(id, name) {
+    if (!this.itemsService.checkItem(name.value)) {
+      this.validItemName = 'Item with such name exist';
+      return;
+    }
+
     if (this.itemForm.dirty && this.itemForm.valid) {
-      this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
+      this.requestService.changeItemInfo(id, this.itemForm, name.value, this.receiveResponseChange.bind(this));
     }
     this.modalEdit = false;
   }
 
   changeItemRating(id, ratingNum) {
-      this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
+    this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
   }
 
   receiveResponseChange(status, response, id) {
     if (status === 200) {
-        this.refresh();
+      this.itemsService
+        .getItems(`/${this.user._id}/${this.category}/items`)
+        .then(result => {
+          this.getItemsData()
+          this.loading = false;
+      });
     } else {
       this.changeError = response;
     }
