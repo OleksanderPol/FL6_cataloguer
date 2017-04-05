@@ -22,3 +22,6 @@
   border-style: dashed;
   border-color: #ffea00;
 }
+.file-over {
+  opacity: 0.5;
+}
