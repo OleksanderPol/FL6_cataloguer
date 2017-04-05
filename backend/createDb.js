@@ -201,3 +201,26 @@ var itemObj = {
 //     console.log("jopa");
 //   }
 // })
+User.find({}, (err, users)=>{
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(users);
+  }
+})
+
+Category.find({}, (err, users)=>{
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(users);
+  }
+})
+
+Item.find({}, (err, users)=>{
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(users);
+  }
+})

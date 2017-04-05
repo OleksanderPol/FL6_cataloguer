@@ -11,6 +11,21 @@
 }
 
 div.col.profile {
-    padding: 5px;
-    position: relative;
+  padding: 5px;
+  position: relative;
 }
+
+.fixed {
+  position: fixed;
+  right: 5px;
+  bottom: 3px;
+  padding: 0 5px;
+  color: lightgrey;
+  font-size: 27px;
+}
+
+.fixed:hover {
+  background: #424242;
+  cursor: pointer;
+}
+

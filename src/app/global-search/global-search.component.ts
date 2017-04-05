@@ -14,20 +14,17 @@ export class GlobalSearchComponent implements OnInit {
   private user: User;
 
   constructor(private requestService: RequestService,
-              private dataService: DataService,
-              private router: Router) { }
+    private dataService: DataService,
+    private router: Router) { }
 
   ngOnInit() {
     this.user = this.dataService.getUser();
   }
 
-  search(searchInput){
-    this.searchValue = searchInput;
-    this.requestService.searchItems(this.searchValue, this.getItems.bind(this));
-  }
-  getItems(response){
-    this.dataService.storeSearch(response);
-    this.router.navigate([`home/${this.user.username}/items/search`, this.searchValue]);
-    this.searchValue = '';
+  search(searchInput: string): void {
+    if (searchInput !== '') {
+      this.router.navigate([`home/${this.user.username}/items/search`, searchInput]);
+      this.searchValue = '';
+    }
   }
 }

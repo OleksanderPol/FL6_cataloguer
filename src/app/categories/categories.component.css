@@ -31,8 +31,9 @@
 
 .catalogue div.card div .el-delete {
     position: absolute;
-    top: -6px;
+    top: -8px;
     right: 2px;
+    font-size: 20px;
 }
 
 .catalogue .card-title {
@@ -41,6 +42,8 @@
     font-size: 16px;
     font-weight: 600;
     padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .catalogue .item-ammount {
     display: block;
@@ -49,15 +52,19 @@
     line-height: 80px;
     font-weight: 100;
 }
+
+/* NAVIGATION */
 div.bottom-nav div {
     padding: 5px;
     text-align: center;
     font-size: 16px;
+    padding-bottom: 0px;
 }
 div.bottom-nav div > a {
     display: inline-block;
+    font-weight: 600;
     width: 100%;
-    padding: 3px;
+    padding: 4px;
     color: black;
     cursor: pointer;
     background: #ffff8d;
@@ -73,16 +80,22 @@ div.bottom-nav div > a.disabled {
     cursor: default;
     background: #424242;
 }
-.bottom-nav a.toggle-btn {
+div.bottom-nav div > a i.material-icons {
+    line-height: 0px;
+    position: relative;
+    top: 9px;
+    margin-left: -1px;
+}
+
+.bottom-nav div a.current-btn {
     font-weight: 600;
     background-color: #ffea00;
-    -webkit-transition: background-color 300ms ease;
-    -ms-transition: background-color 300ms ease;
-    transition: background-color 300ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.bottom-nav a.toggle-btn:hover {
-    background-color: #ffd600;
-}
+
+/* WARN MODAL */
 .modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
 float: none;
 text-align: center;
@@ -95,4 +108,9 @@ text-align: center;
 #warning-modal .modal-content {
     padding: 20px;
     overflow: hidden;
+}
+
+h2.nothing-found {
+    color: #ffea00;
+    text-align: center;
 }

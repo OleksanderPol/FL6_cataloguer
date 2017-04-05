@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, Pipe, PipeTransform, ViewChild, Output, AfterViewInit, EventEmitter } from '@angular/core';
-import { Routes, ActivatedRoute } from '@angular/router';
+import { Routes, Router, ActivatedRoute, Params, NavigationStart } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { MaterializeDirective } from "angular2-materialize";
 import { MaterializeAction } from 'angular2-materialize';
@@ -8,6 +8,15 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
+import { User } from '../app.model';
+import { CategoryService } from '../services/category.service';
+
+import {
+    Event as RouterEvent,
+    NavigationEnd,
+    NavigationCancel,
+    NavigationError
+} from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -15,27 +24,45 @@ import { FilterService } from '../services/filter.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  public user: Object;
+  public user: User;
   public searchFilter: string;
+  private logedInUser: Object;
   private modalAction = new EventEmitter<string | MaterializeAction>();
 
   constructor(private dataService: DataService,
-              private requestService: RequestService,
-              private filterService: FilterService) {}
+    private requestService: RequestService,
+    private filterService: FilterService,
+    private router: Router,
+    private categoryService: CategoryService) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.user = this.dataService.getUser();
+      }
+    });
+  }
 
   ngOnInit() {
     this.user = this.dataService.getUser();
+    this.logedInUser = this.dataService.getLogedInUser();
+
+    if (this.router.url !== `/home/${this.user.username}`) {
+      this.categoryService.onInit();
+    }
   }
 
-  openModal() {
+  play(): void {
+    this.router.navigate([`home/${this.user.username}/tictactoe`]);
+  }
+
+  openModal():void {
     this.modalAction.emit({ action: 'modal', params: ['open'] });
   }
 
-  closeModal() {
+  closeModal():void {
     this.modalAction.emit({ action: 'modal', params: ['close'] });
   }
 
-  inputSearchValue(value){
+  inputSearchValue(value: string):void {
     this.filterService.addSearchPhrase(value);
   }
 }

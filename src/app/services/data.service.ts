@@ -1,38 +1,37 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
+// import { User } from '../app.model';
 
 @Injectable()
 export class DataService {
   private user: Object;
-  private searchResult: any;
 
   constructor(private localStorageService: LocalStorageService){}
 
   storeUser(user: string) {
-    sessionStorage.setItem("user", user)
+    localStorage.setItem("user", user)
   }
 
   getUser() {
-    return JSON.parse(sessionStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem("user"));
   }
 
   removeUser(): void {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
+    localStorage.removeItem("logedInUser");
   }
 
   storeCategories(categories: string) {
-    sessionStorage.setItem("categories", categories)
+    localStorage.setItem("categories", categories)
   }
 
   getCategories() {
-    return JSON.parse(sessionStorage.getItem("categories"));
+    return JSON.parse(localStorage.getItem("categories"));
   }
-
-  storeSearch(searchedItems) {
-    this.searchResult = searchedItems;
+  storeLogedInUser(user: string){
+    localStorage.setItem("logedInUser", user);
   }
-
-  getSearch() {
-    return this.searchResult;
+  getLogedInUser(){
+    return JSON.parse(localStorage.getItem("logedInUser"));
   }
 }

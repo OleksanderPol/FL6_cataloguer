@@ -1,23 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
 .container {
-    width: 80%;
-    max-width: 800px;
+  width: 80%;
+  max-width: 800px;
 }
 .row {
-    margin-top: 0px;
-    margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .input-yellow[type="search"]:focus:not([readonly]),
 .input-yellow[type="text"]:focus:not([readonly]),
 .input-yellow[type="password"]:focus:not([readonly]),
-.input-yellow[type="email"]:focus:not([readonly]) {
-    border-bottom: 1px solid #ffea00;
-    box-shadow: 0 1px 0 0 #ffea00;
+.input-yellow[type="email"]:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #ffea00;
+  box-shadow: 0 1px 0 0 #ffea00;
 }
 
+#message:focus {
+  border-bottom: 1px solid #ffea00;
+  box-shadow: 0 1px 0 0 #ffea00;
+}
+#message:focus + label {
+  color: #ffea00;
+}
 .input-yellow[type="search"]:focus:not([readonly]) + label,
 .input-yellow[type="text"]:focus:not([readonly]) + label,
 .input-yellow[type="password"]:focus:not([readonly]) + label,
-.input-yellow[type="email"]:focus:not([readonly]) + label {
-    color: #ffea00;
+.input-yellow[type="email"]:focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: #ffea00;
 }
+.loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border: 6px solid black;
+  border-radius: 50%;
+  border-top: 6px solid #ffea00;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader + .blur {
+  z-index: 99;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(40, 40, 40, 0.8);
+  left:0;
+  right:0;
+  bottom: 0;
+}
+

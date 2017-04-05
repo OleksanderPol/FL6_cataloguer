@@ -1,37 +1,51 @@
-<div class="row bottom-nav">
-    <div class="col s12 m4 push-m4">
-        <a class="toggle-btn">Toggle</a>
-    </div>
-    <div class="col s6 m4 pull-m4">
-        <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">&#60;&#60;</a>
-    </div>
-    <div class="col s6 m4">
-        <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" [class.full-width] (click)="getNext()">&#62;&#62;</a>
-    </div>
+<div *ngIf="loading">
+  <div class="loader"></div>
+  <div class="blur"></div>
 </div>
-<div class="row catalogue" *ngIf="ifCategories">
-
-    <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false" (click)="onClick(category.name)">
-        <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
-            <div>
-                <span class="card-title">{{category.name | uppercase}}</span>
-                <span class="item-ammount">{{category.amountOfItems}}</span>
-                <span class="el-delete" *ngIf="category.showDelete"
-                    (click)="$event.stopPropagation(); openWarning(category.name, deleteCategory.bind(this))">
+<div *ngIf="!loading">
+  <div class="row bottom-nav">
+    <div class="col s2 m1 push-m2">
+      <a class="home-btn" routerLink="/"><i class="small material-icons grey-text text-darken-3">home</i></a>
+    </div>
+    <div class="col s10 m7 push-m2">
+      <a class="current-btn" (click)="onNavCurrClick()">{{user.username | uppercase}} CATEGORIES</a>
+    </div>
+    <div class="col s6 m2 pull-m8">
+      <a class="prev-btn grey-text text-darken-3" [class.disabled]="!showPrev" (click)="getPrev()">
+        <i class="small material-icons grey-text text-darken-3">chevron_left</i>
+      </a>
+    </div>
+    <div class="col s6 m2">
+      <a class="next-btn grey-text text-darken-3 pull-s12" [class.disabled]="!showNext" (click)="getNext()">
+        <i class="small material-icons grey-text text-darken-3">chevron_right</i>
+      </a>
+    </div>
+  </div>
+  <div *ngIf='pageTable.length===0'>
+    <h2 class="nothing-found">No categories!</h2>
+  </div>
+  <div class="row catalogue" *ngIf="ifCategories">
+    <div class="col s6 m4" *ngFor="let category of pageTable" (mouseover)="category.showDelete = true" (mouseleave)="category.showDelete = false"
+      (click)="onClick(category.name)">
+      <div class="card z-depth-0 yellow accent-3" (click)="category.showDelete = false">
+        <div>
+          <span class="card-title">{{category.name | uppercase}}</span>
+          <span class="item-ammount">{{category.amountOfItems}}</span>
+          <span class="el-delete" *ngIf="category.showDelete && isCategoryEditable === true" (click)="$event.stopPropagation(); openWarning(category.name, deleteCategory.bind(this))">
                     &times;</span>
-            </div>
         </div>
+      </div>
     </div>
-
-    <!-- //Warning Modal -->
-    <div id="warning-modal" class="modal modal-fixed-footer grey lighten-1" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalWarning">
-        <div class="modal-content">
-            <h4>You shall not delete this!</h4>
-            <p>Shall you?</p>
-        </div>
-        <div class="modal-footer grey lighten-1">
-            <a class="modal-action modal-close waves-effect waves-green btn-flat black-text" (click)="warningAction()">Delete</a>
-            <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
-        </div>
+  </div>
+  <!-- //Warning Modal -->
+  <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
+    [materializeActions]="modalWarning">
+    <div class="modal-content">
+      <h4>Are you sure</h4>
     </div>
+    <div class="modal-footer grey darken-4">
+      <a class="modal-action modal-close waves-effect waves-light btn-flat white-text" (click)="warningAction()">Yes</a>
+      <a class="modal-action modal-close waves-effect waves-light btn yellow accent-3 black-text" (click)="closeWarning()">No</a>
+    </div>
+  </div>
 </div>

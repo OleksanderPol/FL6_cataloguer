@@ -48,7 +48,10 @@ export class RequestService {
     }
 
     changeUserRequest(username, email, info, telephone, city, photoUrl, responseFunc) {
-        var body = `email=${email}&info=${info}&telephone=${telephone}&city=${city}&photoUrl=${photoUrl}`;
+        var body = `email=${email}&info=${info}&telephone=${telephone}&city=${city}`;
+        if (photoUrl !== '') {
+          body += `&photoUrl=${photoUrl}`;
+        }
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -65,28 +68,6 @@ export class RequestService {
             })
     }
 
-    getCategories(responseFunc){
-        return this.http.get('categories')
-        .subscribe(response => {
-            this.dataService.storeCategories(response.text());
-            responseFunc();
-        },
-        error => {
-            console.log("Error");
-        })
-    }
-
-    getItems(category: string, responseFunc){
-        this.http.get(`${category}/items`)
-        .subscribe(response => {
-            responseFunc(response.text());
-        },
-        error => {
-            console.log("Error")
-        }
-        )
-    }
-
     signOut() {
         this.http
             .post('/signout','signout')
@@ -94,19 +75,7 @@ export class RequestService {
                 this.responseStatus = response.status;
             }, error => {
                 this.responseStatus = error.status;
-                console.log(this.responseStatus);
             })
-    }
-    searchItems(searchInput, responseFunc) {
-        this.http
-          .get(`items/search/${searchInput}`)
-          .subscribe(response => {
-              console.log(response.text());
-              responseFunc(response.text());
-          },
-          error => {
-              console.log(error);
-          })
     }
 
     itemsUser(id, responseFunc){
@@ -114,15 +83,30 @@ export class RequestService {
           .get(`items/${id}`)
           .subscribe(response => {
               responseFunc(response.text());
-              console.log(response.text())
           })
     }
 
-    changeItemInfo(id: string, itemData, responseFunc) {
-        var body = `name=${itemData.value.itemName}&fotoUrl=${itemData.value.itemFotoUrl}&info=${itemData.value.itemInfo}`;
+    changeItemInfo(id: string, itemData, name: string, borrowed: string, responseFunc) {
+        var body = `name=${name}&borrowedTo=${borrowed}&info=${itemData.value.itemInfo}`;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
+        this.http
+            .put(`items/${id}`, body, { headers: headers })
+            .subscribe(response => {
+                this.responseStatus = response.status;
+                this.responseText = response.text();
+                responseFunc(this.responseStatus, this.responseText, id);
+            }, error => {
+                this.responseStatus = error.status;
+                this.responseText = JSON.parse(error.text()).message;
+                responseFunc(this.responseStatus, this.responseText, id);
+            })
+    }
+    changeItemPhoto(id: string, photoPath: string, responseFunc) {
+        var body = `fotoUrl=${photoPath}`;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
         this.http
             .put(`items/${id}`, body, { headers: headers })
             .subscribe(response => {

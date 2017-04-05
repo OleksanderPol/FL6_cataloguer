@@ -2,7 +2,9 @@
     <div class="row container">
         <div class="col s12 l4 logo">
           <div class="col s10">
-            <a id="logo-container" href="#" class="brand-logo"><img src="/assets/img/logo.svg"></a>
+            <a id="logo-container" routerLink="/" class="brand-logo">
+                <img src="/assets/img/logo.svg">
+            </a>
           </div>
           <div class="profile-icon valign-wrapper s2 hide-on-large-only" (click)="onUserClick()">
             <img src="/assets/icons/user-icon.svg" class="valign">
@@ -13,15 +15,21 @@
               <!-- Navigation icons -->
               <div class="col s12 l4 nav-icons push-l8">
                 <ul class="">
+                  <li (click)="showCategories()">
+                    <i class="material-icons grey-text lighten-2">view_module</i>
+                  </li>
+                  <li (click)="showClubs()">
+                    <i class="material-icons grey-text lighten-2">people</i>
+                  </li>
                   <li (click)="shown = 'search'">
                     <label class="label-icon" for="search">
                       <i class="small material-icons grey-text lighten-2">search</i>
                     </label>
                   </li>
-                  <li *ngIf="locationLength < 5" (click)="shown = 'filter'">
+                  <li *ngIf="locationLength < 6" (click)="shown = 'filter'">
                     <i class="material-icons grey-text lighten-2">swap_vert</i>
                   </li>
-                  <li *ngIf="locationLength < 5" class="nav-icon" title="add category/item" class="nav-icon"
+                  <li *ngIf="locationLength < 6 && editing" class="nav-icon" class="nav-icon"
                   (click)="openModal(); show='';
                   categoryError=''; categorySuccess=''">
                     <i class="material-icons">playlist_add</i>
@@ -38,14 +46,25 @@
                   <input id="search" type="search" placeholder="Type here to search" #input (input)="update.emit(input.value)">
                 </div>
                 <!-- show if items are displayed -->
-                <div *ngIf="locationLength === 4">
+                <div *ngIf="locationLength === 5">
                   <div *ngIf="shown === 'filter'" class="filter">
                     <select class="nav-select" #selected (change)="onChangeItems(selected.value)">
                       <option disabled selected>Click here to sort items</option>
                       <option value="rate">Rate</option>
                       <option value="alphabet">Alphabet</option>
+                      <option value="borrowed">Borrowed</option>
                       <option value="date+">Date: from new to old</option>
                       <option value="date-">Date: from old to new</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- show if clubs are displayed -->
+                <div *ngIf="locationLength === 4">
+                  <div *ngIf="shown === 'filter'" class="filter">
+                    <select class="nav-select" #selected (change)="onChangeUsersCategories(selected.value)">
+                      <option disabled selected>Click here to sort items</option>
+                      <option value="usersAmount">Users amount</option>
+                      <option value="alphabet">Alphabet</option>
                     </select>
                   </div>
                 </div>
@@ -67,18 +86,19 @@
 </nav>
 
 <!-- Modal Structure-->
-<div id="nav-modal" class="modal grey lighten-1" materialize="modal" [materializeActions]="modalAction">
+<div id="nav-modal" class="modal grey darken-4" materialize="modal" [materializeActions]="modalAction">
   <div class="modal-content">
 
     <!-- category form -->
     <div *ngIf="locationLength === 3" class="row">
       <h4 class="modal-heading">Add category</h4>
-      <div class="error">{{categoryError}}{{categorySuccess}}</div>
+      <div class="error">{{categoryError}}</div>
+      <div>{{categorySuccess}}</div>
       <form class="col s12">
         <div class="row">
            <div class="input-field col s12">
               <input id="cateoryName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="35">
+              maxlength="35" required>
               <label for="cateoryName">Category Name</label>
             </div>
         </div>
@@ -86,36 +106,33 @@
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
           (click)="addCategory(name.value); name.value='';
           closeModal('categories');"
-          [disabled]="!name.value.length"
+          [disabled]="!name.value.length || name.value.trim().length === 0"
           >Add</button>
         </div>
       </form>
     </div>
     <!-- item form -->
-    <div *ngIf="locationLength === 4" class="row">
-      <form class="col s12">
+    <div *ngIf="locationLength === 5" class="row">
+      <form class="col s12" [formGroup]="itemForm">
         <h4 class="modal-heading">Add item</h4>
-        <div class="error">{{itemError}}{{itemSuccess}}</div>
+        <div class="error">{{itemError}}</div>
+        <div>{{itemSuccess}}</div>
         <div class="row">
            <div class="input-field col s12">
               <input id="itemName" type="text" #name (input)="null" class="input-yellow"
-              maxlength="50">
+              maxlength="50" formControlName="itemName">
               <label for="itemName">Item Name</label>
             </div>
             <div class="input-field col s12">
               <input id="info" type="text" #info (input)="null" class="input-yellow">
               <label for="info">Item Info</label>
             </div>
-            <div class="input-field col s12">
-              <input id="itemFoto" type="text" #url (input)="null" class="input-yellow">
-              <label for="itemFoto">Foto Url</label>
-            </div>
         </div>
         <div class="row">
           <button type="submit" class="waves-effect waves-light yellow accent-3 black-text btn"
-          (click)="addItem(name.value, info.value, url.value);
-          name.value=''; info.value=''; url.value='';"
-          [disabled]="!name.value.length"
+          (click)="addItem(name.value, info.value);
+          name.value=''; info.value='';"
+          [disabled]="!name.value.length || name.value.trim().length === 0 || !itemForm.valid"
           >Add</button>
         </div>
       </form>

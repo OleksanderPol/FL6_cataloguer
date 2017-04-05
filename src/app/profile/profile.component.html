@@ -46,7 +46,7 @@
         <span>About me: </span><span class="yellow-text text-accent-3">{{user.info}}</span>
       </div>
 
-      <a class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
+      <a *ngIf="allowChange" class="btn-floating yellow accent-3 change-info-button" (click)="showChange()">
         <i class="large material-icons grey-text text-darken-3">mode_edit</i>
       </a>
       <a class="btn-floating yellow accent-3 change-info-button" (click)="showUser()">
@@ -57,55 +57,71 @@
   </div>
 </div>
 
-<div *ngIf="changeTrigger" class="change-user-data">
-  <form [formGroup]="infoForm" class="profile-form grey darken-3">
+<div *ngIf="changeTrigger&&allowChange" class="change-user-data grey darken-3">
+  <form [formGroup]="infoForm" (ngSubmit)="changeInfo()" class="profile-form">
     <div class="input-field">
-      <input id="email" type="email" formControlName="email" [(value)]="user.email">
+      <input class="input-yellow" id="email" type="email" formControlName="email" [(ngModel)]="user.email">
       <label for="email" class="active">Email</label>
     </div>
 
     <div class="input-field">
-      <input id="telephone" type="text" formControlName="telephone" [(value)]="user.telephone">
+      <input class="input-yellow"id="telephone" type="text" formControlName="telephone" [(ngModel)]="user.telephone">
       <label for="telephone" class="active">Phone</label>
     </div>
 
     <div class="input-field">
-      <input id="city" type="text" formControlName="city" [(value)]="user.city">
+      <input class="input-yellow"id="city" type="text" formControlName="city" [(ngModel)]="user.city">
       <label for="city" class="active">City</label>
     </div>
 
-    <div class="input-field">
-      <input id="photo" type="text" formControlName="photoUrl" [(value)]="user.photoUrl">
-      <label for="photo" class="active">Photo URL</label>
+    <div>
+      <label for="photo" class="active">Photo</label>
+      <app-file-upload id="photo" [itemId]="''"></app-file-upload>
     </div>
 
     <div class="input-field">
-      <textarea id="message" class="materialize-textarea" formControlName="info" [(value)]="user.info"></textarea>
+      <textarea id="message" class="materialize-textarea input-yellow" formControlName="info" [(ngModel)]="user.info"></textarea>
       <label for="message" class="active">Info</label>
     </div>
     <div class="center-align">
-      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid"
-        (click)="changeInfo()">Change Data
+      <button class="btn btn-form yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" [disabled]="!infoForm.valid">Save changes
       </button>
       <br>
-      <button class="btn yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showUser()">Close
+      <button class="btn btn-form yellow accent-3 grey-text text-darken-3 waves-effect waves-light" type="submit" (click)="showUser()">Close
       </button>
     </div>
 
   </form>
+  <!-- <button (click)="userPhoto='clicked'">qweqwe</button> -->
 </div>
 
 <div class="profile-nav">
-  <div class="profile-nav-item" (click)="showCategories()">
-    <div class="yellow accent-3 active">
-      <img src="/assets/icons/category-icon-active.svg">
-      <span class="grey-text text-darken-3">CATEGORIES</span>
+  <div *ngIf="userPosition">
+    <div class="profile-nav-item" (click)="showCategories()">
+      <div class="yellow accent-3 active">
+        <i class="material-icons grey-text text-darken-3">view_module</i>
+        <span class="grey-text text-darken-3">CATEGORIES</span>
+      </div>
+    </div>
+    <div class="profile-nav-item" (click)="showAllUsersCategories()">
+      <div class="grey darken-3">
+        <i class="material-icons">people</i>
+        <span class="">CLUBS</span>
+      </div>
     </div>
   </div>
-  <div class="profile-nav-item" (click)="showItems()">
-    <div class="grey darken-3">
-      <img src="/assets/icons/item-icon.svg">
-      <span class="">ITEMS</span>
+  <div *ngIf="!userPosition">
+    <div class="profile-nav-item" (click)="showCategories()">
+      <div class="grey darken-3">
+        <i class="material-icons">view_module</i>
+        <span class="">CATEGORIES</span>
+      </div>
+    </div>
+    <div class="profile-nav-item" (click)="showAllUsersCategories()">
+      <div class="yellow accent-3 active">
+        <i class="material-icons grey-text text-darken-3">people</i>
+        <span class="grey-text text-darken-3">CLUBS</span>
+      </div>
     </div>
   </div>
 </div>

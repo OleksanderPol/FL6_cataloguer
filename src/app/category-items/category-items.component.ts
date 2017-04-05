@@ -1,13 +1,15 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { User } from '../app.model';
+import { User, NotLogedInUser, Item } from '../app.model';
 import { Routes, Router, ActivatedRoute, Params } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { Subscription } from 'rxjs/Subscription';
 import { RequestService } from '../services/request.service';
 import { DataService } from '../services/data.service';
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ValidationService } from '../services/validation.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { SearchPipe } from '../search/search.pipe';
 import { FilterService } from '../services/filter.service';
@@ -19,6 +21,7 @@ import { ItemsService } from '../services/items.service';
   styleUrls: ['./category-items.component.css']
 })
 export class CategoryItemsComponent implements OnInit {
+  private logedInUser: User;
   private pageTable: Object[] = [];
   private subscription: Subscription;
   private showNext: boolean;
@@ -33,7 +36,12 @@ export class CategoryItemsComponent implements OnInit {
   private modalItem: Object[] = [];
   private ratingChanged: boolean;
   private modalEdit: boolean;
+  private user: NotLogedInUser;
   public warningAction: Object;
+  private loading: boolean = true;
+  private isItemEditable: boolean;
+  private validItemName: string = '';
+  private itemObj: Item;
 
   constructor(
     private router: Router,
@@ -43,12 +51,14 @@ export class CategoryItemsComponent implements OnInit {
     private filterService: FilterService,
     private itemsService: ItemsService,
     private formBuilder: FormBuilder,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private sanitizer: DomSanitizer) {
 
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
-      'itemFotoUrl': [''],
+      // 'itemFotoUrl': ['', ValidationService.urlValidator],
+      'itemBorrowedTo': ['']
     });
 
     this.subscription = this.tableNavigationService.showNextChange.subscribe((value) => {
@@ -66,23 +76,33 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.dataService.getUser();
+    this.logedInUser = this.dataService.getLogedInUser();
     this.activatedRoute.params.subscribe((params: Params) => {
-    this.category = params['category'];
+      this.category = params['category'];
     });
 
     this.itemsService
-        .getItems(`${this.category}/items`)
-        .then(result => this.getItemsData());
+        .getItems(`/${this.user._id}/${this.category}/items`)
+        .then(result => {
+          this.getItemsData()
+          this.loading = false;
+        });
 
     this.itemsService.events$.forEach(event => {
       this.refresh();
     });
 
+    this.isItemEditable = this.user.username === this.logedInUser.username ? true : false
+
   }
+
   createModal(data) {
+      this.itemObj = data;
       this.modalItem = data;
       this.openModal();
   }
+
   refresh() {
     this.pageTable = this.tableNavigationService.getPage(this.itemsService.items, 'first');
     return this.pageTable;
@@ -116,36 +136,66 @@ export class CategoryItemsComponent implements OnInit {
   }
 
   openWarning(item, func) {
-      this.modalWarning.emit({action:"modal",params:['open']});
-      this.warningAction = function(){func(item)};
+    this.modalWarning.emit({action:"modal",params:['open']});
+    this.warningAction = function(){func(item)};
   }
-  
+
   closeWarning(){
-       this.modalWarning.emit({action:"modal",params:['close']});
+    this.modalWarning.emit({action:"modal",params:['close']});
   }
-  
+
   deleteItem(item) {
    this.itemsService.removeItem(item._id, item.name);
    this.refresh();
-   console.log('deleted')
   }
 
-  changeItemInfo(id) {
-    if (this.itemForm.dirty && this.itemForm.valid) {
-      this.requestService.changeItemInfo(id, this.itemForm, this.receiveResponseChange.bind(this));
+  changeItemInfo(id, name, borrowed) {
+    console.log(borrowed.value);
+    if (!this.itemsService.checkItem(name.value)) {
+      if (this.itemObj.name !== name.value) {
+        this.validItemName = 'Item with such name exists';
+        return;
+      }
     }
-    this.modalEdit = false;
+
+    if (this.itemForm.valid) {
+      this.requestService.changeItemInfo(id,
+      this.itemForm, name.value, borrowed.value,
+      this.receiveResponseChange.bind(this));
+
+      this.modalEdit = false;
+    }
   }
-    
+
   changeItemRating(id, ratingNum) {
-      this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChange.bind(this));
+    this.requestService.changeItemRating(id, ratingNum, this.receiveResponseChangeRate.bind(this));
   }
 
   receiveResponseChange(status, response, id) {
     if (status === 200) {
-        this.refresh();
+        this.closeModal();
+        this.loading = true;
+        this.itemsService
+        .getItems(`/${this.user._id}/${this.category}/items`)
+        .then(result => {
+          this.getItemsData();
+          this.refresh();
+          this.loading = false;
+        });
+
     } else {
       this.changeError = response;
     }
+  }
+  receiveResponseChangeRate(status, response, id) {
+    if (status === 200) {
+      this.refresh();
+    } else {
+      this.changeError = response;
+    }
+  }
+
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.user.username}`]);
   }
 }

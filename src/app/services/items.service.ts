@@ -26,7 +26,7 @@ export class ItemsService {
     return this.http.get(itemsUrl)
                .toPromise()
                .then(response => {
-                 return this.items = JSON.parse(response.text());
+                  return this.items = JSON.parse(response.text());
                })
                .catch(this.handleError);
   }
@@ -35,7 +35,8 @@ export class ItemsService {
     name: string,
     info: string,
     fotoUrl: string,
-    category: string): Promise<string> {
+    category: string,
+    userId: string): Promise<string> {
 
     let itemObj: Item = {
       name: name,
@@ -51,7 +52,7 @@ export class ItemsService {
       .toPromise()
       .then(res => {
         if (res.status === 200) {
-          this.getItems(`${category}/items`)
+          this.getItems(`${userId}/${category}/items`)
             .then(res => {
               this.newEvent('add');
             });
@@ -81,6 +82,8 @@ export class ItemsService {
   }
 
   checkItem(itemName: string): boolean {
+    itemName = itemName.toUpperCase();
+
     if (this.items.map(item => item.name.toUpperCase()).indexOf(itemName) + 1) {
       return false;
     }
@@ -111,6 +114,12 @@ export class ItemsService {
 
     this.items.sort((item: Item, nextItem: Item) => {
       return new Date(item.created).getTime() - new Date(nextItem.created).getTime();
+    });
+  }
+
+  sortBorrowed(): void {
+    this.items.sort((item: Item, nextItem: Item) => {
+      return item.borrowedTo ? -1 : 1;
     });
   }
 

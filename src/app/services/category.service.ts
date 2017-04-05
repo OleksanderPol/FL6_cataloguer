@@ -2,20 +2,23 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Category } from '../app.model';
 import { Subject } from 'rxjs/Subject';
+import { DataService } from '../services/data.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CategoryService {
   public categories: Category[];
+  public allUsersCategories: any;
   private subject = new Subject<string>();
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
-    private http: Http
+    private http: Http,
+    private dataService: DataService
   ) {}
 
   onInit() {
-    this.getHttpCategories('categories')
+    this.getHttpCategories(`${this.dataService.getUser()._id}/categories`)
       .then(res => {
         this.newEvent('getCategories');
       });
@@ -29,8 +32,8 @@ export class CategoryService {
     return this.subject.asObservable();
   }
 
-  getHttpCategories(categoriesUrl): Promise<Category[]> {
-    return this.http.get(categoriesUrl)
+  getHttpCategories(url: string): Promise<Category[]> {
+    return this.http.get(url)
       .toPromise()
       .then(response => {
         return this.categories = JSON.parse(response.text());

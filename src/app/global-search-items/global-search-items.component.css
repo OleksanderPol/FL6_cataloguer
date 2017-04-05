@@ -1,153 +1,184 @@
-.catalogue .col {
-    padding: 7px;
-}
-
-.catalogue div.card {
-    margin: 0px;
-    border-radius: 0px;
-    padding-bottom: 100%;
-    height: 0;
-    transition: all .1s ease-in-out;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-}
-
-.catalogue div.card:hover {
-    transform: scale(1.04);
-    z-index: 1;
-}
-
-.catalogue .col {
-    padding: 5px;
-}
-.catalogue div.ct-item {
-    margin: 0px;
-    border-radius: 0px;
-    padding-bottom: 100%;
-    height: 0;
-    transition: all .1s ease-in-out;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-}
-.catalogue div.ct-item:hover {
-    transform: scale(1.03);
-    z-index: 1;
-}
-.catalogue div.ct-item > div {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-.catalogue div.ct-item .ct-item-title {
-    display: block;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 5px;
-    position: relative;
-}
-.catalogue div.ct-item .ct-item-title .el-delete {
-    position: absolute;
-    top: -8px;
-    right: 2px;
-}
-.catalogue div.ct-item div.rating {
-    display: block;
-    text-align: center;
-    padding-top: 3px;
-    margin: 0;
-}
-.catalogue div.modal-content {
-    padding: 0px;
-    margin: 0px;
-    height: 450px;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    align-items: stretch;
-    align-content: stretch;
-
-}
-.catalogue .modal-img {
-    padding: 10px;
-    flex: 1 1 100%;
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.catalogue .item-modal-info {
-    padding: 20px;
-    text-align: left;
-    width: 50%;
-}
-.catalogue .item-modal-info.full-width{
-    width: 100%;
-}
-.catalogue .modal-edits {
-    padding: 20px;
-    text-align: right;
-}
-/*.catalogue .modal-edit-active input::-webkit-input-placeholder {
-    color: black;
-}*/
 .catalogue .owner-modal-info {
-    line-height: 100%;
-}
-.catalogue .close-button {
-    float: right;
+  line-height: 100%;
 }
 
 h2.nothing-found {
-    color: #ffea00;
-    text-align: center;
+  color: #ffea00;
+  text-align: center;
 }
+
+.catalogue .col {
+  padding: 5px;
+}
+
+.catalogue div.ct-item {
+  margin: 0px;
+  border-radius: 0px;
+  padding-bottom: 100%;
+  height: 0;
+  transition: all .1s ease-in-out;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.catalogue div.ct-item:hover {
+  transform: scale(1.03);
+  z-index: 1;
+}
+
+.catalogue div.ct-item>div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.catalogue div.ct-item .ct-item-title {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.catalogue div.ct-item .ct-item-title .el-delete {
+  position: absolute;
+  top: -6px;
+  right: 2px;
+}
+
+.catalogue div.ct-item div.rating {
+  display: block;
+  text-align: center;
+  padding-top: 3px;
+  margin: 0;
+}
+
 div.bottom-nav div {
-    padding: 5px;
-    text-align: center;
-    font-size: 16px;
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
 }
-div.bottom-nav div > a {
-    display: inline-block;
-    width: 100%;
-    padding: 3px;
-    color: black;
-    cursor: pointer;
-    background: #ffff8d;
-    -webkit-transition: background-color 300ms ease;
-    -ms-transition: background-color 300ms ease;
-    transition: background-color 300ms ease;
+
+div.bottom-nav div>a {
+  display: inline-block;
+  font-weight: 600;
+  width: 100%;
+  padding: 4px;
+  color: black;
+  cursor: pointer;
+  background: #ffff8d;
+  -webkit-transition: background-color 300ms ease;
+  -ms-transition: background-color 300ms ease;
+  transition: background-color 300ms ease;
 }
-div.bottom-nav div > a:hover {
-    background-color: #ffea00;
+
+div.bottom-nav div>a:hover {
+  background-color: #ffea00;
 }
-div.bottom-nav div > a.disabled {
-    pointer-events: none;
-    cursor: default;
-    background: #424242;
+
+div.bottom-nav div>a.disabled {
+  pointer-events: none;
+  cursor: default;
+  background: #424242;
 }
-.bottom-nav a.toggle-btn {
-    font-weight: 600;
-    background-color: #ffea00;
-    -webkit-transition: background-color 300ms ease;
-    -ms-transition: background-color 300ms ease;
-    transition: background-color 300ms ease;
+
+div.bottom-nav div > a i.material-icons {
+  line-height: 0px;
+  position: relative;
+  top: 9px;
+  margin-left: -1px;
 }
-.bottom-nav a.toggle-btn:hover {
-    background-color: #ffd600;
+
+.bottom-nav div a.current-btn {
+  font-weight: 600;
+  background-color: #ffea00;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.catalogue .modal {
+  min-width: 280px;
+}
+
+.catalogue div.modal-content {
+  padding: 0px;
+  margin: 0px;
+}
+
+.catalogue .modal-img {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  float: left;
+  margin-right: 10px;
+}
+
+.catalogue .item-modal-info {
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  margin-bottom: 60px;
+}
+
+.catalogue .item-modal-info.full-width {
+  width: 100%;
+}
+
+.catalogue .modal-edit-active form {
+  display: inline-block;
+  margin-bottom: 60px;
+}
+
+.catalogue .modal-edits {
+  background: #bdbdbd;
+  height: auto;
+  width: calc(100% - 7px);
+  text-align: center;
+}
+
+.catalogue .modal-edit-active input::-webkit-input-placeholder {
+  color: black;
+}
+
+.modal .modal-footer .btn,
+.modal .modal-footer .btn-large,
+.modal .modal-footer .btn-flat {
+  float: none;
+  text-align: center;
+}
+
+#warning-modal {
+  width: 280px !important;
+  height: 220px !important;
+  text-align: center;
+}
+
+#warning-modal .modal-content {
+  padding: 20px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 993px) {
+  .catalogue .modal {
+    width: 75% !important;
+    height: 85% !important;
+  }
 }

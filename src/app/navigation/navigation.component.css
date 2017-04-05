@@ -3,10 +3,6 @@ nav {
   height: 64px;
 }
 
-nav label {
-  color: #ffea00;
-}
-
 nav .container {
   height: 49px;
 }
@@ -59,14 +55,13 @@ div.filter {
   color: #ffea00;
 }
 
-/*modals*/
-.input-yellow[type="text"]:focus:not([readonly]) {
-  border-bottom: 1px solid #ffea00;
-  box-shadow: 0 1px 0 0 #ffea00;
+.modal {
+  color: #ffea00;
+  max-width: 550px;
 }
 
-.input-yellow[type="text"]:focus:not([readonly]) + label {
-  color: #ffea00;
+.error {
+  color: red;
 }
 
 @media (max-width: 992px) {
@@ -91,5 +86,9 @@ div.filter {
     margin-top: 5px;
     left: 40%;
   }
+}
+
+control-messages {
+  color: red;
 }
 

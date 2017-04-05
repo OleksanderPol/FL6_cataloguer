@@ -6,7 +6,10 @@ import { RequestService } from '../services/request.service';
 import { ItemsService } from '../services/items.service';
 import { CategoryService } from '../services/category.service';
 import { DataService } from '../services/data.service';
+import { AllUsersCategoriesService } from '../services/all-users-categories.service';
 
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ValidationService } from '../services/validation.service';
 
 
 
@@ -25,21 +28,52 @@ export class NavigationComponent implements OnInit {
   private itemError: string;
   private itemSuccess: string;
   private currentCategory: string;
+  private editing: boolean;
+  private itemForm: FormGroup;
 
   constructor(
     private requestService: RequestService,
     private categoryService: CategoryService,
     private router: Router,
     private itemsService: ItemsService,
-    private dataSerice: DataService) {
+    private dataService: DataService,
+    private allUsersCategoriesService: AllUsersCategoriesService,
+    private formBuilder: FormBuilder) {
+      this.itemForm = this.formBuilder.group({
+        'itemName': ['', Validators.required],
+        'info': [''],
+        'itemFoto': ['', ValidationService.urlValidator]
+      })
+    }
 
-    router.events.subscribe((val) => {
-      this.locationLength = val.url.split('/').length;
-    });
-  }
 
   ngOnInit() {
     this.update.emit('');
+
+    this.router.events.subscribe((val) => {
+      let urlArr: string[] = val.url.split('/');
+      this.locationLength = val.url.split('/').length;
+
+      if (val.url === '/') return;
+      this.checkLogedUser();
+
+      if (urlArr.indexOf('usersCategories') + 1 ||
+          urlArr.indexOf('users') + 1 ||
+          urlArr.indexOf('tictactoe') + 1) {
+        this.editing = false;
+      }
+    });
+  }
+
+  checkLogedUser(): void {
+    let currentUser = this.dataService.getUser().username,
+        logedUser = this.dataService.getLogedInUser().username;
+
+    if (currentUser === logedUser) {
+      this.editing = true;
+    } else {
+      this.editing = false;
+    }
   }
 
   openModal() {
@@ -53,15 +87,24 @@ export class NavigationComponent implements OnInit {
       setTimeout(() => {
         this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.categorySuccess = '';
-      }, 1000);
+      }, 500);
     }
 
     if (this.itemSuccess && location === 'items') {
       setTimeout(() => {
         this.modalAction.emit({ action: 'modal', params: ['close'] });
         this.itemSuccess = '';
-      }, 1000);
+      }, 500);
     }
+  }
+
+  showCategories(): void {
+
+    this.router.navigate(['/home', this.dataService.getUser().username]);
+  }
+
+  showClubs():void {
+    this.router.navigate([`home/${this.dataService.getLogedInUser().username}`, 'usersCategories']);
   }
 
   onUserClick() {
@@ -76,10 +119,14 @@ export class NavigationComponent implements OnInit {
     this.itemsService.newEvent('refreshItems');
   }
 
+  onUsersCategoriesClick() {
+    this.allUsersCategoriesService.newEvent('refreshUsersCategories');
+  }
+
   signOutUser():void {
+    this.router.navigate(['']);
     this.requestService.signOut();
-    this.dataSerice.removeUser();
-    this.router.navigate(['/']);
+    this.dataService.removeUser();
   }
 
   onChangeItems(value: String): void {
@@ -103,6 +150,11 @@ export class NavigationComponent implements OnInit {
         this.itemsService.sortByRating();
         this.onItemClick();
         break;
+
+      case 'borrowed':
+        this.itemsService.sortBorrowed();
+        this.onItemClick();
+        break;
     }
   }
 
@@ -118,29 +170,44 @@ export class NavigationComponent implements OnInit {
     }
   }
 
+  onChangeUsersCategories(value: String): void {
+    switch (value) {
+      case 'alphabet':
+        this.allUsersCategoriesService.sortByAlphabet();
+        this.onUsersCategoriesClick();
+        break;
+
+      case 'usersAmount':
+        this.allUsersCategoriesService.sortByAmountOfUsers();
+        this.onUsersCategoriesClick();
+        break;
+    }
+  }
+
   addCategory(categoryName): void {
     categoryName = categoryName.toUpperCase();
 
     if (this.categoryService.checkCategory(categoryName)){
       this.categoryService.addCategory(categoryName);
-      this.categorySuccess = 'Cutegory successfully added';
+      this.categorySuccess = 'Category successfully added';
       this.categoryError = '';
     } else {
       this.categorySuccess = '';
-      this.categoryError = 'Such category exist';
+      this.categoryError = 'Such category exists';
     }
   }
 
   addItem(name, info = '', fotoUrl = ''): void {
-    let uppercaseName = name.toUpperCase();
+    let uppercaseName = name.toUpperCase(),
+        userId = this.dataService.getUser()._id;
 
-    if (this.router.url.split('/')[3] === 'allcategories') {
+    if (this.router.url.split('/')[4] === 'allcategories') {
       this.itemError = 'Select the category first, please!';
       return;
     }
 
     if (this.itemsService.checkItem(uppercaseName)) {
-      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[3])
+      this.itemsService.addItem(name, info, fotoUrl, this.router.url.split('/')[4], userId)
         .then(res => {
           if (res !== 'Server Error') {
             this.itemError = '';
@@ -151,7 +218,7 @@ export class NavigationComponent implements OnInit {
           }
         });
     } else {
-      this.itemError = 'Such Item already exist';
+      this.itemError = 'Such Item already exists';
     }
   }
 }

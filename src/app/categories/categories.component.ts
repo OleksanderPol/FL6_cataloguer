@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { User } from '../app.model';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { User, NotLogedInUser } from '../app.model';
 import { Routes, Router } from '@angular/router';
 import { TableNavigationService } from '../services/table-navigation.service';
 import { MaterializeAction } from 'angular2-materialize';
@@ -17,19 +17,21 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  private user : User;
+  private user : NotLogedInUser;
   private pageTable: Object[] = [];
   private subscription: Subscription;
+  private logedInUser: User;
 
   private showNext: boolean;
   private showPrev: boolean;
   public modalWarning = new EventEmitter<string|MaterializeAction>();
   public warningAction: Object;
+  private isCategoryEditable: boolean;
 
   private search: string = '';
   private ifCategories: boolean = false;
   private searchPipe = new SearchPipe();
-
+  private loading: boolean = true;
 
   constructor(private router: Router,
               private tableNavigationService: TableNavigationService,
@@ -55,6 +57,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.dataService.getUser();
+    this.logedInUser = this.dataService.getLogedInUser();
     this.categoryService.onInit();
     this.categoryService.events$.forEach(event => {
       if (event === 'addCategory' ||
@@ -65,11 +68,14 @@ export class CategoriesComponent implements OnInit {
         this.getCategoriesData();
       }
     });
+
+    this.isCategoryEditable = this.user.username === this.logedInUser.username ? true : false
   }
 
   getCategoriesData() {
     this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'first');
     this.ifCategories = true;
+    this.loading = false;
     return this.pageTable;
   }
 
@@ -78,7 +84,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getPrev(): Object[] {
-    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');  
+    this.pageTable = this.tableNavigationService.getPage(this.categoryService.categories, 'prev');
     return this.pageTable;
   }
 
@@ -88,14 +94,16 @@ export class CategoriesComponent implements OnInit {
   }
 
   onClick(category) {
-    this.router.navigate([`home/${this.user.username}`, category]);
+    this.router.navigate([`home/${this.user.username}/category`, category]);
   }
   openWarning(category, func) {
       this.modalWarning.emit({action:"modal",params:['open']});
       this.warningAction = function(){func(category)};
   }
-  
   closeWarning(){
        this.modalWarning.emit({action:"modal",params:['close']});
+  }
+  onNavCurrClick() {
+    this.router.navigate([`home/${this.user.username}`]);
   }
 }
