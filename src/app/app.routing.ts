@@ -7,10 +7,11 @@ import { GlobalSearchItemsComponent } from './global-search-items/global-search-
 import { ClubUsersComponent } from './club-users/club-users.component';
 import { AllUsersCategoriesComponent } from './all-users-categories/all-users-categories.component';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: '', component: StartingPageComponent },
-    { path: 'home/:user', component: HomeComponent,
+    { path: 'home/:user', component: HomeComponent, canActivate: [AuthGuard],
       children: [
           {
               path: '',

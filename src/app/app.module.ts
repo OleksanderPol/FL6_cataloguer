@@ -28,6 +28,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { TableNavigationService } from './services/table-navigation.service';
 import { CategoryItemsComponent } from './category-items/category-items.component';
 import { SearchPipe, SearchUserPipe } from './search/search.pipe';
+import { AuthGuard } from './services/auth-guard.service';
 
 import { NavigationComponent } from './navigation/navigation.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
@@ -83,7 +84,8 @@ import { NgUploaderModule } from 'ngx-uploader';
     CategoryService,
     AllUsersCategoriesService,
     ClubUsersService,
-    GlobalSearchService
+    GlobalSearchService,
+    AuthGuard
   ],
 
   bootstrap: [AppComponent]
