@@ -70,11 +70,16 @@ export class GlobalSearchItemsComponent implements OnInit {
       this.pageTable = this.tableNavigationService.getPage(filteredCategories, 'first');
       return this.pageTable;
     });
-
-    router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
+    
+    activatedRoute.params.subscribe((params: Params) => {
+      this.loading = true;
+      this.searchInput = params['search'];
+      this.globalSearchService.findItems(`items/search/${this.searchInput}`)
+        .then(response => {
+          this.items = this.globalSearchService.foundItems;
+          this.loading = false;
+          this.pageTable = this.tableNavigationService.getPage(this.items, 'first');
+        });
     });
   }
 
