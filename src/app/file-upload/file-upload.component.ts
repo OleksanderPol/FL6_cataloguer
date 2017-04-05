@@ -11,6 +11,7 @@ import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/route
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit {
+  @Input() itemId: string;
   public user: NotLogedInUser;
   private loggedUser: User;
   options: NgUploaderOptions;
@@ -36,12 +37,19 @@ export class FileUploadComponent implements OnInit {
       this.zone.run(() => {
         this.response = data;
         if (data && data.response) {
-          this.response = "Photo uploaded. Click on 'Save changes' to update photo on site.";
-          this.requestService.changeUserRequest(this.user.username,
-                                            this.user.email, this.user.info,
-                                            this.user.telephone, this.user.city,
-                                            JSON.parse(data.response).path,
-                                            this.receiveResponseChange.bind(this));
+          if (this.itemId == '') {
+            this.response = "Photo uploaded. Click on 'Save changes' to update photo on site.";
+            this.requestService.changeUserRequest(this.user.username,
+                                                  this.user.email, this.user.info,
+                                                  this.user.telephone, this.user.city,
+                                                  JSON.parse(data.response).path,
+                                                  this.receiveResponseChange.bind(this));
+          } else {
+            this.response = "Photo uploaded. Click on 'Save' to update photo on site.";
+            this.requestService.changeItemPhoto(this.itemId,
+                                                JSON.parse(data.response).path,
+                                                this.receiveResponseItem.bind(this));
+          }
         }
       });
     });
@@ -59,6 +67,13 @@ export class FileUploadComponent implements OnInit {
       // this.router.navigate(['/home', username]);
     } else {
       this.response = response;
+    }
+  }
+  receiveResponseItem(status, response, username) {
+    if (status === 200) {
+      console.log('photo updated');
+    } else {
+      console.log('photo update error');
     }
   }
 }

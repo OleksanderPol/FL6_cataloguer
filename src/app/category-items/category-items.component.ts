@@ -55,7 +55,7 @@ export class CategoryItemsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       'itemName': ['', Validators.required],
       'itemInfo': ['', Validators.required],
-      'itemFotoUrl': ['', ValidationService.urlValidator],
+      // 'itemFotoUrl': ['', ValidationService.urlValidator],
       'itemBorrowedTo': ['']
     });
 
@@ -156,7 +156,7 @@ export class CategoryItemsComponent implements OnInit {
       }
     }
 
-    if (this.itemForm.dirty && this.itemForm.valid) {
+    if (this.itemForm.valid) {
       this.requestService.changeItemInfo(id,
       this.itemForm, name.value, borrowed.value,
       this.receiveResponseChange.bind(this));
@@ -171,12 +171,22 @@ export class CategoryItemsComponent implements OnInit {
 
   receiveResponseChange(status, response, id) {
     if (status === 200) {
-      this.itemsService
+        this.closeModal();
+        this.loading = true;
+        this.itemsService
         .getItems(`/${this.user._id}/${this.category}/items`)
         .then(result => {
           this.getItemsData()
           this.loading = false;
-      });
+        });
+
+    } else {
+      this.changeError = response;
+    }
+  }
+  receiveResponseChangeRate(status, response, id) {
+    if (status === 200) {
+      this.refresh();
     } else {
       this.changeError = response;
     }
