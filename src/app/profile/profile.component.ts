@@ -42,8 +42,7 @@ export class ProfileComponent implements OnInit {
       'email': ['', [Validators.required, ValidationService.emailValidator]],
       'info': [''],
       'city': [''],
-      'telephone': [''],
-      'photoUrl': ['']
+      'telephone': ['']
     });
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -65,7 +64,7 @@ export class ProfileComponent implements OnInit {
     this.userPhoto = "";
     this.user = this.dataService.getUser();
     this.loggedUser = this.dataService.getLogedInUser();
-
+    this.userPosition = true;
 
     this.categoryService.events$.forEach(event => {
       this.refreshCategories();
@@ -112,7 +111,7 @@ export class ProfileComponent implements OnInit {
       this.requestService.changeUserRequest(this.dataService.getLogedInUser().username,
                                             this.infoForm.value.email, this.infoForm.value.info,
                                             this.infoForm.value.telephone, this.infoForm.value.city,
-                                            this.infoForm.value.photoUrl,
+                                            '',
                                             this.receiveResponseChange.bind(this));
     }
   }

@@ -74,12 +74,9 @@
       <label for="city" class="active">City</label>
     </div>
 
-    <div class="input-field">
-      <input class="input-yellow"id="photo" type="text" formControlName="photoUrl" [(ngModel)]="userPhoto">
-      <label for="photo" class="active">Photo URL</label>
-    </div>
     <div>
-      <app-file-upload></app-file-upload>
+      <label for="photo" class="active">Photo</label>
+      <app-file-upload id="photo"></app-file-upload>
     </div>
 
     <div class="input-field">
