@@ -45,20 +45,18 @@
         </div>
       </div>
     </div>
-  </div>
+    <div class="modal modal-fixed-footer grey darken-4" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+      <div class="modal-content row white-text">
+        <div class="modal-img grey col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
+        </div>
 
-  <div class="modal modal-fixed-footer grey darken-4" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
-    <div class="modal-content row white-text">
-      <div class="modal-img grey col s12 m6" *ngIf="modalItem.fotoUrl" [style.background-image]="'url('+ modalItem.fotoUrl +')'">
-      </div>
+        <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
 
-      <div class="item-modal-info" [class.full-width]="!modalItem.fotoUrl">
-
-        <div *ngIf="!modalEdit">
-          <h4>{{modalItem.name | uppercase}}</h4>
-          <div class="rating" *ngIf="isItemEditable === true">
-            <span *ngIf="modalItem.rating == 0">Please set rating</span>
-            <a *ngFor="let number of ratingNum">
+          <div *ngIf="!modalEdit">
+            <h4>{{modalItem.name | uppercase}}</h4>
+            <div class="rating" *ngIf="isItemEditable === true">
+              <span *ngIf="modalItem.rating == 0">Please set rating</span>
+              <a *ngFor="let number of ratingNum">
               <i class="material-icons yellow-text text-accent-3"
                 *ngIf="modalItem.rating >= number"
                (click)="modalItem.rating = number"
@@ -68,14 +66,13 @@
                (click)="modalItem.rating = number"
                (click)="changeItemRating(modalItem._id, modalItem.rating)">star_border</i>
             </a>
+            </div>
+            <p *ngIf="!!modalItem.borrowedTo"><small><i>Borrowed to: {{modalItem.borrowedTo}}</i></small></p>
+            <p class="item-details">{{modalItem.info}}</p>
           </div>
-          <p *ngIf="!!modalItem.borrowedTo"><small><i>Borrowed to: {{modalItem.borrowedTo}}</i></small></p>
-          <p class="item-details">{{modalItem.info}}</p>
-        </div>
 
-        <div class="modal-edit-active col s12 m5 center" *ngIf="modalEdit" [class.m10]="!modalItem.fotoUrl">
-          <form [formGroup]="itemForm"
-          (ngSubmit)="changeItemInfo(modalItem._id, name, borrowed)" id="ngForm">
+          <div class="modal-edit-active col s12 m5 center" *ngIf="modalEdit" [class.m10]="!modalItem.fotoUrl">
+            <form [formGroup]="itemForm" (ngSubmit)="changeItemInfo(modalItem._id, name, borrowed)" id="ngForm">
               <div>
                 <p class="warning">{{validItemName}}</p>
                 <label for="item-heading" [class.active]="modalItem.name">Item name:</label>
@@ -86,35 +83,35 @@
                 <input id="item-url" type="text" formControlName="itemFotoUrl" [(ngModel)]="modalItem.fotoUrl">
                 <control-messages [control]="itemForm.controls.itemFotoUrl"></control-messages>
                 <div class="input-field col s12">
-                    <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
-                    <label [class.active]="modalItem.info" for="textarea1">Type description</label>
+                  <textarea id="textarea1" formControlName="itemInfo" class="materialize-textarea" [(ngModel)]="modalItem.info"></textarea>
+                  <label [class.active]="modalItem.info" for="textarea1">Type description</label>
                 </div>
               </div>
-          </form>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-edits modal-footer row grey darken-4">
+        <div class="col s12 m12">
+          <button type="submit" *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid&&!validItemName"
+            form="ngForm">SAVE</button>
+          <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
+          <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
+          <button class="waves-effect waves-light btn-flat grey-text text-lighten-3" (click)="closeModal(); modalEdit = false">Close</button>
         </div>
       </div>
     </div>
-    <div class="modal-edits modal-footer row grey darken-4">
-      <div class="col s12 m12">
-        <button type="submit" *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" [disabled]="!itemForm.valid&&!validItemName"
-          form="ngForm">SAVE</button>
-        <button *ngIf="!modalEdit && isItemEditable === true" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Edit</button>
-        <button *ngIf="modalEdit" class="waves-effect waves-light yellow accent-3 black-text btn" (click)="modalEdit = !modalEdit">Back</button>
-        <button class="waves-effect waves-light btn-flat grey-text text-lighten-3"
-        (click)="closeModal(); modalEdit = false">Close</button>
+    <!-- Warning Modal -->
+    <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
+      [materializeActions]="modalWarning">
+      <div class="modal-content">
+        <h4>You shall not delete this!</h4>
+        <p>Shall you?</p>
       </div>
-    </div>
-  </div>
-  <!-- Warning Modal -->
-  <div id="warning-modal" class="modal modal-fixed-footer grey darken-4 white-text" materialize="modal" [materializeParams]="[{dismissible: true}]"
-    [materializeActions]="modalWarning">
-    <div class="modal-content">
-      <h4>You shall not delete this!</h4>
-      <p>Shall you?</p>
-    </div>
-    <div class="modal-footer grey darken-4">
-      <a class="modal-action modal-close waves-effect waves-green btn-flat white-text" (click)="warningAction()">Delete</a>
-      <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+      <div class="modal-footer grey darken-4">
+        <a class="modal-action modal-close waves-effect waves-green btn-flat white-text" (click)="warningAction()">Delete</a>
+        <a class="modal-action modal-close waves-effect waves-green btn yellow accent-3 black-text" (click)="closeWarning()">Yes</a>
+      </div>
     </div>
   </div>
 </div>
